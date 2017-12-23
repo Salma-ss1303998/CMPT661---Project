@@ -1,13 +1,34 @@
 <br>
-<caption for="studentsDD">Select a student:</caption>
-<select id="studentsDD">
-    <option value=""></option>
-    {{#students}}
-        <option value="{{studentId}}"> {{studentId}} - {{firstName}} {{lastName}}</option>
-    {{/students}}
-</select>
+<div class="form-group row">
+    <caption class="col-sm-4" for="studentsList">Select a student: </caption>
+    <select  class="col-sm-8" id="studentsList">
+        <option value=""></option>
+        {{#students}}
+            <option value="{{studentId}}"> {{studentId}} - {{firstName}} {{lastName}}</option>
+        {{/students}}
+    </select>
+</div>
 
-<br><br>
+<div class="form-group row">
+    <caption class="col-sm-4" for="academicYearsList">Select an Academic Year: </caption>
+    <select   class="col-sm-8" id="academicYearsList">
+        <option value=""></option>
+        {{#academicYears}}
+            <option value="{{year}}"> {{year}}</option>
+        {{/academicYears}}
+    </select>
+</div>
+
+<div class="form-group row">
+    <label class="col-sm-4" for="studentsDataList">Select a student: </label>
+    <input class="col-sm-7" class="form-control" name="studentsDataList" type="text"
+           list="studentsDataList">
+    <datalist id="studentsDataList">
+        {{#students}}
+            <option value="{{studentId}}">{{studentId}} {{firstName}} {{lastName}}</option>
+        {{/students}}
+    </datalist>
+</div>
 
 
 <script src="views/js/incidents.js"></script>

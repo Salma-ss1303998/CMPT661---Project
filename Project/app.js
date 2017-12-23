@@ -68,5 +68,4 @@ app.get('/api/relatives', (req, res) => behvaiorController.getRealtives(req, res
 app.get('/api/students', (req, res) => behvaiorController.getStudents(req, res));
 app.get('/api/academicYears', (req, res) => behvaiorController.getAcademicYears(req, res));
 app.get('/api/status', (req, res) => behvaiorController.getStatus(req, res));
-
 app.get('/incidents', (req, res) => res.render('incidents') )
