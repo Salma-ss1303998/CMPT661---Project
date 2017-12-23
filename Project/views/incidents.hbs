@@ -1,0 +1,14 @@
+<br>
+<caption for="studentsDD">Select a student:</caption>
+<select id="studentsDD">
+    <option value=""></option>
+    {{#students}}
+        <option value="{{studentId}}"> {{studentId}} - {{firstName}} {{lastName}}</option>
+    {{/students}}
+</select>
+
+<br><br>
+
+
+<script src="views/js/incidents.js"></script>
+

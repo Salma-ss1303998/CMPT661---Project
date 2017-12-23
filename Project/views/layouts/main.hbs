@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>MVC App</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <!-- More info @ http://fontawesome.io/icons/ -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+
+    <link rel="stylesheet" href="/views/css/styles.css">
+
+    <script>
+        //Set the active class on the clicked nav-link
+        //Do so when the document is loaded in the browser
+        document.addEventListener("DOMContentLoaded", () => {
+            // get current URL path and assign 'active' class
+            const pathname = window.location.pathname
+            //set css class of the link corresponding to the current Url to active
+            const menuItem = document.querySelector(`.navbar-nav > li > a[href='${pathname}']`).parentNode;
+            //console.log(menuItem);
+            menuItem.classList.add("active");
+        });
+
+    </script>
+</head>
+
+<body>
+<nav class="navbar sticky-top navbar-expand-sm bg-primary navbar-dark rounded">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">
+
+    </a>
+
+    <!-- Links -->
+    <div class="collapse navbar-collapse" id="nav-content">
+        <ul class="navbar-nav active">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+<div class="container">
+    {{{body}}}
+</div>
+</body>
+</html>

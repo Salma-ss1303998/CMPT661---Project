@@ -1,0 +1,30 @@
+[
+  {
+    "location": "Classroom"
+  },
+  {
+    "location": "Backyard"
+  },
+  {
+    "location": "Cafeteria"
+  },
+  {
+    "location": "Entrance"
+  },
+  {
+    "location": "Chemistry Lab"
+  },
+  {
+    "location": "Biology Lab"
+  },
+  {
+    "location": "Physics Lab"
+  },
+  {
+    "location": "Gym"
+  },
+  {
+    "location": "Other"
+  }
+
+]
