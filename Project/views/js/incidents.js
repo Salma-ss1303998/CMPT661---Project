@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("js-DOM fully loaded and parsed");
     document.querySelector('#studentsList').addEventListener("change", onChange)
 })
-async function getIncidents(countryCode) {
-    const url = `/api/countries/${countryCode}`
+async function getStudent(studentID) {
+    const url = `/api/students/${studentID}`
     const response = await fetch(url)
     return await response.json()
 }
@@ -39,7 +39,8 @@ async function onChange(e) {
 
     try {
         const student = await getStudent(selectedStudentId)
-        const htmlTemplate = Handlebars.compile(studentTemplate)
+        console.log(student);
+        const htmlTemplate = Handlebars.compile(IncidentTemplate)
         const htmlContent = htmlTemplate(student)
 
         document.querySelector('#incidentsDetails').innerHTML = htmlContent
