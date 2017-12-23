@@ -90,6 +90,9 @@ class behaviorController {
         console.log("Users count:" + c);
         res.json(users)
     }
+    async getStudent(req, res) {
+
+    }
 
 }
 

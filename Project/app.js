@@ -60,7 +60,7 @@ const dbConnection = mongoose.connect('mongodb://localhost/behavior', function(e
         })
     }
 });
- app.get('/', (req, res) => res.render('login'))
+app.get('/', (req, res) => res.render('login'))
 app.get('/index', (req, res) => res.render('index'))
 app.post('/login', (req, res) => behvaiorController.login(req, res))
 app.get('/api/staffs', (req, res) => behvaiorController.getStaffs(req, res));
@@ -70,3 +70,4 @@ app.get('/api/academicYears', (req, res) => behvaiorController.getAcademicYears(
 app.get('/api/status', (req, res) => behvaiorController.getStatus(req, res));
 app.get('/incidents', (req, res) => behvaiorController.getIncidentsData(req, res))
 app.get('/incidentEditor', (req, res) => behvaiorController.editIncident(req, res))
+app.get('/api/students/:studentID',(req, res) =>  behvaiorController.getStudent(req, res));
