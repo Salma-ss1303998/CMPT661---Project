@@ -131,6 +131,10 @@ class behaviorRepository {
         return await Location.count({})
     }
 
+    getStudentByID(id) {
+        return Student.findOne({studentId: id})
+    }
+
     /* Get relatives by matching the last name of student and Relative */
     getRelative(lastname) {
         //Only retrieve the Relative id
@@ -246,7 +250,6 @@ class behaviorRepository {
         for (const l of locations ) {
             await this. addLocation(l)
         }
-
     }
 }
 

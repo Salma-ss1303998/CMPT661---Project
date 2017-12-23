@@ -91,7 +91,17 @@ class behaviorController {
         res.json(users)
     }
     async getStudent(req, res) {
-
+        console.log("I recived Student ID: "+req.query.studentID)
+        this.behaviorRespository.getStudentByID(req.query.studentID)
+            .then(s => {
+                if (s) {
+                    res.json(s)
+                }
+                else {
+                    res.status(404).send('no Student is found')
+                }
+            })
+            .catch(err => res.status(500).send(err))
     }
 
 }
