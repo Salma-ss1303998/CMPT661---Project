@@ -106,19 +106,34 @@ class behaviorRepository {
     async addStatus(status) {
         return await Status.create(status)
     }
-
     async getStatus() {
         return await Status.find({})
     }
-
     async getStatusCount() {
         return await Status.count({})
     }
-
-    async getAcademicYears() {
-        return await AcademicYear.find({})
+    async addIncidentType(newIncidentType) {
+        return await IncidentType.create(newIncidentType)
+    }
+    async getIncidentType() {
+        return await IncidentType.find({})
+    }
+    async getIncidentTypeCount() {
+        return await IncidentType.count({})
+    }
+    async addLocation(newLocation) {
+        return await Location.create(newLocation)
+    }
+    async getLocation() {
+        return await Location.find({})
+    }
+    async getLocationCount() {
+        return await Location.count({})
     }
 
+    getStudentByID(id) {
+        return Student.findOne({studentId: id})
+    }
 
     /* Get relatives by matching the last name of student and Relative */
     getRelative(lastname) {
@@ -137,6 +152,15 @@ class behaviorRepository {
         await Staff.remove({})
         await Relative.remove({})
         await User.remove({})
+        await AcademicYear.remove({})
+        await Attachment.remove({})
+        await Incident.remove({})
+        await IncidentType.remove({})
+        await Location.remove({})
+        await Note.remove({})
+        await Penalty.remove({})
+        await PenaltyType.remove({})
+        await Status.remove({})
     }
 
     async initDb() {
@@ -159,65 +183,73 @@ class behaviorRepository {
         //Adding users
         const usersData = await fs.readFile('data/users.json')
         const users = JSON.parse(usersData)
-
         console.log('Retrieved Staff from json file and added to MongoDB staff Collection: ' + users.length)
         for (const usr of users) {
             await this.addUser(usr)
         }
 
-        // //Adding Staff
-        // const staffData = await fs.readFile('data/staff.json')
-        // const staff = JSON.parse(staffData)
-        //
-        // console.log('Retrieved Staff from json file and added to MongoDB staff Collection: ' + staff.length)
-        // for (const stf of staff) {
-        //     await this.addStaff(stf)
-        // }
-        //
-        // //Adding relatives
-        // const relativeData = await fs.readFile('data/relative.json')
-        // const relatives = JSON.parse(relativeData)
-        //
-        // console.log('Retrieved Relatives from json file and added to MongoDB Relative Collection: ' + relatives.length)
-        // for (const relative of relatives) {
-        //     await this.addRelative(relative)
-        // }
-        //
-        //
-        // //Adding Students
-        // let studentData = await fs.readFile('data/student.json')
-        // let students = JSON.parse(studentData)
-        // console.log('Retrieved students from json file and added to MongoDB Student Collection: ' + students.length)
-        //
-        // for (let std of students) {
-        //     const relatives = await this.getRelative(std.lastName)
-        //     let temp = []
-        //     for (let rel of relatives) {
-        //         temp.push(rel);
-        //     }
-        //     std.relatives = temp
-        //     await this.addStudent(std)
-        // }
-        //
-        // //Adding Status
-        // const academicYearData = await fs.readFile('data/academicYear.json')
-        // const academicYears = JSON.parse(academicYearData)
-        //
-        // console.log('Retrieved Staff from json file and added to MongoDB Academic Years Collection: ' + academicYears.length)
-        // for (const y of academicYears) {
-        //     await this.addAcademicYear(y)
-        // }
-        //
-        // //Adding Status
-        // const statusData = await fs.readFile('data/status.json')
-        // const status = JSON.parse(statusData)
-        //
-        // console.log('Retrieved Staff from json file and added to MongoDB status Collection: ' + status.length)
-        // for (const s of status) {
-        //     await this.addStatus(s)
-        // }
-        //
+        //Adding Staff
+        const staffData = await fs.readFile('data/staff.json')
+        const staff = JSON.parse(staffData)
+        console.log('Retrieved Staff from json file and added to MongoDB staff Collection: ' + staff.length)
+        for (const stf of staff) {
+            await this.addStaff(stf)
+        }
 
+        //Adding relatives
+        const relativeData = await fs.readFile('data/relative.json')
+        const relatives = JSON.parse(relativeData)
+        console.log('Retrieved Relatives from json file and added to MongoDB Relative Collection: ' + relatives.length)
+        for (const relative of relatives) {
+            await this.addRelative(relative)
+        }
+
+
+        //Adding Students
+        let studentData = await fs.readFile('data/student.json')
+        let students = JSON.parse(studentData)
+        console.log('Retrieved students from json file and added to MongoDB Student Collection: ' + students.length)
+        for (let std of students) {
+            const relatives = await this.getRelative(std.lastName)
+            let temp = []
+            for (let rel of relatives) {
+                temp.push(rel);
+            }
+            std.relatives = temp
+            await this.addStudent(std)
+        }
+
+        //Adding Status
+        const academicYearData = await fs.readFile('data/academicYear.json')
+        const academicYears = JSON.parse(academicYearData)
+        console.log('Retrieved Staff from json file and added to MongoDB Academic Years Collection: ' + academicYears.length)
+        for (const y of academicYears) {
+            await this.addAcademicYear(y)
+        }
+
+        //Adding Status
+        const statusData = await fs.readFile('data/status.json')
+        const status = JSON.parse(statusData)
+        console.log('Retrieved Staff from json file and added to MongoDB status Collection: ' + status.length)
+        for (const s of status) {
+            await this.addStatus(s)
+        }
+
+        //Adding IncidentType
+        const incidentTypesData = await fs.readFile('data/incidentType.json')
+        const incidentTypes = JSON.parse(incidentTypesData)
+        console.log('Retrieved Staff from json file and added to MongoDB incidentTypesData Collection: ' +incidentTypes.length)
+        for (const i of incidentTypes) {
+            await this. addIncidentType(i)
+        }
+
+        //Adding Locations
+        const locationsData = await fs.readFile('data/location.json')
+        const locations = JSON.parse(locationsData)
+        console.log('Retrieved Staff from json file and added to MongoDB locations Collection: ' + locations .length)
+        for (const l of locations ) {
+            await this. addLocation(l)
+        }
     }
 }
 

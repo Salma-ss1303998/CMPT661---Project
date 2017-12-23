@@ -1,0 +1,101 @@
+<br>
+    <form method="post">
+        <fieldset class=form-group">
+
+            <div class="form-group row required">
+                <label class="col-sm-2 control-label" for="studentLookup"> Student: </label>
+                <select class="col-sm-10" class="form-control" name="studentLookup" id="studentLookup"
+                        required="required">
+                    {{#students}}
+                        <option value="{{studentId}}"> {{studentId}} - {{firstName}} {{lastName}}</option>
+                    {{/students}}
+                </select>
+            </div>
+
+            <div class="form-group row required">
+                <label class="col-sm-2 control-label" for="typeOfIncident"> Type of Incident: </label>
+                <select class="col-sm-10" class="form-control" name="typeOfIncident" id="typeOfIncident"
+                        required="required">
+                    {{#incidentType}}
+                        <option value="{{type}}"> {{type}}</option>
+                    {{/incidentType}}
+                </select>
+            </div>
+
+            <div class="form-group row required">
+                <label class="col-sm-2 control-label" for="date">Date:</label>
+                <input class="col-sm-10 " class="form-control" id="date" type="date" required="required">
+
+                <label class="col-sm-2 control-label" for="time">Time:</label>
+                <input class="col-sm-10" class="form-control" id="time" type="time" required="required">
+            </div>
+
+            <div class="form-group row required">
+                <label class="col-sm-2 control-label" for="location"> Location: </label>
+                <select class="col-sm-10" class="form-control" name="location" id="location" required="required">
+                    {{#locations}}
+                        <option value="{{location}}"> {{location}}</option>
+                    {{/locations}}
+                </select>
+            </div>
+
+            <div class="form-group required">
+                <label class="control-label">Reported By:</label>
+                <label class="form-check">
+                    <input type="radio" id="student" name="reportedBy" value="student"
+                           required="required" onclick="reporterLookup();">Student</label>
+                <label class="form-check">
+                    <input type="radio" id="staff" name="reportedBy" value="staff" checked required="required"
+                           onclick="reporterLookup();">Staff
+                </label><br/>
+            </div>
+
+            <div class="form-group row required">
+                <label class="col-sm-2 control-label" for="lookup"> Reporter Name: </label>
+                <select class="col-sm-10" class="form-control" name="lookup" id="lookup"
+                        required="required">
+                </select>
+            </div>
+
+            <div class="form-group row required">
+                <label class="col-sm-2 control-label" for="state"> State: </label>
+                <select class="col-sm-10" class="form-control" name="location" id="state" required="required">
+                    {{#statuses}}
+                        <option value="{{status}}"> {{status}}</option>
+                    {{/statuses}}
+                </select>
+            </div>
+
+
+            <div class="form-group required">
+                <label for="description" class='col-sm-2 control-label'>Description:</label>
+                <textarea class="col-sm-10" id="description" name="description" rows="5" cols="30"
+                          required="required"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label id="note">Notes:</label>
+                <button onclick="addNote()">Add Note</button>
+            </div>
+
+            <div class="form-group">
+                <label id="penalty">Penalty :</label>
+                <button onclick="addPenalty()">Add Penalty</button>
+            </div>
+
+            <div class="form-group">
+                <label id="attachments">Attachments:</label>
+                <button onclick="addAttachments()">Add Attachment</button>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-default">Submit</button>
+                <button type="reset" class="btn btn-default">Rest</button>
+            </div>
+
+        </fieldset>
+    </form>
+
+</div>
+
+<script src="views/js/incidentEditor.js"></script>
