@@ -121,6 +121,15 @@ class behaviorRepository {
     async getIncidentTypeCount() {
         return await IncidentType.count({})
     }
+    async addLocation(newLocation) {
+        return await Location.create(newLocation)
+    }
+    async getLocation() {
+        return await Location.find({})
+    }
+    async getLocationCount() {
+        return await Location.count({})
+    }
 
     /* Get relatives by matching the last name of student and Relative */
     getRelative(lastname) {
@@ -161,7 +170,6 @@ class behaviorRepository {
         //Adding users
         const usersData = await fs.readFile('data/users.json')
         const users = JSON.parse(usersData)
-
         console.log('Retrieved Staff from json file and added to MongoDB staff Collection: ' + users.length)
         for (const usr of users) {
             await this.addUser(usr)
@@ -178,7 +186,6 @@ class behaviorRepository {
         //Adding relatives
         const relativeData = await fs.readFile('data/relative.json')
         const relatives = JSON.parse(relativeData)
-
         console.log('Retrieved Relatives from json file and added to MongoDB Relative Collection: ' + relatives.length)
         for (const relative of relatives) {
             await this.addRelative(relative)
@@ -189,7 +196,6 @@ class behaviorRepository {
         let studentData = await fs.readFile('data/student.json')
         let students = JSON.parse(studentData)
         console.log('Retrieved students from json file and added to MongoDB Student Collection: ' + students.length)
-
         for (let std of students) {
             const relatives = await this.getRelative(std.lastName)
             let temp = []
@@ -203,7 +209,6 @@ class behaviorRepository {
         //Adding Status
         const academicYearData = await fs.readFile('data/academicYear.json')
         const academicYears = JSON.parse(academicYearData)
-
         console.log('Retrieved Staff from json file and added to MongoDB Academic Years Collection: ' + academicYears.length)
         for (const y of academicYears) {
             await this.addAcademicYear(y)
@@ -212,7 +217,6 @@ class behaviorRepository {
         //Adding Status
         const statusData = await fs.readFile('data/status.json')
         const status = JSON.parse(statusData)
-
         console.log('Retrieved Staff from json file and added to MongoDB status Collection: ' + status.length)
         for (const s of status) {
             await this.addStatus(s)
@@ -221,10 +225,17 @@ class behaviorRepository {
         //Adding IncidentType
         const incidentTypesData = await fs.readFile('data/incidentType.json')
         const incidentTypes = JSON.parse(incidentTypesData)
-
         console.log('Retrieved Staff from json file and added to MongoDB incidentTypesData Collection: ' +incidentTypes.length)
         for (const i of incidentTypes) {
             await this. addIncidentType(i)
+        }
+
+        //Adding Locations
+        const locationsData = await fs.readFile('data/location.json')
+        const locations = JSON.parse(locationsData)
+        console.log('Retrieved Staff from json file and added to MongoDB locations Collection: ' + locations .length)
+        for (const l of locations ) {
+            await this. addLocation(l)
         }
 
     }

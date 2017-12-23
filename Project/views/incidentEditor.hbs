@@ -33,11 +33,9 @@
             <div class="form-group row required">
                 <label class="col-sm-2 control-label" for="location"> Location: </label>
                 <select class="col-sm-10" class="form-control" name="location" id="location" required="required">
-                    <option value="classroom">Classroom</option>
-                    <option value="backyard">Backyard</option>
-                    <option value="cafeteria">Cafeteria</option>
-                    <option value="entrance">Entrance</option>
-                    <option value="others">Others</option>
+                    {{#locations}}
+                        <option value="{{location}}"> {{location}}</option>
+                    {{/locations}}
                 </select>
             </div>
 
