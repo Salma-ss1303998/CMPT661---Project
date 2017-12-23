@@ -106,19 +106,21 @@ class behaviorRepository {
     async addStatus(status) {
         return await Status.create(status)
     }
-
     async getStatus() {
         return await Status.find({})
     }
-
     async getStatusCount() {
         return await Status.count({})
     }
-
-    async getAcademicYears() {
-        return await AcademicYear.find({})
+    async addIncidentType(newIncidentType) {
+        return await IncidentType.create(newIncidentType)
     }
-
+    async getIncidentType() {
+        return await IncidentType.find({})
+    }
+    async getIncidentTypeCount() {
+        return await IncidentType.count({})
+    }
 
     /* Get relatives by matching the last name of student and Relative */
     getRelative(lastname) {
@@ -214,6 +216,15 @@ class behaviorRepository {
         console.log('Retrieved Staff from json file and added to MongoDB status Collection: ' + status.length)
         for (const s of status) {
             await this.addStatus(s)
+        }
+
+        //Adding IncidentType
+        const incidentTypesData = await fs.readFile('data/incidentType.json')
+        const incidentTypes = JSON.parse(incidentTypesData)
+
+        console.log('Retrieved Staff from json file and added to MongoDB incidentTypesData Collection: ' +incidentTypes.length)
+        for (const i of incidentTypes) {
+            await this. addIncidentType(i)
         }
 
     }

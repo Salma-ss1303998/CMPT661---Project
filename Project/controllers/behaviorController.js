@@ -26,6 +26,12 @@ class behaviorController {
         let academicYears = await this.behaviorRespository.getAcademicYears();
         res.render('incidents',{students:students, academicYears:academicYears} )
     }
+    async editIncident(req, res) {
+        let students = await this.behaviorRespository.getStudents();
+        let academicYears = await this.behaviorRespository.getAcademicYears();
+        let incidentType=await this.behaviorRespository.getIncidentType();
+        res.render('incidentEditor',{students:students, academicYears:academicYears,incidentType: incidentType} )
+       }
 
     async initDb (req, res) {
         await this.behaviorRespository.initDb();
