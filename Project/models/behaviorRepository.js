@@ -148,6 +148,15 @@ class behaviorRepository {
         await Staff.remove({})
         await Relative.remove({})
         await User.remove({})
+        await AcademicYear.remove({})
+        await Attachment.remove({})
+        await Incident.remove({})
+        await IncidentType.remove({})
+        await Location.remove({})
+        await Note.remove({})
+        await Penalty.remove({})
+        await PenaltyType.remove({})
+        await Status.remove({})
     }
 
     async initDb() {

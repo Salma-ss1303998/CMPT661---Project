@@ -32,12 +32,13 @@ class behaviorController {
         let academicYears = await this.behaviorRespository.getAcademicYears();
         let incidentTypes = await this.behaviorRespository.getIncidentType();
         let locations = await this.behaviorRespository.getLocation();
-        console.log(locations );
+        let statuses=await this.behaviorRespository.getStatus()
         res.render('incidentEditor', {
             students: students,
             academicYears: academicYears,
             incidentType: incidentTypes,
-            locations: locations
+            locations: locations,
+            statuses:statuses
         })
     }
 
