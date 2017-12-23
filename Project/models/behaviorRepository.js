@@ -21,22 +21,25 @@ class behaviorRepository {
     //----------- Login ---------------------//
     async login(username, password) {
 
-        const user = await User.findOne({username: username}).where('password')
+        let user = await Staff.findOne({email: username}).where('password')
             .equals(password);
+        console.log("user after staff", user)
+        if ( user === null ) {
+            user = await Relative.findOne({email: username}).where('password')
+                .equals(password);
 
-        console.log("user : " + user)
-
-        if (user != "undefined" && user != null && user!="") {
+        } if (user != "undefined" && user != null && user!="") {
             //Do not return the user password, remove it
+            console.log("user : " + user)
             delete user.password
             return user;
-
         }
         else {
             console.log("Invalid")
             throw "Username and/or password invalid"
         }
     }
+
 
     //----------- Login ---------------------//
 
