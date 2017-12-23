@@ -22,8 +22,8 @@ class behaviorController {
     /* --------------------------- LOGIN ----------------------*/
 
     async getIncidentsData (req, res) {
-        let students = await behaviorRespository.getStudents();
-        let academicYears = await behaviorRespository.getAcademicYears();
+        let students = await this.behaviorRespository.getStudents();
+        let academicYears = await this.behaviorRespository.getAcademicYears();
         res.render('incidents',{students:students, academicYears:academicYears} )
     }
 
