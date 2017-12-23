@@ -91,8 +91,8 @@ class behaviorController {
         res.json(users)
     }
     async getStudent(req, res) {
-        console.log("I recived Student ID: "+req.query.studentID)
-        this.behaviorRespository.getStudentByID(req.query.studentID)
+        console.log("I received Student ID: "+req.params.studentID)
+        this.behaviorRespository.getStudentByID(req.params.studentID)
             .then(s => {
                 if (s) {
                     res.json(s)
