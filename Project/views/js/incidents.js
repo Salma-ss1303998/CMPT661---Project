@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function getStudent(studentID) {
     const url = `/api/students/${studentID}`
     const response = await fetch(url)
+    console.log("response " + response)
     return await response.json()
 }
 
