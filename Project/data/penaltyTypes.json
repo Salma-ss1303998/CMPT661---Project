@@ -1,7 +1,23 @@
-[{"type":"Verbal warning"},
-{"type":"Loss of recess"},
-{"type":"Detention"},
-{"type":"Social work"},
-{"type":"Short-term suspension"},
-{"type":"Long-term suspension"},
-{"type":"Expulsion"}]
+[
+  {
+    "type": "Verbal warning"
+  },
+  {
+    "type": "Loss of recess"
+  },
+  {
+    "type": "Detention"
+  },
+  {
+    "type": "Social work"
+  },
+  {
+    "type": "Short-term suspension"
+  },
+  {
+    "type": "Long-term suspension"
+  },
+  {
+    "type": "Expulsion"
+  }
+]
