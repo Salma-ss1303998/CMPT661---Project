@@ -95,6 +95,7 @@ class behaviorController {
         this.behaviorRespository.getStudentByID(req.params.studentID)
             .then(s => {
                 if (s) {
+                    console.log(s);
                     res.json(s)
                 }
                 else {
