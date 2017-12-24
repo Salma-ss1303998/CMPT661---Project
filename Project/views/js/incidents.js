@@ -8,13 +8,11 @@ const IncidentTemplate = `
             <td>Last Name</td>
         </tr>
          
-           {{#each .}}
         <tr>
             <td>{{studentId}}</td>
             <td>{{firstName}}</td>
             <td>{{lastName}}</td>
         </tr>
-         {{/each}}
         </tbody>
     </table>
 `
