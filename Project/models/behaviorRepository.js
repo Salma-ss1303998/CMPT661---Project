@@ -11,7 +11,6 @@ const Staff = require('./Staff')
 const Status = require('./Status')
 const Student = require('./Student')
 const User = require('./User')
-
 const fs = require('fs-extra')
 
 class behaviorRepository {
@@ -23,18 +22,26 @@ class behaviorRepository {
 
         let user = await Staff.findOne({email: username}).where('password')
             .equals(password);
-        console.log("user after staff", user)
-        if ( user === null ) {
+
+        if (user !== null)
+            user.role = "Staff";
+
+        // console.log("user after staff", user);
+        if (user === null) {
             user = await Relative.findOne({email: username}).where('password')
                 .equals(password);
 
-        } if (user != "undefined" && user != null && user!="") {
+            if (user !== null)
+                user.role = "Relative";
+        }
+        if (user != "undefined" && user != null && user != "") {
             //Do not return the user password, remove it
-            console.log("user : " + user)
-            delete user.password
+            delete user.password;
+            console.log("User:" + user);
             return user;
         }
         else {
+            // console.log("User:" + user);
             console.log("Invalid")
             throw "Username and/or password invalid"
         }
@@ -109,27 +116,35 @@ class behaviorRepository {
     async addStatus(status) {
         return await Status.create(status)
     }
+
     async getStatus() {
         return await Status.find({})
     }
+
     async getStatusCount() {
         return await Status.count({})
     }
+
     async addIncidentType(newIncidentType) {
         return await IncidentType.create(newIncidentType)
     }
+
     async getIncidentType() {
         return await IncidentType.find({})
     }
+
     async getIncidentTypeCount() {
         return await IncidentType.count({})
     }
+
     async addLocation(newLocation) {
         return await Location.create(newLocation)
     }
+
     async getLocation() {
         return await Location.find({})
     }
+
     async getLocationCount() {
         return await Location.count({})
     }
@@ -241,17 +256,17 @@ class behaviorRepository {
         //Adding IncidentType
         const incidentTypesData = await fs.readFile('data/incidentType.json')
         const incidentTypes = JSON.parse(incidentTypesData)
-        console.log('Retrieved Staff from json file and added to MongoDB incidentTypesData Collection: ' +incidentTypes.length)
+        console.log('Retrieved Staff from json file and added to MongoDB incidentTypesData Collection: ' + incidentTypes.length)
         for (const i of incidentTypes) {
-            await this. addIncidentType(i)
+            await this.addIncidentType(i)
         }
 
         //Adding Locations
         const locationsData = await fs.readFile('data/location.json')
         const locations = JSON.parse(locationsData)
-        console.log('Retrieved Staff from json file and added to MongoDB locations Collection: ' + locations .length)
-        for (const l of locations ) {
-            await this. addLocation(l)
+        console.log('Retrieved Staff from json file and added to MongoDB locations Collection: ' + locations.length)
+        for (const l of locations) {
+            await this.addLocation(l)
         }
     }
 }
