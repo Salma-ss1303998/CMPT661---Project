@@ -42,7 +42,7 @@ class behaviorController {
             academicYears: academicYears,
             incidentType: incidentTypes,
             locations: locations,
-            statuses:statuses
+            statuses:statuses,
         })
     }
 

@@ -127,19 +127,39 @@ class behaviorRepository {
         return await Location.count({})
     }
 
-    getStudentByID(id) {
-        return Student.findOne({studentId: id})
+    async addLocation(newLocation) {
+        return await Location.create(newLocation)
     }
 
+    async getLocation() {
+        return await Location.find({})
+    }
+
+    async getLocationCount() {
+        return await Location.count({})
+    }
+    async getPenaltyType () {
+        return await PenaltyType.find({})
+    }
+
+    async getPenaltyTypeCount() {
+        return await PenaltyType.count({})
+    }
+    async addPenaltyType(newPenaltyType) {
+        return await PenaltyType.create(newPenaltyType)
+    }
     async getIncident () {
-        return await Incident.find({})
+        return await  Incident.find({})
     }
-
     async getIncidentCount() {
         return await Incident.count({})
     }
     async addIncident(newIncident) {
-        return await Incident.create(newIncident)
+        return await  Incident.create(newIncident)
+    }
+
+    async getStudentByID(id) {
+        return Student.findOne({studentId: id})
     }
 
     /* Get relatives by matching the last name of student and Relative */
@@ -249,6 +269,8 @@ class behaviorRepository {
         for (const l of locations) {
             await this.addLocation(l)
         }
+
+
     }
 }
 
