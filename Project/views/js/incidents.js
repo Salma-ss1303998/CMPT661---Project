@@ -1,28 +1,36 @@
 const IncidentTemplate = `
     <h4>Selected Student:</h4>
     <table class="table table-striped">
-        <tbody>
+   <tbody>
         <tr>
             <td>Student ID</td>
-            <td>First Name</td>
-            <td>Last Name</td>
-        </tr>
-         
-        <tr>
             <td>{{studentId}}</td>
+        </tr>
+<<<<<<< HEAD
+         
+=======
+>>>>>>> a8fe86c13bdb7d96d989fa5ef3a5a9558fa0b072
+        <tr>
+            <td>First Name</td>
             <td>{{firstName}}</td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
             <td>{{lastName}}</td>
         </tr>
         </tbody>
+
     </table>
 `
 document.addEventListener("DOMContentLoaded", () => {
     console.log("js-DOM fully loaded and parsed");
     document.querySelector('#studentsList').addEventListener("change", onChange)
 })
+
 async function getStudent(studentID) {
     const url = `/api/students/${studentID}`
     const response = await fetch(url)
+    console.log("response " + response)
     return await response.json()
 }
 
