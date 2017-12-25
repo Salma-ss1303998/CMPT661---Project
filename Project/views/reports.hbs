@@ -1,36 +1,24 @@
-<br>
-<div class="form-group row">
-    <caption class="col-sm-4" for="studentsList">Select a student: </caption>
-    <select  class="col-sm-8" id="studentsList">
-        <option value=""></option>
-        {{#students}}
-            <option name="studentId" value="{{studentId}}"> {{studentId}} - {{firstName}} {{lastName}}</option>
-        {{/students}}
-    </select>
+<h1>Incidents Summary Report</h1>
+<h3>Enter Date</h3>
+<form name=summaryReport>
+
+    <div id="report">
+<span>
+    <b>From:</b><input type="date" id="from" name="from">
+            <b>To:</b><input type="date" id="to" name="to">
+
+            <input type=button value="Refine" onclick="refineDate()">
+        <input type=button value="Reset" onclick="resetData()">
+</span>
+    </div>
+</form>
+
+<div id="gradeLevelDiv">
+    <h2>Incident summary based on  Academic Level</h2>
+    <table id="gradeLevelList"></table>
 </div>
 
-<div class="form-group row">
-    <caption class="col-sm-4" for="academicYearsList">Select an Academic Year: </caption>
-    <select   class="col-sm-8" id="academicYearsList">
-        <option value=""></option>
-        {{#academicYears}}
-            <option name="year" value="{{_id}}"> {{year}}</option>
-        {{/academicYears}}
-    </select>
-</div>
 
-<div class="form-group row">
-    <label class="col-sm-4" for="studentsDataList">Select a student: </label>
-    <input class="col-sm-8" class="form-control" name="studentsDataList" type="text"
-           list="studentsDataList">
-    <datalist id="studentsDataList">
-        {{#students}}
-            <option name="studentsID" value="{{_id}}">{{studentId}} {{firstName}} {{lastName}}</option>
-        {{/students}}
-    </datalist>
-</div>
 
-<div id="incidentsDetails"></div>
 
-<script src="views/js/reports.js"></script>
-
+<script src="views/js/reports.js"></script>;
