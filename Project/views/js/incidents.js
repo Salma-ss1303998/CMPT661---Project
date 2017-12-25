@@ -32,7 +32,6 @@ const IncidentTemplate = `
             <td>Grade</td>
         </tr>
          
-=======
         <tr>
             <td>First Name</td>
             <td>{{firstName}}</td>
