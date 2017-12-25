@@ -21,8 +21,8 @@ class behaviorController {
         console.log("app.post(/incidentEditor).req.body", incident)
         let newIncident = await this.behaviorRespository.addIncident(incident);
         console.log("-------------")
-       // let printIncident = await this.behaviorRespository.getIncident();
-        //console.log("Incident info from DB");
+        let printIncident = await this.behaviorRespository.getIncident();
+        console.log("Incident info from DB");
 
     }
     async getIncidentsData(req, res) {

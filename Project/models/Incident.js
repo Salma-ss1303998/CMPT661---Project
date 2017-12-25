@@ -6,7 +6,6 @@ let incidentSchema = new mongoose.Schema({
     description:String,
     type: { type : mongoose.Schema.ObjectId, ref : 'IncidentType' },
     date: {type:Date,default: Date.now},
-    time: {type:Date,default: Date.now},
     location: { type : mongoose.Schema.ObjectId, ref : 'Location' },
     studentReporter: { type : mongoose.Schema.ObjectId, ref : 'Student' },
     staffReporter: { type : mongoose.Schema.ObjectId, ref : 'Staff' },
