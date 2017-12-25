@@ -10,7 +10,6 @@ const Relative = require('./Relative')
 const Staff = require('./Staff')
 const Status = require('./Status')
 const Student = require('./Student')
-const User = require('./User')
 const fs = require('fs-extra')
 
 class behaviorRepository {
@@ -21,16 +20,16 @@ class behaviorRepository {
     async login(username, password) {
         let user = await Staff.findOne({email: username}).where('password')
             .equals(password);
-
-        // console.log("user after staff", user);
-        if (user === null) {
+        if (!user) {
             user = await Relative.findOne({email: username}).where('password')
-                .equals(password);
+                .equals(password).lean(); // lean to allow adding user.role
+            if (user)
+            user.role="Relative"
         }
         if (user != "undefined" && user != null && user != "") {
             //Do not return the user password, remove it
             delete user.password;
-            console.log("User:" + user);
+            console.log("User:" , user);
             return user;
         }
         else {
@@ -42,20 +41,6 @@ class behaviorRepository {
 
 
     //----------- Login ---------------------//
-
-
-    async addUser(user) {
-        return await User.create(user)
-
-    }
-
-    async getUsers() {
-        return await User.find({})
-    }
-
-    async getUsersCount() {
-        return await User.count({})
-    }
 
     async addStudent(newStudent) {
         return await Student.create(newStudent)
@@ -162,7 +147,6 @@ class behaviorRepository {
         await Student.remove({})
         await Staff.remove({})
         await Relative.remove({})
-        await User.remove({})
         await AcademicYear.remove({})
         await Attachment.remove({})
         await Incident.remove({})
@@ -191,13 +175,6 @@ class behaviorRepository {
     }
 
     async loadDataFromJsonFiles() {
-        //Adding users
-        const usersData = await fs.readFile('data/users.json')
-        const users = JSON.parse(usersData)
-        console.log('Retrieved Staff from json file and added to MongoDB staff Collection: ' + users.length)
-        for (const usr of users) {
-            await this.addUser(usr)
-        }
 
         //Adding Staff
         const staffData = await fs.readFile('data/staff.json')

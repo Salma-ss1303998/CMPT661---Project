@@ -7,7 +7,7 @@
                 <select class="col-sm-10" class="form-control" name="studentLookup" id="studentLookup"
                         required="required">
                     {{#students}}
-                        <option value="{{studentId}}"> {{studentId}} - {{firstName}} {{lastName}}</option>
+                        <option value="{{_id}}"> {{studentId}} - {{firstName}} {{lastName}}</option>
                     {{/students}}
                 </select>
             </div>
