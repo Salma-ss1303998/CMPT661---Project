@@ -20,17 +20,19 @@ class behaviorRepository {
     //----------- Login ---------------------//
     async login(username, password) {
         let user = await Staff.findOne({email: username}).where('password')
-            .equals(password);
+            .equals(password).lean();
 
         // console.log("user after staff", user);
-        if (user === null) {
+        if (!user) {
             user = await Relative.findOne({email: username}).where('password')
-                .equals(password);
+                .equals(password).lean(); // lean to allow adding user.role
+            user.role="Relative"
+            console.log("User:" , user);
         }
-        if (user != "undefined" && user != null && user != "") {
+        if (user) {
             //Do not return the user password, remove it
             delete user.password;
-            console.log("User:" + user);
+            //console.log("User:" + user);
             return user;
         }
         else {
