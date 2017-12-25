@@ -22,7 +22,7 @@ class behaviorController {
         let newIncident = await this.behaviorRespository.addIncident(incident);
         console.log("-------------")
         let printIncident = await this.behaviorRespository.getIncident();
-        console.log("Incident info from DB");
+        console.log("Incident info from DB",printIncident);
 
     }
     async getIncidentsData(req, res) {

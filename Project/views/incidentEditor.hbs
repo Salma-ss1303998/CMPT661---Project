@@ -84,8 +84,10 @@
             </div>
 
             <div class="form-group">
-                <label value="{{_id}}" name="attachments"value="{{_id}}">Attachments:</label>
-                <button onclick="addAttachments()">Add Attachment</button>
+                <label value="{{_id}}" for="attachments">Attachments:</label>
+                <input type=text  onclick="addAttachment()">
+                <input name="attachments" value="{{_id}}" type="file"></input>
+                <button>Add Attachment</button>
             </div>
 
             <div>
