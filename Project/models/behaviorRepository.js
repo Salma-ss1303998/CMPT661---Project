@@ -131,6 +131,17 @@ class behaviorRepository {
         return Student.findOne({studentId: id})
     }
 
+    async getIncident () {
+        return await Incident.find({})
+    }
+
+    async getIncidentCount() {
+        return await Incident.count({})
+    }
+    async addIncident(newIncident) {
+        return await Incident.create(newIncident)
+    }
+
     /* Get relatives by matching the last name of student and Relative */
     getRelative(lastname) {
         //Only retrieve the Relative id

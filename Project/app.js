@@ -71,3 +71,4 @@ app.get('/api/status', (req, res) => behvaiorController.getStatus(req, res));
 app.get('/incidents', (req, res) => behvaiorController.getIncidentsData(req, res))
 app.get('/incidentEditor', (req, res) => behvaiorController.editIncident(req, res))
 app.get('/api/students/:studentID',(req, res) =>  behvaiorController.getStudent(req, res));
+app.post('/incidentEditor', (req, res) => behvaiorController.addIncident(req, res))

@@ -4,7 +4,7 @@
 
             <div class="form-group row required">
                 <label class="col-sm-2 control-label" for="studentLookup"> Student: </label>
-                <select class="col-sm-10" class="form-control" name="studentLookup" id="studentLookup"
+                <select class="col-sm-10" class="form-control" name="studentInvolved"
                         required="required">
                     {{#students}}
                         <option value="{{_id}}"> {{studentId}} - {{firstName}} {{lastName}}</option>
@@ -14,54 +14,56 @@
 
             <div class="form-group row required">
                 <label class="col-sm-2 control-label" for="typeOfIncident"> Type of Incident: </label>
-                <select class="col-sm-10" class="form-control" name="typeOfIncident" id="typeOfIncident"
+                <select class="col-sm-10" class="form-control" name="typeOfIncident"
                         required="required">
                     {{#incidentType}}
-                        <option value="{{type}}"> {{type}}</option>
+                        <option value="{{_id}}"> {{type}}</option>
                     {{/incidentType}}
                 </select>
             </div>
 
             <div class="form-group row required">
                 <label class="col-sm-2 control-label" for="date">Date:</label>
-                <input class="col-sm-10 " class="form-control" id="date" type="date" required="required">
+                <input class="col-sm-10 " class="form-control"name="date" type="date" required="required">
 
                 <label class="col-sm-2 control-label" for="time">Time:</label>
-                <input class="col-sm-10" class="form-control" id="time" type="time" required="required">
+                <input class="col-sm-10" class="form-control" name="time" type="time" required="required">
             </div>
 
             <div class="form-group row required">
                 <label class="col-sm-2 control-label" for="location"> Location: </label>
-                <select class="col-sm-10" class="form-control" name="location" id="location" required="required">
+                <select class="col-sm-10" class="form-control" name="location" required="required">
                     {{#locations}}
-                        <option value="{{location}}"> {{location}}</option>
+                        <option value="{{_id}}"> {{location}}</option>
                     {{/locations}}
                 </select>
             </div>
 
-            <div class="form-group required">
+            <div class="form-group required ">
                 <label class="control-label">Reported By:</label>
                 <label class="form-check">
-                    <input type="radio" id="student" name="reportedBy" value="student"
-                           required="required" onclick="reporterLookup();">Student</label>
+                    <input type="radio" name="reporterRole"
+                           required="required">Student</label>
                 <label class="form-check">
-                    <input type="radio" id="staff" name="reportedBy" value="staff" checked required="required"
-                           onclick="reporterLookup();">Staff
+                    <input type="radio" name="reporterRole" checked required="required">Staff
                 </label><br/>
             </div>
 
             <div class="form-group row required">
                 <label class="col-sm-2 control-label" for="lookup"> Reporter Name: </label>
-                <select class="col-sm-10" class="form-control" name="lookup" id="lookup"
+                <select class="col-sm-10" class="form-control" name="reporterName"
                         required="required">
+                    {{#students}}
+                        <option value="{{_id}}">{{studentId}} {{firstName}} {{lastName}}</option>
+                    {{/students}}
                 </select>
             </div>
 
             <div class="form-group row required">
                 <label class="col-sm-2 control-label" for="state"> State: </label>
-                <select class="col-sm-10" class="form-control" name="location" id="state" required="required">
+                <select class="col-sm-10" class="form-control" name="status" required="required">
                     {{#statuses}}
-                        <option value="{{status}}"> {{status}}</option>
+                        <option value="{{_id}}" > {{status}}</option>
                     {{/statuses}}
                 </select>
             </div>
@@ -69,22 +71,22 @@
 
             <div class="form-group required">
                 <label for="description" class='col-sm-2 control-label'>Description:</label>
-                <textarea class="col-sm-10" id="description" name="description" rows="5" cols="30"
+                <textarea class="col-sm-10" name="description" rows="5" cols="30"
                           required="required"></textarea>
             </div>
 
             <div class="form-group">
-                <label id="note">Notes:</label>
+                <label value="{{_id}}" name="note">Notes:</label>
                 <button onclick="addNote()">Add Note</button>
             </div>
 
             <div class="form-group">
-                <label id="penalty">Penalty :</label>
+                <label value="{{_id}}" name="penalty">Penalty :</label>
                 <button onclick="addPenalty()">Add Penalty</button>
             </div>
 
             <div class="form-group">
-                <label id="attachments">Attachments:</label>
+                <label value="{{_id}}" name="attachments"value="{{_id}}">Attachments:</label>
                 <button onclick="addAttachments()">Add Attachment</button>
             </div>
 

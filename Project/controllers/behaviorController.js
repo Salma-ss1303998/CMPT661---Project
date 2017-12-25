@@ -3,11 +3,9 @@ class behaviorController {
     constructor() {
         this.behaviorRespository = require('../models/behaviorRepository')
     }
-
-    /* --------------------------- LOGIN ----------------------*/
     login(req, res) {
         const loginInfo = req.body
-        console.log("app.post(/api/login).req.body", loginInfo)
+        console.log("app.post(login).req.body", loginInfo)
 
         this.behaviorRespository.login(loginInfo.username, loginInfo.password).then(user => {
             req.session.user = user
@@ -18,9 +16,15 @@ class behaviorController {
                 res.render('login', {errMessage: err})
             })
     }
+    async addIncident(req, res) {
+        const incident = req.body
+        console.log("app.post(/incidentEditor).req.body", incident)
+        let newIncident = await this.behaviorRespository.addIncident(incident);
+        console.log("-------------")
+       // let printIncident = await this.behaviorRespository.getIncident();
+        //console.log("Incident info from DB");
 
-    /* --------------------------- LOGIN ----------------------*/
-
+    }
     async getIncidentsData(req, res) {
         let students = await this.behaviorRespository.getStudents();
         let academicYears = await this.behaviorRespository.getAcademicYears();
