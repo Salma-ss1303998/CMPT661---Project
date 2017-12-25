@@ -4,7 +4,7 @@
     <select  class="col-sm-8" id="studentsList">
         <option value=""></option>
         {{#students}}
-            <option value="{{studentId}}"> {{studentId}} - {{firstName}} {{lastName}}</option>
+            <option name="studentId" value="{{studentId}}"> {{studentId}} - {{firstName}} {{lastName}}</option>
         {{/students}}
     </select>
 </div>
@@ -14,7 +14,7 @@
     <select   class="col-sm-8" id="academicYearsList">
         <option value=""></option>
         {{#academicYears}}
-            <option value="{{year}}"> {{year}}</option>
+            <option name="year" value="{{_id}}"> {{year}}</option>
         {{/academicYears}}
     </select>
 </div>
@@ -25,7 +25,7 @@
            list="studentsDataList">
     <datalist id="studentsDataList">
         {{#students}}
-            <option value="{{studentId}}">{{studentId}} {{firstName}} {{lastName}}</option>
+            <option name="studentsList" value="{{_id}}">{{studentId}} {{firstName}} {{lastName}}</option>
         {{/students}}
     </datalist>
 </div>

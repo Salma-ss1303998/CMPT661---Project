@@ -10,8 +10,6 @@ const Relative = require('./Relative')
 const Staff = require('./Staff')
 const Status = require('./Status')
 const Student = require('./Student')
-const User = require('./User')
-
 const fs = require('fs-extra')
 
 class behaviorRepository {
@@ -20,21 +18,22 @@ class behaviorRepository {
 
     //----------- Login ---------------------//
     async login(username, password) {
-
         let user = await Staff.findOne({email: username}).where('password')
             .equals(password);
-        console.log("user after staff", user)
-        if ( user === null ) {
+        if (!user) {
             user = await Relative.findOne({email: username}).where('password')
-                .equals(password);
-
-        } if (user != "undefined" && user != null && user!="") {
+                .equals(password).lean(); // lean to allow adding user.role
+            if (user)
+            user.role="Relative"
+        }
+        if (user != "undefined" && user != null && user != "") {
             //Do not return the user password, remove it
-            console.log("user : " + user)
-            delete user.password
+            delete user.password;
+            console.log("User:" , user);
             return user;
         }
         else {
+            // console.log("User:" + user);
             console.log("Invalid")
             throw "Username and/or password invalid"
         }
@@ -42,20 +41,6 @@ class behaviorRepository {
 
 
     //----------- Login ---------------------//
-
-
-    async addUser(user) {
-        return await User.create(user)
-
-    }
-
-    async getUsers() {
-        return await User.find({})
-    }
-
-    async getUsersCount() {
-        return await User.count({})
-    }
 
     async addStudent(newStudent) {
         return await Student.create(newStudent)
@@ -109,33 +94,52 @@ class behaviorRepository {
     async addStatus(status) {
         return await Status.create(status)
     }
+
     async getStatus() {
         return await Status.find({})
     }
+
     async getStatusCount() {
         return await Status.count({})
     }
+
     async addIncidentType(newIncidentType) {
         return await IncidentType.create(newIncidentType)
     }
+
     async getIncidentType() {
         return await IncidentType.find({})
     }
+
     async getIncidentTypeCount() {
         return await IncidentType.count({})
     }
+
     async addLocation(newLocation) {
         return await Location.create(newLocation)
     }
+
     async getLocation() {
         return await Location.find({})
     }
+
     async getLocationCount() {
         return await Location.count({})
     }
 
     getStudentByID(id) {
         return Student.findOne({studentId: id})
+    }
+
+    async getIncident () {
+        return await Incident.find({})
+    }
+
+    async getIncidentCount() {
+        return await Incident.count({})
+    }
+    async addIncident(newIncident) {
+        return await Incident.create(newIncident)
     }
 
     /* Get relatives by matching the last name of student and Relative */
@@ -154,7 +158,6 @@ class behaviorRepository {
         await Student.remove({})
         await Staff.remove({})
         await Relative.remove({})
-        await User.remove({})
         await AcademicYear.remove({})
         await Attachment.remove({})
         await Incident.remove({})
@@ -183,13 +186,6 @@ class behaviorRepository {
     }
 
     async loadDataFromJsonFiles() {
-        //Adding users
-        const usersData = await fs.readFile('data/users.json')
-        const users = JSON.parse(usersData)
-        console.log('Retrieved Staff from json file and added to MongoDB staff Collection: ' + users.length)
-        for (const usr of users) {
-            await this.addUser(usr)
-        }
 
         //Adding Staff
         const staffData = await fs.readFile('data/staff.json')
@@ -241,17 +237,17 @@ class behaviorRepository {
         //Adding IncidentType
         const incidentTypesData = await fs.readFile('data/incidentType.json')
         const incidentTypes = JSON.parse(incidentTypesData)
-        console.log('Retrieved Staff from json file and added to MongoDB incidentTypesData Collection: ' +incidentTypes.length)
+        console.log('Retrieved Staff from json file and added to MongoDB incidentTypesData Collection: ' + incidentTypes.length)
         for (const i of incidentTypes) {
-            await this. addIncidentType(i)
+            await this.addIncidentType(i)
         }
 
         //Adding Locations
         const locationsData = await fs.readFile('data/location.json')
         const locations = JSON.parse(locationsData)
-        console.log('Retrieved Staff from json file and added to MongoDB locations Collection: ' + locations .length)
-        for (const l of locations ) {
-            await this. addLocation(l)
+        console.log('Retrieved Staff from json file and added to MongoDB locations Collection: ' + locations.length)
+        for (const l of locations) {
+            await this.addLocation(l)
         }
     }
 }

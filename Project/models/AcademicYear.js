@@ -1,7 +1,7 @@
 let mongoose = require('mongoose');
 
 let academicYearSchema = new mongoose.Schema({
-    year: String,
+    year: {type:String,default:"2017-2018"}
 
 });
 
