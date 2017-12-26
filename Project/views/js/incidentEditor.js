@@ -24,14 +24,12 @@ function addStudent(){
 
 function lookup() {
     if (document.getElementById('studentChecked').checked) {
-        document.getElementById('studentLookup').style.visibility = 'visible';
+        document.getElementById('stuReporter').se
     }
-    else document.getElementById('studentLookup').style.visibility = 'hidden';
 
     if (document.getElementById('staffChecked').checked) {
-        document.getElementById('staffLookup').style.visibility = 'visible';
+        document.getElementById('staReporter')
     }
-    else document.getElementById('staffLookup').style.visibility = 'hidden';
 
 }
 
