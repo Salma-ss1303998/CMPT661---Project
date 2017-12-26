@@ -16,6 +16,7 @@ class behaviorController {
                 res.render('login', {errMessage: err})
             })
     }
+
     async addIncident(req, res) {
         const incident = req.body
         console.log("app.post(/incidentEditor).req.body", incident)
@@ -25,6 +26,7 @@ class behaviorController {
         console.log("Incident info from DB",printIncident);
 
     }
+
     async getIncidentsData(req, res) {
         let students = await this.behaviorRespository.getStudents();
         let academicYears = await this.behaviorRespository.getAcademicYears();
@@ -94,6 +96,7 @@ class behaviorController {
         console.log("Users count:" + c);
         res.json(users)
     }
+
     async getStudent(req, res) {
         console.log("I received Student ID: "+req.params.studentID)
         this.behaviorRespository.getStudentByID(req.params.studentID)
@@ -108,6 +111,20 @@ class behaviorController {
             })
             .catch(err => res.status(500).send(err))
     }
+
+    async getByGradeLevel(req, res){
+
+    }
+
+    async getByLocation(req,res){
+
+    }
+
+    async getByType(req,res){
+
+    }
+
+
 
 }
 
