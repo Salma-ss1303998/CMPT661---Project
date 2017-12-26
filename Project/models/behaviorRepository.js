@@ -24,12 +24,16 @@ class behaviorRepository {
             user = await Relative.findOne({email: username}).where('password')
                 .equals(password).lean(); // lean to allow adding user.role
             if (user)
+<<<<<<< HEAD
                 user.role="Relative"
+=======
+                user.role = "Relative"
+>>>>>>> 8c8ca151fa6f133c3435382b59209c19c2f39d30
         }
         if (user != "undefined" && user != null && user != "") {
             //Do not return the user password, remove it
             delete user.password;
-            console.log("User:" , user);
+            console.log("User:", user);
             return user;
         }
         else {
@@ -127,20 +131,102 @@ class behaviorRepository {
         return await Location.count({})
     }
 
-    getStudentByID(id) {
-        return Student.findOne({studentId: id})
+    async getPenaltyType() {
+        return await PenaltyType.find({})
     }
 
-    async getIncident () {
-        return await Incident.find({})
+    async getPenaltyTypeCount() {
+        return await PenaltyType.count({})
+    }
+
+    async addPenaltyType(newPenaltyType) {
+        return await PenaltyType.create(newPenaltyType)
+    }
+
+    async getIncident() {
+        return await  Incident.find({})
     }
 
     async getIncidentCount() {
         return await Incident.count({})
     }
+
     async addIncident(newIncident) {
-        return await Incident.create(newIncident)
+        return await  Incident.create(newIncident)
     }
+
+    async getAttachment() {
+        return await  Attachment.find({})
+    }
+
+    async getIAttachmentCount() {
+        return await Attachment.count({})
+    }
+
+    async addAttachment(newAttachment) {
+        return await  Attachment.create(newAttachment)
+    }
+
+    async getPenalty() {
+        return await  Penalty.find({})
+    }
+
+    async getPenaltyCount() {
+        return await Penalty.count({})
+    }
+
+    async addPenalty(newPenalty) {
+        return await  Penalty.create(newPenalty)
+    }
+
+    async getNote() {
+        return await  Note.find({})
+    }
+
+    async getNoteCount() {
+        return await Note.count({})
+    }
+
+    async addNote(newNote) {
+        return await  Note.create(newNote)
+    }
+
+
+    async getStudentByID(id) {
+        return Student.findOne({studentId: id})
+    }
+
+    /*
+        async getIncidentByID(id) {
+            return Incident.findOne({_id : id})
+        }
+        async getAttachmentByID(id) {
+            return Attachment.findOne({_id : id})
+        }
+        */
+
+
+    async addAttachmentToIncident(incident, attachmentID) {
+        incident.attachments.push(attachmentID)
+        return incident.save()
+    }
+
+    /*
+        async addStudentToIncident(incident, studentID) {
+            incident.students.push(studentID)
+            return incident.save()
+        }
+    */
+    async addPenaltyToIncident(incident, penaltyID) {
+        incident.penalties.push(penaltyID)
+        return incident.save()
+    }
+
+    async addNoteToIncident(incident, noteID) {
+        incident.notes.push(noteID)
+        return incident.save()
+    }
+
 
     /* Get relatives by matching the last name of student and Relative */
     getRelative(lastname) {
@@ -159,14 +245,17 @@ class behaviorRepository {
         await Staff.remove({})
         await Relative.remove({})
         await AcademicYear.remove({})
-        await Attachment.remove({})
-        await Incident.remove({})
         await IncidentType.remove({})
         await Location.remove({})
-        await Note.remove({})
-        await Penalty.remove({})
         await PenaltyType.remove({})
         await Status.remove({})
+
+/*
+        await Incident.remove({})
+        await Attachment.remove({})
+        await Penalty.remove({})
+        await Note.remove({})
+*/
     }
 
     async initDb() {
@@ -204,7 +293,7 @@ class behaviorRepository {
         }
 
 
-        //Adding Students
+        //Adding Students with their relatives
         let studentData = await fs.readFile('data/student.json')
         let students = JSON.parse(studentData)
         console.log('Retrieved students from json file and added to MongoDB Student Collection: ' + students.length)
@@ -249,6 +338,16 @@ class behaviorRepository {
         for (const l of locations) {
             await this.addLocation(l)
         }
+
+        //Adding PenaltyType
+        const penaltyTypeData = await fs.readFile('data/penaltyTypes.json')
+        const penaltyTypes = JSON.parse(penaltyTypeData)
+        console.log('Retrieved Staff from json file and added to MongoDB Penalty Types Collection: ' + penaltyTypes.length)
+        for (const p of penaltyTypes) {
+            await this.addPenaltyType(p);
+        }
+
+
     }
 
 

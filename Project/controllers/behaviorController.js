@@ -18,10 +18,21 @@ class behaviorController {
     }
 
     async addIncident(req, res) {
-        const incident = req.body
+        const incident = req.body;
         console.log("app.post(/incidentEditor).req.body", incident)
+
         let newIncident = await this.behaviorRespository.addIncident(incident);
-        console.log("-------------")
+        let newAttachment = await this.behaviorRespository.addAttachment(incident);
+        //let newStudent= await this.behaviorRespository.addStudent(incident);
+        let newPenalty= await this.behaviorRespository.addPenalty(incident);
+        let newNote= await this.behaviorRespository.addNote(incident);
+
+        await this.behaviorRespository.addAttachmentToIncident(newIncident, newAttachment._id);
+        //await this.behaviorRespository.addStudentToIncident(newIncident, newStudent._id);
+        await this.behaviorRespository.addPenaltyToIncident(newIncident,newPenalty._id);
+        await this.behaviorRespository.addNoteToIncident(newIncident,newNote._id)
+
+
         let printIncident = await this.behaviorRespository.getIncident();
         console.log("Incident info from DB",printIncident);
 
@@ -38,13 +49,18 @@ class behaviorController {
         let academicYears = await this.behaviorRespository.getAcademicYears();
         let incidentTypes = await this.behaviorRespository.getIncidentType();
         let locations = await this.behaviorRespository.getLocation();
-        let statuses=await this.behaviorRespository.getStatus()
+        let statuses=await this.behaviorRespository.getStatus();
+        let staffs= await this.behaviorRespository.getStaffs();
+        let penaltyTypes=  await this.behaviorRespository.getPenaltyType();
         res.render('incidentEditor', {
             students: students,
             academicYears: academicYears,
             incidentType: incidentTypes,
             locations: locations,
-            statuses:statuses
+            status:statuses,
+            staffs:staffs,
+            studentsReporter: students,
+            penaltyTypes:penaltyTypes
         })
     }
 
@@ -90,13 +106,6 @@ class behaviorController {
         res.json(status)
     }
 
-    async getUsers(req, res) {
-        let users = await this.behaviorRespository.getUsers();
-        let c = await this.behaviorRespository.getUsersCount();
-        console.log("Users count:" + c);
-        res.json(users)
-    }
-
     async getStudent(req, res) {
         console.log("I received Student ID: "+req.params.studentID)
         this.behaviorRespository.getStudentByID(req.params.studentID)
@@ -111,6 +120,26 @@ class behaviorController {
             })
             .catch(err => res.status(500).send(err))
     }
+
+<<<<<<< HEAD
+=======
+/*
+>>>>>>> 8c8ca151fa6f133c3435382b59209c19c2f39d30
+    async getStudent(req, res) {
+        console.log("I received Student ID: "+req.params.studentID)
+        this.behaviorRespository.getStudentByID(req.params.studentID)
+            .then(s => {
+                if (s) {
+                    console.log(s);
+                    res.json(s)
+                }
+                else {
+                    res.status(404).send('no Student is found')
+                }
+            })
+            .catch(err => res.status(500).send(err))
+    }
+*/
 
     async getByGradeLevel(req, res){
 
