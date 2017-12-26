@@ -165,12 +165,12 @@ class behaviorRepository {
         return Attachment.findOne({_id : id})
     }
 
-    async addAttachmentToIncident(incident, attachment) {
+    async addAttachmentToIncident(incident, attachmentID) {
         //const i= await this.getIncidentByID(iId);
         //const a= await this.getAttachmentByID(aID);
         console.log("inc :",incident);
-        console.log("att :",attachment);
-        incident.attachments.push(attachment)
+        console.log("att :",attachmentID);
+        incident.attachments.push(attachmentID)
         return incident.save()
     }
 
@@ -233,7 +233,7 @@ class behaviorRepository {
         }
 
 
-        //Adding Students
+        //Adding Students with their relatives
         let studentData = await fs.readFile('data/student.json')
         let students = JSON.parse(studentData)
         console.log('Retrieved students from json file and added to MongoDB Student Collection: ' + students.length)
@@ -278,6 +278,9 @@ class behaviorRepository {
         for (const l of locations) {
             await this.addLocation(l)
         }
+
+
+
 
 
     }

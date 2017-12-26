@@ -22,16 +22,18 @@ class behaviorController {
 
         let newIncident = await this.behaviorRespository.addIncident(incident);
         let newAttachment = await this.behaviorRespository.addAttachment(incident);
+        let newStudent= await this.behaviorRespository.addStudent(incident);
         console.log("-------------");
         console.log(newAttachment);
         console.log("-------------");
+        console.log( newStudent);
         console.log("-------------");
         console.log("newIncident._id-------------",newIncident._id);
 
-        // await this.behaviorRespository.addAttachmentToIncident(newIncident, newAttachment);
+        await this.behaviorRespository.addAttachmentToIncident(newIncident, newAttachment._id);
 
-        //let printIncident = await this.behaviorRespository.getIncident();
-        //console.log("Incident info from DB",printIncident);
+        let printIncident = await this.behaviorRespository.getIncident();
+        console.log("Incident info from DB",printIncident);
 
     }
     async getIncidentsData(req, res) {
@@ -99,12 +101,6 @@ class behaviorController {
         res.json(status)
     }
 
-    async getUsers(req, res) {
-        let users = await this.behaviorRespository.getUsers();
-        let c = await this.behaviorRespository.getUsersCount();
-        console.log("Users count:" + c);
-        res.json(users)
-    }
     async getStudent(req, res) {
         console.log("I received Student ID: "+req.params.studentID)
         this.behaviorRespository.getStudentByID(req.params.studentID)
@@ -119,6 +115,23 @@ class behaviorController {
             })
             .catch(err => res.status(500).send(err))
     }
+
+/*
+    async getStudent(req, res) {
+        console.log("I received Student ID: "+req.params.studentID)
+        this.behaviorRespository.getStudentByID(req.params.studentID)
+            .then(s => {
+                if (s) {
+                    console.log(s);
+                    res.json(s)
+                }
+                else {
+                    res.status(404).send('no Student is found')
+                }
+            })
+            .catch(err => res.status(500).send(err))
+    }
+*/
 
 }
 

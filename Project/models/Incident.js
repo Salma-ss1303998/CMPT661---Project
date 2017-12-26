@@ -14,7 +14,7 @@ let incidentSchema = new mongoose.Schema({
     penalties: [{ type : mongoose.Schema.ObjectId, ref : 'Penalty' }],
     attachments: [{ type : mongoose.Schema.ObjectId, ref : 'Attachment' }],
     academicYear: { type : mongoose.Schema.ObjectId, ref : 'AcademicYear' }
-});
+}, { usePushEach: true });
 
 
 module.exports = mongoose.model('Incident', incidentSchema);

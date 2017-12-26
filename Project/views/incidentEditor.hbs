@@ -50,7 +50,7 @@
 
             <div id="studentLookup" style="visibility:hidden" class="form-group row">
                 <label class="col-sm-2 control-label" for="reporterName"> Reporter Name: </label>
-                <select class="col-sm-10" class="form-control" name="reporterName">
+                <select class="col-sm-10" class="form-control" name="studentReporter">
                     {{#students}}
                         <option value="{{_id}}">{{studentId}} {{firstName}} {{lastName}}</option>
                     {{/students}}
@@ -59,7 +59,7 @@
 
             <div id="staffLookup" style="visibility:hidden" class="form-group row">
                 <label class="col-sm-2 control-label" for="reporterName"> Reporter Name: </label>
-                <select class="col-sm-10" class="form-control" name="reporterName">
+                <select class="col-sm-10" class="form-control" name="staffReporter">
                     {{#staffs}}
                         <option value="{{_id}}"> {{firstName}} {{lastName}}: {{occupation}}</option>
                     {{/staffs}}
