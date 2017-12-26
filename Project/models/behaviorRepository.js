@@ -24,7 +24,11 @@ class behaviorRepository {
             user = await Relative.findOne({email: username}).where('password')
                 .equals(password).lean(); // lean to allow adding user.role
             if (user)
+<<<<<<< HEAD
+                user.role="Relative"
+=======
                 user.role = "Relative"
+>>>>>>> 8c8ca151fa6f133c3435382b59209c19c2f39d30
         }
         if (user != "undefined" && user != null && user != "") {
             //Do not return the user password, remove it
@@ -356,6 +360,31 @@ class behaviorRepository {
 
 
     }
+
+
+    async refine(from, to){
+        //returns all incidents in that range
+    }
+
+    async getCountByGradeLevel(grade,from,to){
+        // refine(from,to);
+        // filter by grade
+        // returns {grade, count}
+    }
+
+    async getCountByLocation(location,from,to){
+        // refine(from,to);
+        // filter by location
+        // returns {location, count}
+    }
+
+    async getCountByType(type,from,to){
+        // refine(from,to);
+        // filter by type
+        // returns {type, count}
+    }
+
+
 }
 
 module.exports = new behaviorRepository();
