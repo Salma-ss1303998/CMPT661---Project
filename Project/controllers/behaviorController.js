@@ -23,14 +23,12 @@ class behaviorController {
         let newIncident = await this.behaviorRespository.addIncident(incident);
         let newAttachment = await this.behaviorRespository.addAttachment(incident);
         let newStudent= await this.behaviorRespository.addStudent(incident);
-        console.log("-------------");
-        console.log(newAttachment);
-        console.log("-------------");
-        console.log( newStudent);
-        console.log("-------------");
-        console.log("newIncident._id-------------",newIncident._id);
+
+        console.log(newStudent,newStudent._id)
 
         await this.behaviorRespository.addAttachmentToIncident(newIncident, newAttachment._id);
+        await this.behaviorRespository.addStudentToIncident(newIncident, newStudent._id);
+
 
         let printIncident = await this.behaviorRespository.getIncident();
         console.log("Incident info from DB",printIncident);

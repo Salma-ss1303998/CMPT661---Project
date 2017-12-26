@@ -18,6 +18,10 @@ function addNote(){
 
 }
 
+function addStudent(){
+
+}
+
 function lookup() {
     if (document.getElementById('studentChecked').checked) {
         document.getElementById('studentLookup').style.visibility = 'visible';
