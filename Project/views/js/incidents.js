@@ -11,10 +11,10 @@ const IncidentsTemplate = `
         
        {{#incident}}
         <tr>
+          <td>{{incidentDescription}}</td>
           <td>{{type}}</td>
-          <td>{{type}}</td>
-          <td>{{type}}</td>
-          <td>{{type}}</td>
+          <td>{{date}}</td>
+          <td>{{location}}</td>
         </tr>
       {{/incident}}
             
