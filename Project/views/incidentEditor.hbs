@@ -41,19 +41,28 @@
             <div class="form-group required ">
                 <label class="control-label">Reported By:</label>
                 <label class="form-check">
-                    <input type="radio" name="reporterRole"
+                    <input id="studentChecked" onclick="lookup()" type="radio" name="reporterRole"
                            required="required">Student</label>
                 <label class="form-check">
-                    <input type="radio" name="reporterRole" checked required="required">Staff
+                    <input id="staffChecked" onclick="lookup()" type="radio" name="reporterRole" checked required="required">Staff
                 </label><br/>
             </div>
 
-            <div class="form-group row">
+            <div id="studentLookup" style="visibility:hidden" class="form-group row">
                 <label class="col-sm-2 control-label" for="reporterName"> Reporter Name: </label>
                 <select class="col-sm-10" class="form-control" name="reporterName">
                     {{#students}}
                         <option value="{{_id}}">{{studentId}} {{firstName}} {{lastName}}</option>
                     {{/students}}
+                </select>
+            </div>
+
+            <div id="staffLookup" style="visibility:hidden" class="form-group row">
+                <label class="col-sm-2 control-label" for="reporterName"> Reporter Name: </label>
+                <select class="col-sm-10" class="form-control" name="reporterName">
+                    {{#staffs}}
+                        <option value="{{_id}}"> {{firstName}} {{lastName}}: {{occupation}}</option>
+                    {{/staffs}}
                 </select>
             </div>
 

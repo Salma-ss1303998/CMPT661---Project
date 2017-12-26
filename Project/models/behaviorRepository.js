@@ -165,13 +165,13 @@ class behaviorRepository {
         return Attachment.findOne({_id : id})
     }
 
-    async addAttachmentToIncident(iId, aID) {
-        const i= await this.getIncidentByID(iId);
-        const a= await this.getAttachmentByID(aID);
-        console.log("inc i",i);
-        console.log("att i",a);
-        i.attachments.push(aID)
-        return i.save()
+    async addAttachmentToIncident(incident, attachment) {
+        //const i= await this.getIncidentByID(iId);
+        //const a= await this.getAttachmentByID(aID);
+        console.log("inc :",incident);
+        console.log("att :",attachment);
+        incident.attachments.push(attachment)
+        return incident.save()
     }
 
 

@@ -27,12 +27,10 @@ class behaviorController {
         console.log("-------------");
         console.log("-------------");
         console.log("newIncident._id-------------",newIncident._id);
-       // let y=  await this.behaviorRespository.addAttachmentToIncident(newIncident._id, newAttachment._id);
 
-        let printIncident = await this.behaviorRespository.getIncident();
-        console.log("Incident info from DB",printIncident);
+        // await this.behaviorRespository.addAttachmentToIncident(newIncident, newAttachment);
 
-      //  let printIncident = await this.behaviorRespository.getIncident();
+        //let printIncident = await this.behaviorRespository.getIncident();
         //console.log("Incident info from DB",printIncident);
 
     }
@@ -47,13 +45,15 @@ class behaviorController {
         let academicYears = await this.behaviorRespository.getAcademicYears();
         let incidentTypes = await this.behaviorRespository.getIncidentType();
         let locations = await this.behaviorRespository.getLocation();
-        let statuses=await this.behaviorRespository.getStatus()
+        let statuses=await this.behaviorRespository.getStatus();
+        let staffs= await this.behaviorRespository.getStaffs();
         res.render('incidentEditor', {
             students: students,
             academicYears: academicYears,
             incidentType: incidentTypes,
             locations: locations,
             statuses:statuses,
+            staffs:staffs
         })
     }
 
