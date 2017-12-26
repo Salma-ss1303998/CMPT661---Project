@@ -121,8 +121,7 @@ class behaviorController {
             .catch(err => res.status(500).send(err))
     }
 
-<<<<<<< HEAD
-=======
+
 /*
 >>>>>>> 8c8ca151fa6f133c3435382b59209c19c2f39d30
     async getStudent(req, res) {
