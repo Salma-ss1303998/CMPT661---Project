@@ -2,7 +2,7 @@ const IncidentsTemplate = `
     <h4>Selected Student:</h4>
     <table class="table table-striped">
         <tbody>
-     {{#each incidents}}
+       {{#each incident}}
         <tr>
             <td>Description</td>
             <td>Type</td>
