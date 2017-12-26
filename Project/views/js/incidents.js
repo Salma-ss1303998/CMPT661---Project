@@ -1,22 +1,22 @@
 const IncidentsTemplate = `
-    <h4>Selected Student:</h4>
+
     <table class="table table-striped">
         <tbody>
-       {{#each incident}}
-        <tr>
+         <tr>
             <td>Description</td>
             <td>Type</td>
             <td>Date</td>
             <td>Location</td>
         </tr>
-         
+        
+       {{#incident}}
         <tr>
-            <td>{{description}</td>
-            <td>{{type}}</td>
-            <td>{{date}}</td>
-            <td>{{location}}</td>
+          <td>{{type}}</td>
+          <td>{{type}}</td>
+          <td>{{type}}</td>
+          <td>{{type}}</td>
         </tr>
-      {{/each}}
+      {{/incident}}
             
         </tbody>
     </table>
