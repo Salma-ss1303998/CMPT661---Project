@@ -22,13 +22,14 @@ class behaviorController {
 
         let newIncident = await this.behaviorRespository.addIncident(incident);
         let newAttachment = await this.behaviorRespository.addAttachment(incident);
-        let newStudent= await this.behaviorRespository.addStudent(incident);
-
-        console.log(newStudent,newStudent._id)
+        //let newStudent= await this.behaviorRespository.addStudent(incident);
+        let newPenalty= await this.behaviorRespository.addPenalty(incident);
+        let newNote= await this.behaviorRespository.addNote(incident);
 
         await this.behaviorRespository.addAttachmentToIncident(newIncident, newAttachment._id);
-        await this.behaviorRespository.addStudentToIncident(newIncident, newStudent._id);
-
+        //await this.behaviorRespository.addStudentToIncident(newIncident, newStudent._id);
+        await this.behaviorRespository.addPenaltyToIncident(newIncident,newPenalty._id);
+        await this.behaviorRespository.addNoteToIncident(newIncident,newNote._id)
 
         let printIncident = await this.behaviorRespository.getIncident();
         console.log("Incident info from DB",printIncident);
@@ -47,13 +48,16 @@ class behaviorController {
         let locations = await this.behaviorRespository.getLocation();
         let statuses=await this.behaviorRespository.getStatus();
         let staffs= await this.behaviorRespository.getStaffs();
+        let penaltyTypes=  await this.behaviorRespository.getPenaltyType();
         res.render('incidentEditor', {
             students: students,
             academicYears: academicYears,
             incidentType: incidentTypes,
             locations: locations,
-            statuses:statuses,
-            staffs:staffs
+            status:statuses,
+            staffs:staffs,
+            studentsReporter: students,
+            penaltyTypes:penaltyTypes
         })
     }
 

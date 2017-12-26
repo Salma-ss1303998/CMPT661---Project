@@ -3,7 +3,7 @@ let mongoose = require('mongoose');
 let incidentSchema = new mongoose.Schema({
 
     students: [{ type : mongoose.Schema.ObjectId, ref : 'Student' }],
-    description:String,
+    incidentDescription:String,
     type: { type : mongoose.Schema.ObjectId, ref : 'IncidentType' },
     date: { type:Date,default: Date.now },
     location: { type : mongoose.Schema.ObjectId, ref : 'Location' },

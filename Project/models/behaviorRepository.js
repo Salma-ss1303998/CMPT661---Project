@@ -154,24 +154,53 @@ class behaviorRepository {
     async addAttachment(newAttachment) {
         return await  Attachment.create(newAttachment)
     }
+    async getPenalty () {
+        return await  Penalty.find({})
+    }
+    async getPenaltyCount() {
+        return await Penalty.count({})
+    }
+    async addPenalty(newPenalty) {
+        return await  Penalty.create(newPenalty)}
+    async getNote  () {
+        return await  Note .find({})
+    }
+    async getNoteCount() {
+        return await Note .count({})
+    }
+    async addNote (newNote ) {
+        return await  Note .create(newNote )}
+
+
     async getStudentByID(id) {
         return Student.findOne({studentId: id})
     }
-
+/*
     async getIncidentByID(id) {
         return Incident.findOne({_id : id})
     }
     async getAttachmentByID(id) {
         return Attachment.findOne({_id : id})
     }
+    */
+
 
     async addAttachmentToIncident(incident, attachmentID) {
         incident.attachments.push(attachmentID)
         return incident.save()
     }
-
+/*
     async addStudentToIncident(incident, studentID) {
         incident.students.push(studentID)
+        return incident.save()
+    }
+*/
+    async addPenaltyToIncident(incident, penaltyID) {
+        incident.penalties.push(penaltyID)
+        return incident.save()
+    }
+    async addNoteToIncident(incident, noteID) {
+        incident.notes.push(noteID)
         return incident.save()
     }
 
@@ -197,6 +226,11 @@ class behaviorRepository {
         await Location.remove({})
         await PenaltyType.remove({})
         await Status.remove({})
+
+        await Incident.remove({})
+        await Attachment.remove({})
+        await Penalty.remove({})
+        await Note.remove({})
     }
 
     async initDb() {
@@ -280,6 +314,13 @@ class behaviorRepository {
             await this.addLocation(l)
         }
 
+        //Adding PenaltyType
+        const penaltyTypeData = await fs.readFile('data/penaltyTypes.json')
+        const penaltyTypes = JSON.parse(penaltyTypeData)
+        console.log('Retrieved Staff from json file and added to MongoDB Penalty Types Collection: ' + penaltyTypes .length)
+        for (const p of penaltyTypes ) {
+            await this.addPenaltyType(p);
+        }
 
 
 
