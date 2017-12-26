@@ -46,7 +46,8 @@
             </label><br/>
         </div>
 
-        <div id="studentLookup" style="visibility:hidden" class="form-group row">
+       {{#if stuReporter}}
+        <div id="studentLookup"  class="form-group row">
             <label class="col-sm-2 control-label" > Reporter Name: </label>
             <select name="studentReporter" class="col-sm-10" class="form-control">
                 {{#studentsReporter}}
@@ -54,8 +55,10 @@
                 {{/studentsReporter}}
             </select>
         </div>
+       {{/if}}
 
-        <div id="staffLookup" style="visibility:hidden" class="form-group row">
+       {{#if staReporter}}
+        <div id="staffLookup"  class="form-group row">
             <label class="col-sm-2 control-label"> Reporter Name: </label>
             <select name="staffReporter" class="col-sm-10" class="form-control">
                 {{#staffs}}
@@ -63,6 +66,7 @@
                 {{/staffs}}
             </select>
         </div>
+       {{/if}}
 
         <div class="form-group row required">
             <label> State: </label>
