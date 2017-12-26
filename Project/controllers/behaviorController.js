@@ -31,6 +31,7 @@ class behaviorController {
         await this.behaviorRespository.addPenaltyToIncident(newIncident,newPenalty._id);
         await this.behaviorRespository.addNoteToIncident(newIncident,newNote._id)
 
+
         let printIncident = await this.behaviorRespository.getIncident();
         console.log("Incident info from DB",printIncident);
 
