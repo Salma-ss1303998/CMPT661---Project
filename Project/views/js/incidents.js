@@ -1,20 +1,23 @@
 const IncidentsTemplate = `
-    <h4>Selected Student:</h4>
+
     <table class="table table-striped">
         <tbody>
-        <tr>
+         <tr>
             <td>Description</td>
             <td>Type</td>
             <td>Date</td>
             <td>Location</td>
         </tr>
-         
+        
+       {{#incident}}
         <tr>
-            <td>{{description}</td>
-            <td>{{type}}</td>
-            <td>{{date}}</td>
-            <td>{{location}}</td>
+          <td>{{incidentDescription}}</td>
+          <td>{{type}}</td>
+          <td>{{date}}</td>
+          <td>{{location}}</td>
         </tr>
+      {{/incident}}
+            
         </tbody>
     </table>
 `;
@@ -23,12 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector('#studentsList').addEventListener("change", onChange)
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("js-DOM fully loaded and parsed");
-    document.querySelector('#').addEventListener("click",onClick)
-});
-async function getStudent(studentID) {
-    const url = `/api/students/${studentID}`
+async function getStudentIncidents(studentID) {
+    const url = `/api/incidents/${studentID}`
     const response = await fetch(url)
     console.log("response " + response)
     return await response.json()
@@ -41,13 +40,11 @@ async function onChange(e) {
         document.querySelector('#incidentsDetails').innerHTML = '';
         return
     }
-    console.log("onStudentChange.selectedStudentId:", selectedStudentId)
 
     try {
-        const student = await getIncidents(selectedStudentId)
-        console.log(student);
+        const incidents = await getStudentIncidents(selectedStudentId)
         const htmlTemplate = Handlebars.compile(IncidentsTemplate)
-        const htmlContent = htmlTemplate(student)
+        const htmlContent = htmlTemplate(incidents)
 
         document.querySelector('#incidentsDetails').innerHTML = htmlContent
     }
@@ -55,7 +52,5 @@ async function onChange(e) {
         console.log(err)
     }
 }
-async function onClick(e) {
 
-}
 
