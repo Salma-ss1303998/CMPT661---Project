@@ -1,9 +1,9 @@
 let mongoose = require('mongoose');
 
 let noteSchema = new mongoose.Schema({
-    title: String,
-    addedOn: {type:Date,default: Date.now},
-    body: String
+    noteTitle: String,
+    noteAddedOn: {type:Date,default: Date.now},
+    noteBody: String
 });
 
 module.exports = mongoose.model('Note', noteSchema);

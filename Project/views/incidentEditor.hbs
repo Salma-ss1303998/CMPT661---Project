@@ -1,102 +1,132 @@
-
-
 <br>
-    <form method="post">
-        <fieldset class=form-group">
+<form method="post">
+    <fieldset class=form-group">
 
-            <div class="form-group row required">
-                <label class="col-sm-2 control-label" for="studentLookup"> Student: </label>
-                <select class="col-sm-10" class="form-control" name="studentInvolved"
-                        required="required">
-                    {{#students}}
-                        <option value="{{_id}}"> {{studentId}} - {{firstName}} {{lastName}}</option>
-                    {{/students}}
-                </select>
-            </div>
+        <div class="form-group row required">
+            <label> Student: </label>
+            <select name="students" required="required">
+                {{#students}}
+                    <option value="{{_id}}"> {{studentId}} - {{firstName}} {{lastName}}</option>
+                {{/students}}
+            </select>
+            <button onclick="addStudent()">Add Student</button>
+        </div>
 
-            <div class="form-group row required">
-                <label class="col-sm-2 control-label" for="typeOfIncident"> Type of Incident: </label>
-                <select class="col-sm-10" class="form-control" name="typeOfIncident"
-                        required="required">
-                    {{#incidentType}}
-                        <option value="{{_id}}"> {{type}}</option>
-                    {{/incidentType}}
-                </select>
-            </div>
+        <div class="form-group row required">
+            <label> Type of Incident: </label>
+            <select name="type"required="required">
+                {{#incidentType}}
+                    <option value="{{_id}}"> {{type}}</option>
+                {{/incidentType}}
+            </select>
+        </div>
 
-            <div class="form-group row required">
-                <label class="col-sm-2 control-label" for="date">Date:</label>
-                <input class="col-sm-10 " class="form-control"name="date" type="datetime-local" required="required">
-            </div>
+        <div class="form-group row required">
+            <label >Date:</label>
+            <input  name="date" type="datetime-local" required="required">
+        </div>
 
-            <div class="form-group row required">
-                <label class="col-sm-2 control-label" for="location"> Location: </label>
-                <select class="col-sm-10" class="form-control" name="location" required="required">
-                    {{#locations}}
-                        <option value="{{_id}}"> {{location}}</option>
-                    {{/locations}}
-                </select>
-            </div>
+        <div class="form-group row required">
+            <label class="col-sm-2 control-label" > Location: </label>
+            <select name="location" class="col-sm-10" class="form-control" required="required">
+                {{#locations}}
+                    <option value="{{_id}}"> {{location}}</option>
+                {{/locations}}
+            </select>
+        </div>
 
-            <div class="form-group required ">
-                <label class="control-label">Reported By:</label>
-                <label class="form-check">
-                    <input type="radio" name="reporterRole"
-                           required="required">Student</label>
-                <label class="form-check">
-                    <input type="radio" name="reporterRole" checked required="required">Staff
-                </label><br/>
-            </div>
+        <div class="form-group required ">
+            <label class="control-label">Reported By:</label>
+            <label class="form-check">
+                <input id="studentChecked" onclick="lookup()" type="radio" name="reporter"
+                       required="required">Student</label>
+            <label class="form-check">
+                <input id="staffChecked" onclick="lookup()" type="radio" name="reporter" checked
+                       required="required">Staff
+            </label><br/>
+        </div>
 
-            <div class="form-group row">
-                <label class="col-sm-2 control-label" for="lookup"> Reporter Name: </label>
-                <select class="col-sm-10" class="form-control" name="reporterName">
-                    {{#students}}
-                        <option value="{{_id}}">{{studentId}} {{firstName}} {{lastName}}</option>
-                    {{/students}}
-                </select>
-            </div>
+       {{#if stuReporter}}
+        <div id="studentLookup"  class="form-group row">
+            <label class="col-sm-2 control-label" > Reporter Name: </label>
+            <select name="studentReporter" class="col-sm-10" class="form-control">
+                {{#studentsReporter}}
+                    <option value="{{_id}}">{{studentId}} {{firstName}} {{lastName}}</option>
+                {{/studentsReporter}}
+            </select>
+        </div>
+       {{/if}}
 
-            <div class="form-group row required">
-                <label class="col-sm-2 control-label" for="state"> State: </label>
-                <select class="col-sm-10" class="form-control" name="status" required="required">
-                    {{#statuses}}
-                        <option value="{{_id}}" > {{status}}</option>
-                    {{/statuses}}
-                </select>
-            </div>
+       {{#if staReporter}}
+        <div id="staffLookup"  class="form-group row">
+            <label class="col-sm-2 control-label"> Reporter Name: </label>
+            <select name="staffReporter" class="col-sm-10" class="form-control">
+                {{#staffs}}
+                    <option value="{{_id}}"> {{firstName}} {{lastName}}: {{occupation}}</option>
+                {{/staffs}}
+            </select>
+        </div>
+       {{/if}}
+
+        <div class="form-group row required">
+            <label> State: </label>
+            <select name="status" class="form-control" required="required">
+                {{#status}}
+                    <option value="{{_id}}"> {{status}}</option>
+                {{/status}}
+            </select>
+        </div>
 
 
-            <div class="form-group required">
-                <label for="description" class='col-sm-2 control-label'>Description:</label>
-                <textarea class="col-sm-10" name="description" rows="5" cols="30"
-                          required="required"></textarea>
-            </div>
+        <div class="form-group required">
+            <label  class='col-sm-2 control-label'>Description:</label>
+            <textarea class="col-sm-10" name="incidentDescription" rows="5" cols="30"
+                      required="required"></textarea>
+        </div>
 
-            <div class="form-group">
-                <label value="{{_id}}" name="note">Notes:</label>
-                <button onclick="addNote()">Add Note</button>
-            </div>
+        <div class="form-group" name="attachments" value="{{_id}}">
+            <label > Attachment title: </label>
+            <input class="input-group" name="attachmentTitle" type=text>
+            <label >Date:</label>
+            <input class="input-group" name="attachmentAddedOn"  type="datetime-local">
+            <input class="input-group" class="form-control" name="attachmentUrl" type="file">
+            <br>
+            <button onclick="addAttachment()">Add Attachment</button>
+        </div>
 
-            <div class="form-group">
-                <label value="{{_id}}" name="penalty">Penalty :</label>
-                <button onclick="addPenalty()">Add Penalty</button>
-            </div>
+        <div class="form-group" name="penalties" value="{{_id}}">
+            <label > Penalty type: </label>
+            <select name="penaltyType" class="form-control" required="required">
+                {{#penaltyTypes}}
+                    <option value="{{_id}}"> {{type}}</option>
+                {{/penaltyTypes}}
+            </select>
+            <label >Date:</label>
+            <input class="input-group" name="penaltyAddedOn" type="datetime-local">
+            <label >Description:</label>
+            <textarea name="penaltyDescription" rows="5" cols="30"></textarea>
+            <br>
+            <button onclick="addPenalty()">Add Penalty</button>
+        </div>
 
-            <div class="form-group">
-                <label value="{{_id}}" for="attachments">Attachments:</label>
-                <input type=text  onclick="addAttachment()">
-                <input name="attachments" value="{{_id}}" type="file"></input>
-                <button>Add Attachment</button>
-            </div>
+        <div class="form-group" name="notes" value="{{_id}}">
+            <label > Note title: </label>
+            <input class="input-group" name="noteTitle" type=text>
+            <label >Date:</label>
+            <input class="input-group" name="noteAddedOn" type="datetime-local">
+            <label >Note Body:</label>
+            <textarea name="noteBody" rows="5" cols="30"></textarea>
+            <br>
+            <button onclick="addNote()()">Add Note()</button>
+        </div>
 
-            <div>
-                <button type="submit" class="btn btn-default">Submit</button>
-                <button type="reset" class="btn btn-default">Rest</button>
-            </div>
+        <div>
+            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="reset" class="btn btn-default">Rest</button>
+        </div>
 
-        </fieldset>
-    </form>
+    </fieldset>
+</form>
 
 </div>
 

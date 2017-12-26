@@ -9,8 +9,7 @@ let studentSchema = new mongoose.Schema({
     email: String,
     grade: String,
     status: String,
-    relatives: [{ type : mongoose.Schema.ObjectId, ref : 'relative' }],
-    incidents: [{ type : mongoose.Schema.ObjectId, ref : 'Incident' }]
-});
+    relatives: [{ type : mongoose.Schema.ObjectId, ref : 'relative' }]
+}, { usePushEach: true });
 
 module.exports = mongoose.model('Student', studentSchema);
