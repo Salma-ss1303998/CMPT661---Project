@@ -24,7 +24,7 @@ function addStudent(){
 
 function lookup() {
     if (document.getElementById('studentChecked').checked) {
-        document.getElementById('stuReporter').se
+        document.getElementById('stuReporter')
     }
 
     if (document.getElementById('staffChecked').checked) {
