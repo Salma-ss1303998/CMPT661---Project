@@ -39,7 +39,8 @@ class behaviorController {
     async getIncidentsData(req, res) {
         let students = await this.behaviorRespository.getStudents();
         let academicYears = await this.behaviorRespository.getAcademicYears();
-        res.render('incidents', {students: students, academicYears: academicYears})
+        let incidents = await this.behaviorRespository.getIncident();
+        res.render('incidents', {students: students, academicYears: academicYears, incidents:incidents})
     }
 
     async editIncident(req, res) {
@@ -119,10 +120,10 @@ class behaviorController {
             .catch(err => res.status(500).send(err))
     }
 
-/*
-    async getStudent(req, res) {
-        console.log("I received Student ID: "+req.params.studentID)
-        this.behaviorRespository.getStudentByID(req.params.studentID)
+
+    async getStudentIncidents(req, res) {
+        console.log("I received Student ID: "+req.params.studentID);
+        this.behaviorRespository.getStudentIncidents(req.params.studentID)
             .then(s => {
                 if (s) {
                     console.log(s);
@@ -134,7 +135,7 @@ class behaviorController {
             })
             .catch(err => res.status(500).send(err))
     }
-*/
+
 
 }
 

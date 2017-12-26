@@ -192,6 +192,16 @@ class behaviorRepository {
         return Student.findOne({studentId: id})
     }
 
+    async getStudentIncidentByID(id) {
+        return Incident.find({students: id});
+    }
+
+    async getStudentIncidents(studentId) {
+        const student = await this.getStudentByID(studentId);
+        return await this.getStudentIncidentByID(student._id);
+    }
+
+
     /*
         async getIncidentByID(id) {
             return Incident.findOne({_id : id})
@@ -237,6 +247,8 @@ class behaviorRepository {
 
     //in case needed during testing
     async emptyDB() {
+
+        /*
         await Student.remove({})
         await Staff.remove({})
         await Relative.remove({})
@@ -245,13 +257,12 @@ class behaviorRepository {
         await Location.remove({})
         await PenaltyType.remove({})
         await Status.remove({})
-
-/*
         await Incident.remove({})
         await Attachment.remove({})
         await Penalty.remove({})
         await Note.remove({})
-*/
+        */
+
     }
 
     async initDb() {
@@ -261,9 +272,9 @@ class behaviorRepository {
             //If the db is empty then load data from json files
             const studentCount = await this.getStudentsCount()
             console.log(`Students Count: ${studentCount}. Comment out emptyDB() to stop re-initializing the database`)
-            //if (studentCount == 0) {
+           if (studentCount == 0) {
             await this.loadDataFromJsonFiles()
-            //}
+            }
         }
         catch (err) {
             console.log(err)

@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("js-DOM fully loaded and parsed");
     document.querySelector('#').addEventListener("click",onClick)
 });
-async function getStudent(studentID) {
+async function getIncidents(studentID) {
     const url = `/api/students/${studentID}`
     const response = await fetch(url)
     console.log("response " + response)
