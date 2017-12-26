@@ -17,12 +17,23 @@ class behaviorController {
             })
     }
     async addIncident(req, res) {
-        const incident = req.body
+        const incident = req.body;
         console.log("app.post(/incidentEditor).req.body", incident)
+
         let newIncident = await this.behaviorRespository.addIncident(incident);
-        console.log("-------------")
+        let newAttachment = await this.behaviorRespository.addAttachment(incident);
+        console.log("-------------");
+        console.log(newAttachment);
+        console.log("-------------");
+        console.log("-------------");
+        console.log("newIncident._id-------------",newIncident._id);
+       // let y=  await this.behaviorRespository.addAttachmentToIncident(newIncident._id, newAttachment._id);
+
         let printIncident = await this.behaviorRespository.getIncident();
         console.log("Incident info from DB",printIncident);
+
+      //  let printIncident = await this.behaviorRespository.getIncident();
+        //console.log("Incident info from DB",printIncident);
 
     }
     async getIncidentsData(req, res) {

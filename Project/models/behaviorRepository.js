@@ -126,18 +126,6 @@ class behaviorRepository {
     async getLocationCount() {
         return await Location.count({})
     }
-
-    async addLocation(newLocation) {
-        return await Location.create(newLocation)
-    }
-
-    async getLocation() {
-        return await Location.find({})
-    }
-
-    async getLocationCount() {
-        return await Location.count({})
-    }
     async getPenaltyType () {
         return await PenaltyType.find({})
     }
@@ -157,10 +145,35 @@ class behaviorRepository {
     async addIncident(newIncident) {
         return await  Incident.create(newIncident)
     }
-
+    async getAttachment () {
+        return await  Attachment.find({})
+    }
+    async getIAttachmentCount() {
+        return await Attachment.count({})
+    }
+    async addAttachment(newAttachment) {
+        return await  Attachment.create(newAttachment)
+    }
     async getStudentByID(id) {
         return Student.findOne({studentId: id})
     }
+
+    async getIncidentByID(id) {
+        return Incident.findOne({_id : id})
+    }
+    async getAttachmentByID(id) {
+        return Attachment.findOne({_id : id})
+    }
+
+    async addAttachmentToIncident(iId, aID) {
+        const i= await this.getIncidentByID(iId);
+        const a= await this.getAttachmentByID(aID);
+        console.log("inc i",i);
+        console.log("att i",a);
+        i.attachments.push(aID)
+        return i.save()
+    }
+
 
     /* Get relatives by matching the last name of student and Relative */
     getRelative(lastname) {
@@ -179,12 +192,8 @@ class behaviorRepository {
         await Staff.remove({})
         await Relative.remove({})
         await AcademicYear.remove({})
-        await Attachment.remove({})
-        await Incident.remove({})
         await IncidentType.remove({})
         await Location.remove({})
-        await Note.remove({})
-        await Penalty.remove({})
         await PenaltyType.remove({})
         await Status.remove({})
     }

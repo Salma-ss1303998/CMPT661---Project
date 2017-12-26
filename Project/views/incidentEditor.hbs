@@ -49,7 +49,7 @@
             </div>
 
             <div class="form-group row">
-                <label class="col-sm-2 control-label" for="lookup"> Reporter Name: </label>
+                <label class="col-sm-2 control-label" for="reporterName"> Reporter Name: </label>
                 <select class="col-sm-10" class="form-control" name="reporterName">
                     {{#students}}
                         <option value="{{_id}}">{{studentId}} {{firstName}} {{lastName}}</option>
@@ -75,10 +75,10 @@
 
             <div class="form-group" name="attachments" value="{{_id}}" >
                 <label  for="attachmentTitle"> Attachment title: </label>
-                <input  class="input-group" name ="attachmentTitle" type=text >
+                <input  class="input-group" name ="title" value="{{_id.title}}" type=text >
                 <label  for="attachmentAddedOn">Date:</label>
-                <input class="input-group" name="attachmentAddedOn" type="datetime-local">
-                <input class="input-group" class="form-control"name="attachmentURL" type="file">
+                <input class="input-group" name="addedOn" value="{{_id.addedOn}}"  type="datetime-local">
+                <input class="input-group" class="form-control"name="url" value="{{_id.url}}" type="file">
                 <br>
                 <button onclick="addAttachment()">Add Attachment</button>
             </div>
