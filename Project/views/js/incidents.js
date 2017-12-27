@@ -1,4 +1,5 @@
 const IncidentsTemplate = `
+
     <table class="table table-striped">
         <tbody>
          <tr>
@@ -8,18 +9,21 @@ const IncidentsTemplate = `
             <td>Location</td>
         </tr>
         
-       <!--{{#incident}}-->
+       {{#each .}}
         <tr>
           <td>{{incidentDescription}}</td>
           <td>{{type}}</td>
           <td>{{date}}</td>
           <td>{{location}}</td>
         </tr>
-      <!--{{/incident}}-->
+      {{/each}}
             
         </tbody>
     </table>
 `;
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
     console.log("js-DOM fully loaded and parsed");
     document.querySelector('#studentsList').addEventListener("change", onChange)
