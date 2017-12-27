@@ -1,4 +1,4 @@
-const studentReporterTemplate =`
+/*const studentReporterTemplate =`
       <label> Reporter Name: </label>
       <select name="studentReporter" class="col-sm-10" class="form-control">
           {{#studentsReporter}}
@@ -16,7 +16,7 @@ const staffReporterTemplate =`
           {{/staffs}}
       </select>
 `;
-
+*/
 
 document.addEventListener("DOMContentLoaded", function () {
     lookup();
@@ -42,7 +42,7 @@ function addStudent(){
 }
 
 function lookup() {
-
+/*
     if (document.getElementById('studentChecked').checked) {
         const htmlTemplate = Handlebars.compile(studentReporterTemplate)
         const htmlContent = htmlTemplate(studentsReporter)
@@ -53,6 +53,6 @@ function lookup() {
         const htmlContent = htmlTemplate(staffs)
         document.querySelector('#reporterDetails').innerHTML = htmlContent
     }
-
+*/
 }
 
