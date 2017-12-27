@@ -23,6 +23,7 @@ const IncidentsTemplate = `
 `;
 
 
+
 document.addEventListener("DOMContentLoaded", () => {
     console.log("js-DOM fully loaded and parsed");
     document.querySelector('#studentsList').addEventListener("change", onChange)
