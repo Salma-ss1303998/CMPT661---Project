@@ -43,9 +43,6 @@ app.use( (req, res, next) => {
     }
     return next();
 });
-
-
-
 /* modules routes */
 const port = 3322;
 const dbConnection = mongoose.connect('mongodb://localhost/behavior', function(err) {
@@ -79,6 +76,7 @@ app.get('/api/countByType/:from/:to',(req, res) =>  behvaiorController.getCountB
 app.get('/api/countByGrade/:from/:to',(req, res) =>  behvaiorController.getCountByGradeLevel(req, res));
 
 
+app.get('/logout', (req, res) => behvaiorController.logout(req, res))
 
 
 

@@ -1,47 +1,47 @@
-function refineDate(){
+function refineDate() {
     console.log("refining search...")
     let from = document.querySelector('#from').value;
     let to = document.querySelector('#to').value;
 
     console.log(from + " + " + to)
-    // fillGradeLevel(from,to);
-    fillLocation(from,to);
-    fillType(from,to);
+    fillGradeLevel(from, to).then(c => console.log(c)).catch(err => console.log(err));
+    fillLocation(from, to);
+    fillType(from, to);
 }
+
 //
- async function fillGradeLevel(from,to) {
+async function fillGradeLevel(from, to) {
     let table = "<tr><th>Academic Year</th><th>Count</th></tr>\n"
     //getCountByDate(from,to);  returns
     const url = `/api/countByGrade/${from}/${to}`
     const response = await fetch(url)
     let list = await response.json()
-    console.log("json is : " + list)
-    for (let i=0; list.length; i++){
-        console.log(" in loop : " + list[i].grade + " : " + list[i].count)
-         //table += `<!--<tr><td>${i}</td><td>${i}</td></tr>-->`
+    console.log("json is : " + list.length)
 
-        table += `<tr><td>${list[i].grade}</td><td>${list[i].count}</td></tr>`
-        // console.log(`${list[i].grade} + ${list[i].count}`)
-    }
+    list.forEach(item => {
+        console.log(item.grade + " : " + item.count)
+        table += `<tr><td>${item.grade}</td><td>${item.count}</td></tr>`
 
+    })
+    
     document.getElementById('gradeLevelList').innerHTML = table
 }
 
-function fillLocation(from,to) {
+function fillLocation(from, to) {
     let table = "<tr><th>Location</th><th>Count</th></tr>\n"
 
-    for (let i=0; i<= 3; i++){
-        table += `<tr><td>${i}</td><td>${i*2}</td></tr>`
+    for (let i = 0; i <= 3; i++) {
+        table += `<tr><td>${i}</td><td>${i * 2}</td></tr>`
     }
 
     document.getElementById('locationList').innerHTML = table
 }
 
-function fillType(from,to) {
+function fillType(from, to) {
     let table = "<tr><th>Incident Type</th><th>Count</th></tr>\n"
-    let types = controller.getCountByType(from,to)
-    for (let i=0; i<= 3; i++){
-        table += `<tr><td>${i}</td><td>${i*2}</td></tr>`
+    // let types = controller.getCountByType(from,to)
+    for (let i = 0; i <= 3; i++) {
+        table += `<tr><td>${i}</td><td>${i * 2}</td></tr>`
     }
 
     document.getElementById('typeList').innerHTML = table
