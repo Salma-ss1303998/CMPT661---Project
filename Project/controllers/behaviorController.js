@@ -40,8 +40,8 @@ class behaviorController {
         await this.behaviorRespository.addNoteToIncident(newIncident, newNote._id)
 
 
-        let printIncident = await this.behaviorRespository.getIncidents();
-        console.log("Incident info from DB", printIncident);
+        //let printIncident = await this.behaviorRespository.getIncidents();
+        // console.log("Incident info from DB", printIncident);
 
     }
 
@@ -128,27 +128,50 @@ class behaviorController {
             })
             .catch(err => res.status(500).send(err))
     }
+<<<<<<< HEAD
 
 
+=======
+    
+>>>>>>> c93d4ca0e2135262d26dcfb2c71f7e67b6697662
     async getStudent(req, res) {
         console.log("I received Student ID: " + req.params.studentID)
         this.behaviorRespository.getStudentByID(req.params.studentID)
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> c93d4ca0e2135262d26dcfb2c71f7e67b6697662
     async getStudentIncidents(req, res) {
         console.log("I received Student ID: " + req.params.studentID);
-        this.behaviorRespository.getStudentIncidents(req.params.studentID)
+        let answer = await this.behaviorRespository.getStudentIncidents(req.params.studentID)
             .then(s => {
                 if (s) {
-                    console.log(s);
-                    res.json(s)
+                    return s;
                 }
                 else {
                     res.status(404).send('no Student is found')
                 }
             })
             .catch(err => res.status(500).send(err))
+
+
+        let incidentObj =[];
+
+        for (let i=0;i<answer.length;i++) {
+            incidentObj.push(await this.behaviorRespository.getIncidentByID(answer[i]._id));
+
+            let locationObj = await this.behaviorRespository.getLocationByID(answer[i].location);
+            let location = locationObj.location;
+            incidentObj[i].location = location;
+
+            let IncidentTypeObj = await this.behaviorRespository.getIncidentTypeByID(answer[i].type);
+            let incidentType = IncidentTypeObj.type;
+            incidentObj[i].type = incidentType;
+        }
+
+        res.json(incidentObj)
     }
 
 
@@ -173,4 +196,5 @@ class behaviorController {
 
     }
 }
-    module.exports = new behaviorController();
+
+module.exports = new behaviorController();
