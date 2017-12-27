@@ -43,7 +43,10 @@ app.use( (req, res, next) => {
     }
     return next();
 });
+<<<<<<< HEAD
+=======
 
+>>>>>>> 30573082702bf5a31230b38a0759beb61e731106
 
 
 /* modules routes */

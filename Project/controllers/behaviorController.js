@@ -123,11 +123,20 @@ class behaviorController {
             .catch(err => res.status(500).send(err))
     }
 
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 30573082702bf5a31230b38a0759beb61e731106
     async getStudent(req, res) {
         console.log("I received Student ID: " + req.params.studentID)
         this.behaviorRespository.getStudentByID(req.params.studentID)
     }
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 30573082702bf5a31230b38a0759beb61e731106
     async getStudentIncidents(req, res) {
         console.log("I received Student ID: " + req.params.studentID);
         let answer = await this.behaviorRespository.getStudentIncidents(req.params.studentID)
