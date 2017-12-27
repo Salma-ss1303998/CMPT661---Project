@@ -39,8 +39,20 @@ class behaviorRepository {
             }
         }
         console.log(user)
+        // }
+        user.role = "Relative"
+        if (user != "undefined" && user != null && user != "") {
+            //Do not return the user password, remove it
+            delete user.password;
+            console.log("User:", user);
+            return user;
+        }
+        else {
+            // console.log("User:" + user);
+            console.log("Invalid")
+            throw "Username and/or password invalid"
+        }
     }
-
 
     //----------- Login ---------------------//
 
@@ -193,6 +205,7 @@ class behaviorRepository {
         return await  Note.create(newNote)
     }
 
+
     async getStudentByID(id) {
         return Student.findOne({studentId: id})
     }
@@ -252,18 +265,18 @@ class behaviorRepository {
 
     //in case needed during testing
     async emptyDB() {
-        await Student.remove({})
-        await Staff.remove({})
-        await Relative.remove({})
-        await AcademicYear.remove({})
-        await IncidentType.remove({})
-        await Location.remove({})
-        await PenaltyType.remove({})
-        await Status.remove({})
-        await Incident.remove({})
-        await Attachment.remove({})
-        await Penalty.remove({})
-        await Note.remove({})
+        // await Student.remove({})
+        // await Staff.remove({})
+        // await Relative.remove({})
+        // await AcademicYear.remove({})
+        // await IncidentType.remove({})
+        // await Location.remove({})
+        // await PenaltyType.remove({})
+        // await Status.remove({})
+        // await Incident.remove({})
+        // await Attachment.remove({})
+        // await Penalty.remove({})
+        // await Note.remove({})
     }
 
     async initDb() {
@@ -355,68 +368,20 @@ class behaviorRepository {
             await this.addPenaltyType(p);
         }
 
-        //load incidents from file
-        const incidentsData = await fs.readFile('data/incidents.json')
-        const incidents = JSON.parse(incidentsData)
-        console.log('Retrieved Incidents from json file and added to MongoDB Incidents Collection: ' + incidents.length)
-        for (const incident of incidents) {
-            await this.addIncident(incident)
-        }
+        // //load incidents from file
+        // const incidentsData = await fs.readFile('data/incidents.json')
+        // const incidents = JSON.parse(incidentsData)
+        // console.log('Retrieved Incidents from json file and added to MongoDB Incidents Collection: ' + incidents.length)
+        // for (const incident of incidents) {
+        //     await this.addIncident(incident)
+        // }
     }
 
 
-    // -------------------------------------------------------------------
     async refine(from, to) {
-        let incidents = await this.getIncidents();
-        let array = [];
-        await Promise.all(incidents.filter(async incident => {
-            if (await this.dateInRange(incident.date, from, to))
-                array.push(incident)
-        }));
-
-        console.log("length = " + array.length)
-        return array;
-
-    }
-
-    async getGradeByStudentId(id) {
-        let students = await fs.readFile('students.json');
-        students = JSON.parse(students)
-
-        let grade = students.find(student => student.studentId == id).grade;
-        return grade;
-    }
-
-    async getCountByGradeLevel(from, to) {
-        let incidents = await this.refine(from, to); // get all incidents in range
-
-        let studentsInvolved = incidents.map(incident => { // get student IDs
-            return incident.students
-        })
-
-        studentsInvolved = [].concat.apply([], studentsInvolved); // restructure array
-
-        let grades = await Promise.all(studentsInvolved.map(id => { // get grades of IDs above
-            return this.getGradeByStudentId(id)
-        }))
-
-        let grade_count = await Promise.all(grades.map(grade => { //  get counts
-            let count = grades.filter(g => g == grade).length;
-            let temp = {grade: grade, count: count};
-            return JSON.stringify(temp)
-        }))
-
-        grade_count = Array.from(new Set(grade_count)); // remove duplicates
-        grade_count = grade_count.map(n => { // re-structure array
-            return {grade: JSON.parse(n).grade, count: JSON.parse(n).count};
-        })
-
-        // toReturn.sort(function (g1, g2){
-        //     return g1.grade - g2.grade;
-        // })
-
-        // console.log(toReturn)
-        return grade_count;
+        const incidentTypesData = await fs.readFile('data/incidentType.json')
+        const incidentTypes = JSON.parse(incidentTypesData)
+        //returns all incidents in that range
     }
 
     async getCountByLocation(from, to) {
@@ -467,7 +432,24 @@ class behaviorRepository {
         return (date >= From && date <= To)
     }
 
-    // --------------------------------------------------------------------------------
+    async getCountByGradeLevel(grade, from, to) {
+        // refine(from,to);
+        // filter by grade
+        // returns {grade, count}
+    }
+
+    async getCountByLocation(location, from, to) {
+        // refine(from,to);
+        // filter by location
+        // returns {location, count}
+    }
+
+    async getCountByType(type, from, to) {
+        // refine(from,to);
+        // filter by type
+        // returns {type, count}
+    }
+
 
 }
 
