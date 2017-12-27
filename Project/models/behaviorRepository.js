@@ -20,27 +20,16 @@ class behaviorRepository {
     async login(username, password) {
         let user = await Staff.findOne({email: username}).where('password')
             .equals(password);
+        // console.log("User To Show:", user);
+
         if (!user) {
             user = await Relative.findOne({email: username}).where('password')
                 .equals(password).lean(); // lean to allow adding user.role
-            if (user)
-                user.role = "Relative"
-
-            if (user != "undefined" && user != null && user != "") {
-                //Do not return the user password, remove it
-                delete user.password;
-                // console.log("User:", user);
-                return user;
-            }
-            else {
-                // console.log("User:" + user);
-                console.log("Invalid")
-                throw "Username and/or password invalid"
-            }
+            // if (user)
+            //     user.role="Relative"
         }
-        console.log(user)
-        // }
-        user.role = "Relative"
+
+
         if (user != "undefined" && user != null && user != "") {
             //Do not return the user password, remove it
             delete user.password;
@@ -52,9 +41,11 @@ class behaviorRepository {
             console.log("Invalid")
             throw "Username and/or password invalid"
         }
+
     }
 
     //----------- Login ---------------------//
+
 
     async addStudent(newStudent) {
         return await Student.create(newStudent)
@@ -216,10 +207,18 @@ class behaviorRepository {
 
     async getStudentIncidents(studentId) {
         const student = await this.getStudentByID(studentId);
-        return await this.getStudentIncidentByID(student._id);
+       return  await this.getStudentIncidentByID(student._id);
     }
 
-
+    async getIncidentByID(id) {
+        return Incident.findOne({_id : id}).lean()
+    }
+    async getLocationByID(id) {
+        return Location.findOne({_id : id}).lean()
+    }
+    async getIncidentTypeByID(id) {
+        return IncidentType.findOne({_id : id}).lean()
+    }
     /*
         async getIncidentByID(id) {
             return Incident.findOne({_id : id})
@@ -265,18 +264,18 @@ class behaviorRepository {
 
     //in case needed during testing
     async emptyDB() {
-        // await Student.remove({})
-        // await Staff.remove({})
-        // await Relative.remove({})
-        // await AcademicYear.remove({})
-        // await IncidentType.remove({})
-        // await Location.remove({})
-        // await PenaltyType.remove({})
-        // await Status.remove({})
-        // await Incident.remove({})
-        // await Attachment.remove({})
-        // await Penalty.remove({})
-        // await Note.remove({})
+         await Student.remove({})
+         await Staff.remove({})
+         await Relative.remove({})
+         await AcademicYear.remove({})
+         await IncidentType.remove({})
+         await Location.remove({})
+         await PenaltyType.remove({})
+         await Status.remove({})
+         await Incident.remove({})
+         await Attachment.remove({})
+         await Penalty.remove({})
+         await Note.remove({})
     }
 
     async initDb() {
