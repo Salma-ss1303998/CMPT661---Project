@@ -25,7 +25,10 @@ class behaviorRepository {
                 .equals(password).lean(); // lean to allow adding user.role
             if (user)
                 user.role="Relative"
+<<<<<<< HEAD
 
+=======
+>>>>>>> f5b083a8ed982e75698b4e325206efc9d430f10e
         if (user != "undefined" && user != null && user != "") {
             //Do not return the user password, remove it
             delete user.password;
