@@ -43,10 +43,6 @@ app.use( (req, res, next) => {
     }
     return next();
 });
-<<<<<<< HEAD
-=======
-
->>>>>>> 30573082702bf5a31230b38a0759beb61e731106
 
 
 /* modules routes */
@@ -78,7 +74,7 @@ app.get('/api/students/:studentID',(req, res) =>  behvaiorController.getStudent(
 app.post('/incidentEditor', (req, res) => behvaiorController.addIncident(req, res))
 app.get('/api/incidents/:studentID',(req, res) =>  behvaiorController.getStudentIncidents(req, res));
 app.get('/api/countByLocation/:from/:to',(req, res) =>  behvaiorController.getCountByLocation(req, res));
-
+app.get('/logout', (req, res) => behvaiorController.logout(req, res))
 
 
 

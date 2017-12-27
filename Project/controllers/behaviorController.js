@@ -18,6 +18,12 @@ class behaviorController {
             })
     }
 
+    async logout(req, res) {
+        req.session.destroy( () => {
+            res.redirect('/')
+        })
+    }
+
     async addIncident(req, res) {
         const incident = req.body;
         console.log("app.post(/incidentEditor).req.body", incident)
@@ -123,20 +129,13 @@ class behaviorController {
             .catch(err => res.status(500).send(err))
     }
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 30573082702bf5a31230b38a0759beb61e731106
     async getStudent(req, res) {
         console.log("I received Student ID: " + req.params.studentID)
         this.behaviorRespository.getStudentByID(req.params.studentID)
     }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 30573082702bf5a31230b38a0759beb61e731106
     async getStudentIncidents(req, res) {
         console.log("I received Student ID: " + req.params.studentID);
         this.behaviorRespository.getStudentIncidents(req.params.studentID)
@@ -156,6 +155,7 @@ class behaviorController {
     async getCountByGradeLevel(req, res) {
 
     }
+
 
     async getCountByLocation(req, res) {
         console.log("Getting count by location (Controller)")

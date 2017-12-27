@@ -25,31 +25,11 @@ class behaviorRepository {
         if (!user) {
             user = await Relative.findOne({email: username}).where('password')
                 .equals(password).lean(); // lean to allow adding user.role
-<<<<<<< HEAD
             // if (user)
             //     user.role="Relative"
             }
 
-=======
-            if (user)
-                user.role = "Relative"
 
-            if (user != "undefined" && user != null && user != "") {
-                //Do not return the user password, remove it
-                delete user.password;
-                // console.log("User:", user);
-                return user;
-            }
-            else {
-                // console.log("User:" + user);
-                console.log("Invalid")
-                throw "Username and/or password invalid"
-            }
-        }
-        console.log(user)
-        // }
-        user.role = "Relative"
->>>>>>> 30573082702bf5a31230b38a0759beb61e731106
         if (user != "undefined" && user != null && user != "") {
             //Do not return the user password, remove it
             delete user.password;
@@ -61,13 +41,11 @@ class behaviorRepository {
             console.log("Invalid")
             throw "Username and/or password invalid"
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> 30573082702bf5a31230b38a0759beb61e731106
     }
 
     //----------- Login ---------------------//
+
 
     async addStudent(newStudent) {
         return await Student.create(newStudent)
