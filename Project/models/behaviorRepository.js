@@ -157,7 +157,7 @@ class behaviorRepository {
         return await PenaltyType.create(newPenaltyType)
     }
 
-    async getIncident() {
+    async getIncidents() {
         return await  Incident.find({})
     }
 
@@ -377,11 +377,17 @@ class behaviorRepository {
         // }
     }
 
-
     async refine(from, to) {
-        const incidentTypesData = await fs.readFile('data/incidentType.json')
-        const incidentTypes = JSON.parse(incidentTypesData)
-        //returns all incidents in that range
+        let incidents = await this.getIncidents();
+        let array = [];
+        await Promise.all(incidents.filter(async incident => {
+            if (await this.dateInRange(incident.date, from, to))
+                array.push(incident)
+        }));
+
+        console.log("length = " + array.length)
+        return array;
+
     }
 
     async getCountByLocation(from, to) {
