@@ -18,6 +18,12 @@ class behaviorController {
             })
     }
 
+    async logout(req, res) {
+        req.session.destroy( () => {
+            res.redirect('/')
+        })
+    }
+
     async addIncident(req, res) {
         const incident = req.body;
         console.log("app.post(/incidentEditor).req.body", incident)
@@ -34,8 +40,8 @@ class behaviorController {
         await this.behaviorRespository.addNoteToIncident(newIncident, newNote._id)
 
 
-        let printIncident = await this.behaviorRespository.getIncidents();
-        console.log("Incident info from DB", printIncident);
+        //let printIncident = await this.behaviorRespository.getIncidents();
+        // console.log("Incident info from DB", printIncident);
 
     }
 
@@ -122,54 +128,62 @@ class behaviorController {
             })
             .catch(err => res.status(500).send(err))
     }
-
     async getStudent(req, res) {
         console.log("I received Student ID: " + req.params.studentID)
         this.behaviorRespository.getStudentByID(req.params.studentID)
     }
-
     async getStudentIncidents(req, res) {
         console.log("I received Student ID: " + req.params.studentID);
-        this.behaviorRespository.getStudentIncidents(req.params.studentID)
+        let answer = await this.behaviorRespository.getStudentIncidents(req.params.studentID)
             .then(s => {
                 if (s) {
-                    console.log(s);
-                    res.json(s)
+                    return s;
                 }
                 else {
                     res.status(404).send('no Student is found')
                 }
             })
             .catch(err => res.status(500).send(err))
+
+
+        let incidentObj =[];
+
+        for (let i=0;i<answer.length;i++) {
+            incidentObj.push(await this.behaviorRespository.getIncidentByID(answer[i]._id));
+
+            let locationObj = await this.behaviorRespository.getLocationByID(answer[i].location);
+            let location = locationObj.location;
+            incidentObj[i].location = location;
+
+            let IncidentTypeObj = await this.behaviorRespository.getIncidentTypeByID(answer[i].type);
+            let incidentType = IncidentTypeObj.type;
+            incidentObj[i].type = incidentType;
+        }
+
+        res.json(incidentObj)
     }
 
 
     async getCountByGradeLevel(req, res) {
-        console.log("Getting count by Grade Level (Controller)")
-        console.log(req.params.from, req.params.to)
-        this.behaviorRespository.getCountByGradeLevel(req.params.from, req.params.to)
-            .then(object => res.json(object))
-            .catch(err => console.log(err))
+
     }
+
 
     async getCountByLocation(req, res) {
         console.log("Getting count by location (Controller)")
-        console.log(req.params.from, req.params.to)
         this.behaviorRespository.getCountByLocation(req.params.from, req.params.to)
             .then(object => res.json(object))
             .catch(err => console.log(err))
 
+
+        async
+        getCountByType(req, res)
+        {
+
+        }
+
+
     }
-
-    async getCountByType(req, res) {
-        console.log("Getting count by Type (Controller)")
-        console.log(req.params.from, req.params.to)
-        this.behaviorRespository.getCountByType(req.params.from, req.params.to)
-            .then(object => res.json(object))
-            .catch(err => console.log(err))
-    }
-
-
-
 }
+
 module.exports = new behaviorController();

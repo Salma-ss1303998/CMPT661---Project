@@ -7,6 +7,7 @@ const IncidentsTemplate = `
             <td>Type</td>
             <td>Date</td>
             <td>Location</td>
+            <td>More details</td>
         </tr>
         
        {{#each .}}
@@ -14,7 +15,9 @@ const IncidentsTemplate = `
           <td>{{incidentDescription}}</td>
           <td>{{type}}</td>
           <td>{{date}}</td>
-          <td>{{location}}</td>
+          <td>{{location}}</td> 
+          <td><a href="">Press here</a></td>
+          
         </tr>
       {{/each}}
             
