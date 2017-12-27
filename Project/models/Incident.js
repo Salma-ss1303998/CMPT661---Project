@@ -5,17 +5,11 @@ let incidentSchema = new mongoose.Schema({
     students: [{ type : mongoose.Schema.ObjectId, ref : 'Student' }],
     incidentDescription:String,
     type: { type : mongoose.Schema.ObjectId, ref : 'IncidentType' },
-<<<<<<< HEAD
-
     date: { type:Date,default: Date.now },
-
-=======
-    date: { type:Date,default: Date.now },
->>>>>>> f5b083a8ed982e75698b4e325206efc9d430f10e
     location: { type : mongoose.Schema.ObjectId, ref : 'Location' },
     studentReporter: { type : mongoose.Schema.ObjectId, ref : 'Student' },
     staffReporter: { type : mongoose.Schema.ObjectId, ref : 'Staff' },
-    status: { type : mongoose.Schema.ObjectId, ref : 'Status'},
+    status: { type : mongoose.Schema.ObjectId, ref : 'status'},
     notes: [{ type : mongoose.Schema.ObjectId, ref : 'Note' }],
     penalties: [{ type : mongoose.Schema.ObjectId, ref : 'Penalty' }],
     attachments: [{ type : mongoose.Schema.ObjectId, ref : 'Attachment' }],

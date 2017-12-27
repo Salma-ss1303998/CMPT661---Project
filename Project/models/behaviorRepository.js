@@ -24,24 +24,21 @@ class behaviorRepository {
             user = await Relative.findOne({email: username}).where('password')
                 .equals(password).lean(); // lean to allow adding user.role
             if (user)
-                user.role="Relative"
-<<<<<<< HEAD
+                user.role = "Relative"
 
-=======
->>>>>>> f5b083a8ed982e75698b4e325206efc9d430f10e
-        if (user != "undefined" && user != null && user != "") {
-            //Do not return the user password, remove it
-            delete user.password;
-            // console.log("User:", user);
-            return user;
+            if (user != "undefined" && user != null && user != "") {
+                //Do not return the user password, remove it
+                delete user.password;
+                // console.log("User:", user);
+                return user;
+            }
+            else {
+                // console.log("User:" + user);
+                console.log("Invalid")
+                throw "Username and/or password invalid"
+            }
         }
-        else {
-            // console.log("User:" + user);
-            console.log("Invalid")
-            throw "Username and/or password invalid"
-        }
-    }
-    console.log(user)
+        console.log(user)
     }
 
 
@@ -124,6 +121,10 @@ class behaviorRepository {
         return await Location.create(newLocation)
     }
 
+    async addIncident(newIncident) {
+        return await Incident.create(newIncident)
+    }
+
     async getLocation() {
         return await Location.find({})
     }
@@ -152,9 +153,9 @@ class behaviorRepository {
         return await Incident.count({})
     }
 
-    async addIncident(newIncident) {
-        return await  Incident.create(newIncident)
-    }
+    // async addIncident(newIncident) {
+    //     return await  Incident.create(newIncident)
+    // }
 
     async getAttachment() {
         return await  Attachment.find({})
@@ -251,8 +252,6 @@ class behaviorRepository {
 
     //in case needed during testing
     async emptyDB() {
-
-        /*
         await Student.remove({})
         await Staff.remove({})
         await Relative.remove({})
@@ -265,8 +264,6 @@ class behaviorRepository {
         await Attachment.remove({})
         await Penalty.remove({})
         await Note.remove({})
-        */
-
     }
 
     async initDb() {
@@ -276,8 +273,8 @@ class behaviorRepository {
             //If the db is empty then load data from json files
             const studentCount = await this.getStudentsCount()
             console.log(`Students Count: ${studentCount}. Comment out emptyDB() to stop re-initializing the database`)
-           if (studentCount == 0) {
-            await this.loadDataFromJsonFiles()
+            if (studentCount == 0) {
+                await this.loadDataFromJsonFiles()
             }
         }
         catch (err) {
@@ -321,7 +318,7 @@ class behaviorRepository {
         //Adding Status
         const academicYearData = await fs.readFile('data/academicYear.json')
         const academicYears = JSON.parse(academicYearData)
-        console.log('Retrieved Staff from json file and added to MongoDB Academic Years Collection: ' + academicYears.length)
+        console.log('Retrieved Academic Years from json file and added to MongoDB Academic Years Collection: ' + academicYears.length)
         for (const y of academicYears) {
             await this.addAcademicYear(y)
         }
@@ -329,7 +326,7 @@ class behaviorRepository {
         //Adding Status
         const statusData = await fs.readFile('data/status.json')
         const status = JSON.parse(statusData)
-        console.log('Retrieved Staff from json file and added to MongoDB status Collection: ' + status.length)
+        console.log('Retrieved status from json file and added to MongoDB status Collection: ' + status.length)
         for (const s of status) {
             await this.addStatus(s)
         }
@@ -337,7 +334,7 @@ class behaviorRepository {
         //Adding IncidentType
         const incidentTypesData = await fs.readFile('data/incidentType.json')
         const incidentTypes = JSON.parse(incidentTypesData)
-        console.log('Retrieved Staff from json file and added to MongoDB incidentTypesData Collection: ' + incidentTypes.length)
+        console.log('Retrieved incidentTypesData from json file and added to MongoDB incidentTypesData Collection: ' + incidentTypes.length)
         for (const i of incidentTypes) {
             await this.addIncidentType(i)
         }
@@ -345,7 +342,7 @@ class behaviorRepository {
         //Adding Locations
         const locationsData = await fs.readFile('data/location.json')
         const locations = JSON.parse(locationsData)
-        console.log('Retrieved Staff from json file and added to MongoDB locations Collection: ' + locations.length)
+        console.log('Retrieved locations from json file and added to MongoDB locations Collection: ' + locations.length)
         for (const l of locations) {
             await this.addLocation(l)
         }
@@ -353,14 +350,18 @@ class behaviorRepository {
         //Adding PenaltyType
         const penaltyTypeData = await fs.readFile('data/penaltyTypes.json')
         const penaltyTypes = JSON.parse(penaltyTypeData)
-        console.log('Retrieved Staff from json file and added to MongoDB Penalty Types Collection: ' + penaltyTypes.length)
+        console.log('Retrieved Penalty Types from json file and added to MongoDB Penalty Types Collection: ' + penaltyTypes.length)
         for (const p of penaltyTypes) {
             await this.addPenaltyType(p);
         }
 
         //load incidents from file
-
-
+        const incidentsData = await fs.readFile('data/incidents.json')
+        const incidents = JSON.parse(incidentsData)
+        console.log('Retrieved Incidents from json file and added to MongoDB Incidents Collection: ' + incidents.length)
+        for (const incident of incidents) {
+            await this.addIncident(incident)
+        }
     }
 
 
@@ -424,9 +425,9 @@ class behaviorRepository {
             return incident.location
         }));
 
-        let location_count = await Promise.all(locations.map(loc =>  {
-            let count = locations.filter(l => l==loc).length
-            return JSON.stringify({location: loc, count:count})
+        let location_count = await Promise.all(locations.map(loc => {
+            let count = locations.filter(l => l == loc).length
+            return JSON.stringify({location: loc, count: count})
         }));
 
         location_count = Array.from(new Set(location_count)); // remove duplicates
@@ -444,9 +445,9 @@ class behaviorRepository {
             return incident.type
         }));
 
-        let type_count = await Promise.all(types.map(type =>  {
-            let count = types.filter(t => t==type).length
-            return JSON.stringify({type: type, count:count})
+        let type_count = await Promise.all(types.map(type => {
+            let count = types.filter(t => t == type).length
+            return JSON.stringify({type: type, count: count})
         }));
 
         type_count = Array.from(new Set(type_count)); // remove duplicates
@@ -458,7 +459,7 @@ class behaviorRepository {
         return type_count;
     }
 
-    dateInRange( d, from, to) {
+    dateInRange(d, from, to) {
         let From = new Date(from + "Z");
         let To = new Date(to + "Z");
         let date = new Date(d + "Z");
