@@ -43,11 +43,6 @@ app.use( (req, res, next) => {
     }
     return next();
 });
-<<<<<<< HEAD
-
-=======
->>>>>>> c93d4ca0e2135262d26dcfb2c71f7e67b6697662
-
 /* modules routes */
 const port = 3322;
 const dbConnection = mongoose.connect('mongodb://localhost/behavior', function(err) {
