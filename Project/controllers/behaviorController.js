@@ -3,6 +3,7 @@ class behaviorController {
     constructor() {
         this.behaviorRespository = require('../models/behaviorRepository')
     }
+
     login(req, res) {
         const loginInfo = req.body
         console.log("app.post(login).req.body", loginInfo)
@@ -24,25 +25,25 @@ class behaviorController {
         let newIncident = await this.behaviorRespository.addIncident(incident);
         let newAttachment = await this.behaviorRespository.addAttachment(incident);
         //let newStudent= await this.behaviorRespository.addStudent(incident);
-        let newPenalty= await this.behaviorRespository.addPenalty(incident);
-        let newNote= await this.behaviorRespository.addNote(incident);
+        let newPenalty = await this.behaviorRespository.addPenalty(incident);
+        let newNote = await this.behaviorRespository.addNote(incident);
 
         await this.behaviorRespository.addAttachmentToIncident(newIncident, newAttachment._id);
         //await this.behaviorRespository.addStudentToIncident(newIncident, newStudent._id);
-        await this.behaviorRespository.addPenaltyToIncident(newIncident,newPenalty._id);
-        await this.behaviorRespository.addNoteToIncident(newIncident,newNote._id)
+        await this.behaviorRespository.addPenaltyToIncident(newIncident, newPenalty._id);
+        await this.behaviorRespository.addNoteToIncident(newIncident, newNote._id)
 
 
-        let printIncident = await this.behaviorRespository.getIncident();
-        console.log("Incident info from DB",printIncident);
+        let printIncident = await this.behaviorRespository.getIncidents();
+        console.log("Incident info from DB", printIncident);
 
     }
 
     async getIncidentsData(req, res) {
         let students = await this.behaviorRespository.getStudents();
         let academicYears = await this.behaviorRespository.getAcademicYears();
-        let incidents = await this.behaviorRespository.getIncident();
-        res.render('incidents', {students: students, academicYears: academicYears, incidents:incidents})
+        let incidents = await this.behaviorRespository.getIncidents();
+        res.render('incidents', {students: students, academicYears: academicYears, incidents: incidents})
     }
 
     async editIncident(req, res) {
@@ -50,18 +51,18 @@ class behaviorController {
         let academicYears = await this.behaviorRespository.getAcademicYears();
         let incidentTypes = await this.behaviorRespository.getIncidentType();
         let locations = await this.behaviorRespository.getLocation();
-        let statuses=await this.behaviorRespository.getStatus();
-        let staffs= await this.behaviorRespository.getStaffs();
-        let penaltyTypes=  await this.behaviorRespository.getPenaltyType();
+        let statuses = await this.behaviorRespository.getStatus();
+        let staffs = await this.behaviorRespository.getStaffs();
+        let penaltyTypes = await this.behaviorRespository.getPenaltyType();
         res.render('incidentEditor', {
             students: students,
             academicYears: academicYears,
             incidentType: incidentTypes,
             locations: locations,
-            status:statuses,
-            staffs:staffs,
+            status: statuses,
+            staffs: staffs,
             studentsReporter: students,
-            penaltyTypes:penaltyTypes
+            penaltyTypes: penaltyTypes
         })
     }
 
@@ -108,7 +109,7 @@ class behaviorController {
     }
 
     async getStudent(req, res) {
-        console.log("I received Student ID: "+req.params.studentID)
+        console.log("I received Student ID: " + req.params.studentID)
         this.behaviorRespository.getStudentByID(req.params.studentID)
             .then(s => {
                 if (s) {
@@ -122,16 +123,22 @@ class behaviorController {
             .catch(err => res.status(500).send(err))
     }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 30573082702bf5a31230b38a0759beb61e731106
     async getStudent(req, res) {
         console.log("I received Student ID: " + req.params.studentID)
         this.behaviorRespository.getStudentByID(req.params.studentID)
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 30573082702bf5a31230b38a0759beb61e731106
     async getStudentIncidents(req, res) {
-        console.log("I received Student ID: "+req.params.studentID);
+        console.log("I received Student ID: " + req.params.studentID);
         this.behaviorRespository.getStudentIncidents(req.params.studentID)
             .then(s => {
                 if (s) {
@@ -146,20 +153,24 @@ class behaviorController {
     }
 
 
-    async getByGradeLevel(req, res){
+    async getCountByGradeLevel(req, res) {
 
     }
 
-    async getByLocation(req,res){
+    async getCountByLocation(req, res) {
+        console.log("Getting count by location (Controller)")
+        this.behaviorRespository.getCountByLocation(req.params.from, req.params.to)
+            .then(object => res.json(object))
+            .catch(err => console.log(err))
+
+
+        async
+        getCountByType(req, res)
+        {
+
+        }
+
 
     }
-
-    async getByType(req,res){
-
-    }
-
-
-
 }
-
-module.exports = new behaviorController();
+    module.exports = new behaviorController();
