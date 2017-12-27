@@ -10,7 +10,17 @@ class behaviorController {
 
         this.behaviorRespository.login(loginInfo.username, loginInfo.password).then(user => {
             req.session.user = user
-            res.redirect('/index')//req.session.prevUrl)
+            console.log("Type of ", typeof (req.session.prevUrl))
+
+            if (typeof req.session.prevUrl == 'undefined'){
+                res.redirect('/index')
+
+            }else{
+                // console.log(req.session.prevUrl)
+                res.redirect(req.session.prevUrl)
+
+            }
+
         })
             .catch(err => {
                 console.log(err)
