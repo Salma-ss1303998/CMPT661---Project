@@ -25,14 +25,11 @@ class behaviorRepository {
                 .equals(password).lean(); // lean to allow adding user.role
             if (user)
                 user.role="Relative"
-<<<<<<< HEAD
-        }
-=======
->>>>>>> a32ec1df03494b880b7be566ca2df47498647584
+
         if (user != "undefined" && user != null && user != "") {
             //Do not return the user password, remove it
             delete user.password;
-            console.log("User:", user);
+            // console.log("User:", user);
             return user;
         }
         else {
@@ -40,7 +37,9 @@ class behaviorRepository {
             console.log("Invalid")
             throw "Username and/or password invalid"
         }
-    }}
+    }
+    console.log(user)
+    }
 
 
     //----------- Login ---------------------//
@@ -189,7 +188,6 @@ class behaviorRepository {
     async addNote(newNote) {
         return await  Note.create(newNote)
     }
-
 
     async getStudentByID(id) {
         return Student.findOne({studentId: id})
@@ -363,30 +361,109 @@ class behaviorRepository {
     }
 
 
-    async refine(from, to){
-        const incidentTypesData = await fs.readFile('data/incidentType.json')
-        const incidentTypes = JSON.parse(incidentTypesData)
-        //returns all incidents in that range
+    // -------------------------------------------------------------------
+    async refine(from, to) {
+        let incidents = await this.getIncidents();
+        let array = [];
+        await Promise.all(incidents.filter(async incident => {
+            if (await this.dateInRange(incident.date, from, to))
+                array.push(incident)
+        }));
+
+        console.log("length = " + array.length)
+        return array;
+
     }
 
-    async getCountByGradeLevel(grade,from,to){
-        // refine(from,to);
-        // filter by grade
-        // returns {grade, count}
+    async getGradeByStudentId(id) {
+        let students = await fs.readFile('students.json');
+        students = JSON.parse(students)
+
+        let grade = students.find(student => student.studentId == id).grade;
+        return grade;
     }
 
-    async getCountByLocation(location,from,to){
-        // refine(from,to);
-        // filter by location
-        // returns {location, count}
+    async getCountByGradeLevel(from, to) {
+        let incidents = await this.refine(from, to); // get all incidents in range
+
+        let studentsInvolved = incidents.map(incident => { // get student IDs
+            return incident.students
+        })
+
+        studentsInvolved = [].concat.apply([], studentsInvolved); // restructure array
+
+        let grades = await Promise.all(studentsInvolved.map(id => { // get grades of IDs above
+            return this.getGradeByStudentId(id)
+        }))
+
+        let grade_count = await Promise.all(grades.map(grade => { //  get counts
+            let count = grades.filter(g => g == grade).length;
+            let temp = {grade: grade, count: count};
+            return JSON.stringify(temp)
+        }))
+
+        grade_count = Array.from(new Set(grade_count)); // remove duplicates
+        grade_count = grade_count.map(n => { // re-structure array
+            return {grade: JSON.parse(n).grade, count: JSON.parse(n).count};
+        })
+
+        // toReturn.sort(function (g1, g2){
+        //     return g1.grade - g2.grade;
+        // })
+
+        // console.log(toReturn)
+        return grade_count;
     }
 
-    async getCountByType(type,from,to){
-        // refine(from,to);
-        // filter by type
-        // returns {type, count}
+    async getCountByLocation(from, to) {
+        let incidents = await this.refine(from, to);
+        let locations = await Promise.all(incidents.map(incident => {
+            return incident.location
+        }));
+
+        let location_count = await Promise.all(locations.map(loc =>  {
+            let count = locations.filter(l => l==loc).length
+            return JSON.stringify({location: loc, count:count})
+        }));
+
+        location_count = Array.from(new Set(location_count)); // remove duplicates
+        location_count = location_count.map(n => { // re-structure array
+            return {location: JSON.parse(n).location, count: JSON.parse(n).count}
+        });
+
+        return location_count;
     }
 
+
+    async getCountByType(from, to) {
+        let incidents = await this.refine(from, to);
+        let types = await Promise.all(incidents.map(incident => {
+            return incident.type
+        }));
+
+        let type_count = await Promise.all(types.map(type =>  {
+            let count = types.filter(t => t==type).length
+            return JSON.stringify({type: type, count:count})
+        }));
+
+        type_count = Array.from(new Set(type_count)); // remove duplicates
+        type_count = type_count.map(n => { // re-structure array
+            return {type: JSON.parse(n).type, count: JSON.parse(n).count}
+        });
+
+        console.log(type_count)
+        return type_count;
+    }
+
+    dateInRange( d, from, to) {
+        let From = new Date(from + "Z");
+        let To = new Date(to + "Z");
+        let date = new Date(d + "Z");
+
+        return (date >= From && date <= To)
+    }
+
+    // --------------------------------------------------------------------------------
 
 }
 

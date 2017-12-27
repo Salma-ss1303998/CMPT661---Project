@@ -1,5 +1,4 @@
 const IncidentsTemplate = `
-
     <table class="table table-striped">
         <tbody>
          <tr>
@@ -9,14 +8,14 @@ const IncidentsTemplate = `
             <td>Location</td>
         </tr>
         
-       {{#incident}}
+       <!--{{#incident}}-->
         <tr>
           <td>{{incidentDescription}}</td>
           <td>{{type}}</td>
           <td>{{date}}</td>
           <td>{{location}}</td>
         </tr>
-      {{/incident}}
+      <!--{{/incident}}-->
             
         </tbody>
     </table>
