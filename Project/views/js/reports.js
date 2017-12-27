@@ -1,18 +1,27 @@
 function refineDate(){
+    console.log("refining search...")
     let from = document.querySelector('#from').value;
     let to = document.querySelector('#to').value;
 
-    fillGradeLevel(from,to);
+    console.log(from + " + " + to)
+    // fillGradeLevel(from,to);
     fillLocation(from,to);
     fillType(from,to);
 }
-
-function fillGradeLevel(from,to) {
+//
+ async function fillGradeLevel(from,to) {
     let table = "<tr><th>Academic Year</th><th>Count</th></tr>\n"
     //getCountByDate(from,to);  returns
-    // list
-    for (let i=0; i<= 3; i++){
-        table += `<tr><td>${i}</td><td>${i*2}</td></tr>`
+    const url = `/api/countByGrade/${from}/${to}`
+    const response = await fetch(url)
+    let list = await response.json()
+    console.log("json is : " + list)
+    for (let i=0; list.length; i++){
+        console.log(" in loop : " + list[i].grade + " : " + list[i].count)
+         //table += `<!--<tr><td>${i}</td><td>${i}</td></tr>-->`
+
+        table += `<tr><td>${list[i].grade}</td><td>${list[i].count}</td></tr>`
+        // console.log(`${list[i].grade} + ${list[i].count}`)
     }
 
     document.getElementById('gradeLevelList').innerHTML = table
@@ -30,7 +39,7 @@ function fillLocation(from,to) {
 
 function fillType(from,to) {
     let table = "<tr><th>Incident Type</th><th>Count</th></tr>\n"
-
+    let types = controller.getCountByType(from,to)
     for (let i=0; i<= 3; i++){
         table += `<tr><td>${i}</td><td>${i*2}</td></tr>`
     }

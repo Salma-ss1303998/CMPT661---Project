@@ -75,6 +75,9 @@ app.get('/api/students/:studentID',(req, res) =>  behvaiorController.getStudent(
 app.post('/incidentEditor', (req, res) => behvaiorController.addIncident(req, res))
 app.get('/api/incidents/:studentID',(req, res) =>  behvaiorController.getStudentIncidents(req, res));
 app.get('/api/countByLocation/:from/:to',(req, res) =>  behvaiorController.getCountByLocation(req, res));
+app.get('/api/countByType/:from/:to',(req, res) =>  behvaiorController.getCountByType(req, res));
+app.get('/api/countByGrade/:from/:to',(req, res) =>  behvaiorController.getCountByGradeLevel(req, res));
+
 
 
 

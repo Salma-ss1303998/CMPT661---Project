@@ -145,23 +145,31 @@ class behaviorController {
 
 
     async getCountByGradeLevel(req, res) {
-
+        console.log("Getting count by Grade Level (Controller)")
+        console.log(req.params.from, req.params.to)
+        this.behaviorRespository.getCountByGradeLevel(req.params.from, req.params.to)
+            .then(object => res.json(object))
+            .catch(err => console.log(err))
     }
 
     async getCountByLocation(req, res) {
         console.log("Getting count by location (Controller)")
+        console.log(req.params.from, req.params.to)
         this.behaviorRespository.getCountByLocation(req.params.from, req.params.to)
             .then(object => res.json(object))
             .catch(err => console.log(err))
 
-
-        async
-        getCountByType(req, res)
-        {
-
-        }
-
-
     }
+
+    async getCountByType(req, res) {
+        console.log("Getting count by Type (Controller)")
+        console.log(req.params.from, req.params.to)
+        this.behaviorRespository.getCountByType(req.params.from, req.params.to)
+            .then(object => res.json(object))
+            .catch(err => console.log(err))
+    }
+
+
+
 }
-    module.exports = new behaviorController();
+module.exports = new behaviorController();

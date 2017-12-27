@@ -282,7 +282,7 @@ class behaviorRepository {
     async initDb() {
         try {
             //Empty the database. Comment out emptyDB to stop re-initializing the DB
-           // await this.emptyDB()
+            // await this.emptyDB()
             //If the db is empty then load data from json files
             const studentCount = await this.getStudentsCount()
             console.log(`Students Count: ${studentCount}. Comment out emptyDB() to stop re-initializing the database`)
@@ -390,6 +390,42 @@ class behaviorRepository {
 
     }
 
+    async getGradeByStudentId(id) {
+        let students = await this.getStudents();
+        let grade = students.find(std => std._id.toString() == id.toString()
+        ).grade;
+        return grade;
+    }
+
+    async getCountByGradeLevel(from, to) {
+        let incidents = await this.refine(from, to); // get all incidents in range
+
+        let studentsInvolved = incidents.map(incident => { // get student IDs
+            return incident.students
+        })
+
+        // studentsInvolved = [].concat.apply([], studentsInvolved); // restructure array
+
+        let grades = await Promise.all(studentsInvolved.map(id => {
+            console.log("in count by grade level : " + id)// get grades of IDs above
+            return this.getGradeByStudentId(id)
+        }))
+
+        // console.log(grades)
+        let grade_count = await Promise.all(grades.map(grade => { //  get counts
+            let count = grades.filter(g => g == grade).length;
+            let temp = {grade: grade, count: count};
+            return JSON.stringify(temp)
+        }))
+
+        grade_count = Array.from(new Set(grade_count)); // remove duplicates
+        grade_count = grade_count.map(n => { // re-structure array
+            return {grade: JSON.parse(n).grade, count: JSON.parse(n).count};
+        })
+
+        return grade_count;
+    }
+
     async getCountByLocation(from, to) {
         let incidents = await this.refine(from, to);
         let locations = await Promise.all(incidents.map(incident => {
@@ -426,7 +462,6 @@ class behaviorRepository {
             return {type: JSON.parse(n).type, count: JSON.parse(n).count}
         });
 
-        console.log(type_count)
         return type_count;
     }
 
@@ -436,24 +471,6 @@ class behaviorRepository {
         let date = new Date(d + "Z");
 
         return (date >= From && date <= To)
-    }
-
-    async getCountByGradeLevel(grade, from, to) {
-        // refine(from,to);
-        // filter by grade
-        // returns {grade, count}
-    }
-
-    async getCountByLocation(location, from, to) {
-        // refine(from,to);
-        // filter by location
-        // returns {location, count}
-    }
-
-    async getCountByType(type, from, to) {
-        // refine(from,to);
-        // filter by type
-        // returns {type, count}
     }
 
 
