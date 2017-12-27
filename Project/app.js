@@ -43,7 +43,7 @@ app.use( (req, res, next) => {
     }
     return next();
 });
-6
+
 
 
 /* modules routes */
@@ -74,3 +74,8 @@ app.get('/incidentEditor', (req, res) => behvaiorController.editIncident(req, re
 app.get('/api/students/:studentID',(req, res) =>  behvaiorController.getStudent(req, res));
 app.post('/incidentEditor', (req, res) => behvaiorController.addIncident(req, res))
 app.get('/api/incidents/:studentID',(req, res) =>  behvaiorController.getStudentIncidents(req, res));
+
+
+
+
+
