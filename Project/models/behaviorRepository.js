@@ -269,7 +269,7 @@ class behaviorRepository {
     async initDb() {
         try {
             //Empty the database. Comment out emptyDB to stop re-initializing the DB
-            await this.emptyDB()
+           // await this.emptyDB()
             //If the db is empty then load data from json files
             const studentCount = await this.getStudentsCount()
             console.log(`Students Count: ${studentCount}. Comment out emptyDB() to stop re-initializing the database`)
