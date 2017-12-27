@@ -20,19 +20,19 @@ class behaviorRepository {
     async login(username, password) {
         let user = await Staff.findOne({email: username}).where('password')
             .equals(password);
+        // console.log("User To Show:", user);
+
         if (!user) {
             user = await Relative.findOne({email: username}).where('password')
                 .equals(password).lean(); // lean to allow adding user.role
-            if (user)
-                user.role="Relative"
-<<<<<<< HEAD
+            // if (user)
+            //     user.role="Relative"
+            }
 
-=======
->>>>>>> f5b083a8ed982e75698b4e325206efc9d430f10e
         if (user != "undefined" && user != null && user != "") {
             //Do not return the user password, remove it
             delete user.password;
-            // console.log("User:", user);
+            console.log("User:", user);
             return user;
         }
         else {
@@ -40,10 +40,8 @@ class behaviorRepository {
             console.log("Invalid")
             throw "Username and/or password invalid"
         }
-    }
-    console.log(user)
-    }
 
+    }
 
     //----------- Login ---------------------//
 

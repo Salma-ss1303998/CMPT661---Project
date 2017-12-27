@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <title>MVC App</title>
+    <title>SMS</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
     <!-- More info @ http://fontawesome.io/icons/ -->
@@ -28,18 +28,63 @@
 
 <body>
 <nav class="navbar sticky-top navbar-expand-sm bg-primary navbar-dark rounded">
+
     <!-- Brand -->
     <a class="navbar-brand" href="#">
+        <img src="/views/img/school.png" alt="Logo" style="height:40px;">
+    </a>
+
 
     </a>
 
     <!-- Links -->
     <div class="collapse navbar-collapse" id="nav-content">
+{{#if session.user}}
+
+    <!--Only show the full navigation menu when the user is staff -->
+
+    {{#if session.user.role}}
+
         <ul class="navbar-nav active">
             <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/reports">Reports</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/incidents">Incidents</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/incidentEditor">Incident Editor</a>
             </li>
         </ul>
+    {{else}}
+    <ul class="navbar-nav active">
+        <li class="nav-item">
+            <a class="nav-link" href="/incidents">Incidents</a>
+        </li>
+    </ul>
+    {{/if}}
+
+    <!--Only show the welcome message and the menu if the user already login -->
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <p class="navbar-text">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                Welcome {{session.user.firstName}} {{session.user.lastName}}
+            </p>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/logout">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                Logout
+            </a>
+        </li>
+    </ul>
+
+{{else}}
+
+{{/if}}
+
 
     </div>
 </nav>
@@ -48,3 +93,7 @@
 </div>
 </body>
 </html>
+
+
+
+

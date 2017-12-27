@@ -43,7 +43,6 @@ app.use( (req, res, next) => {
     }
     return next();
 });
-6
 
 
 /* modules routes */
