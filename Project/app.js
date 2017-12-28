@@ -58,16 +58,11 @@ const dbConnection = mongoose.connect('mongodb://localhost/behavior', function(e
     }
 });
 app.get('/', (req, res) => res.render('login'))
-<<<<<<< HEAD
 app.get('/AY',(req,res)=> behvaiorController.getIncidents(res,res))//.render('reports'))
 app.get('/index', (req, res) => res.render('index'))
-=======
 app.get('/AY',(req,res)=>res.render('reports'))
 app.get('/index', isAuthenticated,(req, res) => res.render('index'))
->>>>>>> 8a6a8f1a56012fe20ff81b4cfcc20f1ac2d1addf
 app.post('/login', (req, res) => behvaiorController.login(req, res))
-
-
 app.get('/api/staffs', (req, res) => behvaiorController.getStaffs(req, res));
 app.get('/api/relatives', (req, res) => behvaiorController.getRealtives(req, res));
 app.get('/api/students', (req, res) => behvaiorController.getStudents(req, res));
