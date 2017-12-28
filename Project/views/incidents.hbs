@@ -1,36 +1,48 @@
 <br>
-<div class="form-group row">
-    <caption class="col-sm-4" for="studentsList">Select a student: </caption>
-    <select  class="col-sm-8" id="studentsList">
-        <option value=""></option>
-        {{#students}}
-            <option name="studentId" value="{{studentId}}"> {{studentId}} - {{firstName}} {{lastName}}</option>
-        {{/students}}
-    </select>
-</div>
+{{#if session.user.role}}
 
-<div class="form-group row">
-    <caption class="col-sm-4" for="academicYearsList">Select an Academic Year: </caption>
-    <select   class="col-sm-8" id="academicYearsList">
-        <option value=""></option>
-        {{#academicYears}}
-            <option name="year" value="{{_id}}"> {{year}}</option>
-        {{/academicYears}}
-    </select>
-</div>
+    <div class="form-group row">
+        <label class="col-sm-4" for="studentsDataList">Select a student: </label>
+<<<<<<< HEAD
+        <input class="col-sm-8" class="form-control"  id="studentsList" name="studentsDataList" type="text"
+               list="studentsDataList">
+        <datalist id="studentsDataList">
+            {{#students}}
+                <option name="studentId" value="{{studentId}}">{{studentId}} {{firstName}} {{lastName}}</option>
+=======
+        <input class="col-sm-8" class="form-control" name="studentsDataList" type="text"
+               list="studentsDataList">
+        <datalist id="studentsDataList">
+            {{#students}}
+                <option name="studentsList" value="{{_id}}">{{studentId}} {{firstName}} {{lastName}}</option>
+>>>>>>> 9250e294df0215a781c994908a08b9f3d6936363
+            {{/students}}
+        </datalist>
+    </div>
 
-<div class="form-group row">
-    <label class="col-sm-4" for="studentsDataList">Select a student: </label>
-    <input class="col-sm-8" class="form-control" name="studentsDataList" type="text"
-           list="studentsDataList">
-    <datalist id="studentsDataList">
-        {{#students}}
-            <option name="studentsList" value="{{_id}}">{{studentId}} {{firstName}} {{lastName}}</option>
-        {{/students}}
-    </datalist>
-</div>
 
+
+{{else}}
+    <div class="form-group row">
+        <caption class="col-sm-4" for="studentsList">Select a student: </caption>
+        <select  class="col-sm-8" id="studentsList">
+            <option value=""></option>
+            {{#students}}
+                <option name="studentId" value="{{studentId}}"> {{studentId}} - {{firstName}} {{lastName}}</option>
+            {{/students}}
+        </select>
+    </div>
+
+    <div class="form-group row">
+        <caption class="col-sm-4" for="academicYearsList">Select an Academic Year: </caption>
+        <select   class="col-sm-8" id="academicYearsList">
+            <option value=""></option>
+            {{#academicYears}}
+                <option name="year" value="{{_id}}"> {{year}}</option>
+            {{/academicYears}}
+        </select>
+    </div>
+{{/if}}
 <div id="incidentsDetails"></div>
 
 <script src="views/js/incidents.js"></script>
-

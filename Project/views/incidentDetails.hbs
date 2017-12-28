@@ -1,0 +1,97 @@
+<br>
+<table class="table table-striped">
+    <tbody>
+    {{#incident}}
+
+        {{#if students}}
+            <tr>
+                <td>Students:</td>
+                <td>
+                    {{#each students}}
+                        <li></li>
+                    {{/each}}
+                </td>
+            </tr>
+        {{/if}}
+        {{#if incidentDescription}}
+            <tr>
+                <td>Incident Description</td>
+                <td>{{incidentDescription}}</td>
+            </tr>
+        {{/if}}
+        {{#if type}}
+            <tr>
+                <td>Type</td>
+                <td>{{type}}</td>
+            </tr>
+        {{/if}}
+        {{#if date}}
+            <tr>
+                <td>Date</td>
+                <td>{{date}}</td>
+            </tr>
+        {{/if}}
+        {{#if location}}
+            <tr>
+                <td>Location</td>
+                <td>{{location}}</td>
+            </tr>
+        {{/if}}
+        {{#if studentReporter}}
+            <tr>
+                <td>Student Reporter</td>
+                <td>{{studentReporter}}</td>
+            </tr>
+        {{/if}}
+        {{#if staffReporter}}
+            <tr>
+                <td>Staff Reporter</td>
+                <td>{{staffReporter}}</td>
+            </tr>
+        {{/if}}
+        {{#if status}}
+            <tr>
+                <td>Status</td>
+                <td>{{status}}</td>
+            </tr>
+        {{/if}}
+        {{#if notes}}
+            <tr>
+                <td>Notes:</td>
+                <td>
+                    {{#each notes}}
+                        <li></li>
+                    {{/each}}
+                </td>
+            </tr>
+        {{/if}}
+        {{#if penalties}}
+            <tr>
+                <td>Penalties:</td>
+                <td>
+                    {{#each penalties}}
+                        <li></li>
+                    {{/each}}
+                </td>
+            </tr>
+        {{/if}}
+        {{#if attachments}}
+            <tr>
+                <td>Attachments:</td>
+                <td>
+                    {{#each attachments}}
+                        <li></li>
+                    {{/each}}
+                </td>
+            </tr>
+        {{/if}}
+
+            <tr>
+                <td><button id="editIncident" onclick="goToIncidentEditor()" value="{{_id}}">Edit</button></td>
+            </tr>
+
+    {{/incident}}
+    </tbody>
+</table>
+
+<script src="views/js/incidentDetails.js"></script>

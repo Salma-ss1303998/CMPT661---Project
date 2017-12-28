@@ -197,9 +197,7 @@ class behaviorRepository {
     }
 
 
-    async getStudentByID(id) {
-        return Student.findOne({studentId: id})
-    }
+
 
     async getStudentIncidentByID(id) {
         return Incident.find({students: id});
@@ -252,6 +250,34 @@ class behaviorRepository {
         incident.notes.push(noteID)
         return incident.save()
     }
+    async getStudentByID(id) {
+        return Student.findOne({studentId: id})
+    }
+    async getStudentByDBID(id) {
+        return Student.findOne({_id: id})
+    }
+
+    async getStudentRelative(lastName){
+        const studentsIDs=await this.getStudentsRelative(lastName);
+        let student=null;
+        //console.log( studentsIDs);
+        let students=[];
+        for (const stu of studentsIDs) {
+            student = await this.getStudentByDBID(stu._id);
+            students.push(student);
+        }
+        return students;
+        }
+    async getStudentsRelative(lastname) {
+        //Only retrieve the Relative id
+        const query = Student.find({}, "_id")
+        //If lastName is defined then filter by lastName
+        if (lastname) {
+            query.where({lastName: lastname})
+        }
+        return query
+    }
+
 
 
     /* Get relatives by matching the last name of student and Relative */
@@ -284,7 +310,7 @@ class behaviorRepository {
     async initDb() {
         try {
             //Empty the database. Comment out emptyDB to stop re-initializing the DB
-            // await this.emptyDB()
+           // await this.emptyDB()
             //If the db is empty then load data from json files
             const studentCount = await this.getStudentsCount()
             console.log(`Students Count: ${studentCount}. Comment out emptyDB() to stop re-initializing the database`)
