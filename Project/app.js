@@ -68,12 +68,9 @@ app.get('/api/relatives', (req, res) => behvaiorController.getRealtives(req, res
 app.get('/api/students', (req, res) => behvaiorController.getStudents(req, res));
 app.get('/api/academicYears', (req, res) => behvaiorController.getAcademicYears(req, res));
 app.get('/api/status', (req, res) => behvaiorController.getStatus(req, res));
-<<<<<<< HEAD
 app.get('/incidents', isAuthenticated,(req, res) => behvaiorController.getIncidentsData(req, res))
-=======
 
-app.get('/incidents', (req, res) => behvaiorController.getIncidentsData(req, res))
->>>>>>> 7e8582af3da0818e587691ce6d32e71c741cad28
+// app.get('/incidents', (req, res) => behvaiorController.getIncidentsData(req, res))
 app.get('/incidentEditor', (req, res) => behvaiorController.editIncident(req, res))
 
 app.get('/api/students/:studentID',(req, res) =>  behvaiorController.getStudent(req, res));
