@@ -10,17 +10,9 @@ const IncidentsTemplate = `
         
        {{#each .}}
         <tr>
-<<<<<<< HEAD
           <td><a href="/api/incident/{{_id}}">{{type}}</a></td>
           <td><a href="/api/incident/{{_id}}">{{date}}</a></td>
           <td><a href="/api/incident/{{_id}}">{{location}} </a></td> 
-=======
-          <td>{{type}}</td>
-          <td>{{date}}</td>
-          <td>{{location}}</td> 
-          <td><a href="">Press here</a></td>
-          
->>>>>>> 9250e294df0215a781c994908a08b9f3d6936363
         </tr>
       {{/each}}
         </tbody>
