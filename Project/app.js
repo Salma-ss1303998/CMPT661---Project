@@ -58,7 +58,7 @@ const dbConnection = mongoose.connect('mongodb://localhost/behavior', function(e
     }
 });
 app.get('/', (req, res) => res.render('login'))
-app.get('/AY',(req,res)=>res.render('reports'))
+app.get('/AY',(req,res)=> behvaiorController.getIncidents(res,res))//.render('reports'))
 app.get('/index', (req, res) => res.render('index'))
 app.post('/login', (req, res) => behvaiorController.login(req, res))
 
@@ -81,6 +81,8 @@ app.get('/api/countByType/:from/:to',(req, res) =>  behvaiorController.getCountB
 app.get('/api/countByGrade/:from/:to',(req, res) =>  behvaiorController.getCountByGradeLevel(req, res));
 
 app.get('/api/incidents/location/:location/:from/:to', (req,res) => behvaiorController.filterIncidentsByLocation(req,res));
+// app.get('/api/incidents/location/:location/:from/:to', (req, res) => res.render('byLocation'))
+
 app.get('/api/incidents/grade/:grade/:from/:to', (req,res) => behvaiorController.filterIncidentsByGrade(req,res));
 app.get('/api/incidents/type/:type/:from/:to', (req,res) => behvaiorController.filterIncidentsByType(req,res));
 

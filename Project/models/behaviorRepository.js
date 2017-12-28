@@ -381,6 +381,10 @@ class behaviorRepository {
 
     async refineIncidentsByDate(from, to) {
         let incidents = await this.getIncidents();
+        if (from == null && to == null) {
+         //   console.log("in repository : " + incidents[0])
+            return incidents;
+        }
         let array = [];
         await Promise.all(incidents.filter(async incident => {
             if (await this.dateInRange(incident.date, from, to))
@@ -401,6 +405,7 @@ class behaviorRepository {
 
     async getCountByGradeLevel(from, to) {
         let incidents = await this.refineIncidentsByDate(from, to); // get all incidents in range
+        // console.log("in count grade : " + incidents[0])
 
         let studentsInvolved = incidents.map(incident => { // get student IDs
             return incident.students
@@ -430,6 +435,8 @@ class behaviorRepository {
 
     async getCountByLocation(from, to) {
         let incidents = await this.refineIncidentsByDate(from, to);
+        // console.log("in count loc : " + incidents[0])
+
         let locations = await Promise.all(incidents.map(incident => {
             return incident.location
         }));
@@ -452,6 +459,8 @@ class behaviorRepository {
 
     async getCountByType(from, to) {
         let incidents = await this.refineIncidentsByDate(from, to);
+        // console.log("in count type : " + incidents[0])
+
         let types = await Promise.all(incidents.map(incident => {
             return incident.type
         }));
@@ -480,13 +489,13 @@ class behaviorRepository {
 
     async filterByLocation(location, from, to) {
         let incidents = await this.refineIncidentsByDate(from, to);
-        location = location.charAt(0).toUpperCase() + location.slice(1);
+        //location = location.charAt(0).toUpperCase() + location.slice(1);
 
-        let loc = await Location.findOne({location: location});
-        if (loc == null)
-            return null
+        // let loc = await Location.findOne({location: location});
+        //if (loc == null)
+        //    return null
 
-        let locationId = loc._id.toString();
+        let locationId = location;//loc._id.toString();
         let incidentsInLocation = [];
 
         incidents.filter(incident => {
@@ -498,13 +507,13 @@ class behaviorRepository {
 
     async filterByType(type, from, to) {
         let incidents = await this.refineIncidentsByDate(from, to);
-        type = type.charAt(0).toUpperCase() + type.slice(1);
+        //  type = type.charAt(0).toUpperCase() + type.slice(1);
 
-        let incidentType = await IncidentType.findOne({type: type});
-        if (incidentType == null)
-            return null
-
-        let typeId = incidentType._id.toString();
+        // let incidentType = await IncidentType.findOne({type: type});
+        // if (incidentType == null)
+        //     return null
+        //
+        let typeId = type;// incidentType._id.toString();
         let incidentsOfType = [];
 
         incidents.filter(incident => {
@@ -520,19 +529,19 @@ class behaviorRepository {
         let std = await Student.findOne({_id: "5a4394f505fd858544a3b01b"});
         console.log("student : " + std.grade);
         let incidentsInGrade = [];
-       let x = await Promise.all(incidents.map(async incident => { // get student IDs
-          incidentsInGrade = await incident.students.filter(async student => {
+        let x = await Promise.all(incidents.map(async incident => { // get student IDs
+            incidentsInGrade = await incident.students.filter(async student => {
                 console.log("-----------" + student)
                 let std = await Student.findOne({_id: student.toString()});
-               std.grade == grade
+                std.grade == grade
                 // console.log(std)
                 // console.log(typeof std.grade + " : " + typeof grade)
                 // if (std.grade == grade) {
-                    // console.log(std.grade + " : " + grade)
-                    // console.log(incident)
-                    // return incident
+                // console.log(std.grade + " : " + grade)
+                // console.log(incident)
+                // return incident
 
-                    // incidentsInGrade.push(incident)
+                // incidentsInGrade.push(incident)
                 // }
             })
             console.log(incidentsInGrade)

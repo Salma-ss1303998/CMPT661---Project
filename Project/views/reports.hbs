@@ -16,6 +16,12 @@
 <div id="gradeLevelDiv">
     <h4>Incident summary based on Grade Level</h4>
     <table class="table table-striped" id="gradeLevelList"></table>
+    {{#incidentsByGrade}}
+        <tr>
+            <td>{{date}}</td>
+            <td>{{incidentDescription}}</td>
+        </tr>
+    {{/incidentsByGrade}}
 </div>
 
 <!--script-->
@@ -23,12 +29,23 @@
 <div id="locationDiv">
     <h4>Incident summary based on location</h4>
     <table class="table table-striped" id="locationList"></table>
-
+    {{#incidentsByLocation}}
+        <tr>
+            <td>{{date}}</td>
+            <td>{{incidentDescription}}</td>
+        </tr>
+    {{/incidentsByLocation}}
 </div>
 
 <div id="typeDiv">
     <h4>Incident summary based on type</h4>
     <table class="table table-striped" id="typeList"></table>
+    {{#incidentsByType}}
+        <tr>
+            <td>{{date}}</td>
+            <td>{{incidentDescription}}</td>
+        </tr>
+    {{/incidentsByType}}
 </div>
 
 

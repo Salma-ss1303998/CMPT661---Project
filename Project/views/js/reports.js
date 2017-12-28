@@ -1,3 +1,4 @@
+let repo = require('../../models/behaviorRepository');
 function refineDate() {
     console.log("refining search...")
     let from = document.querySelector('#from').value;
@@ -38,7 +39,8 @@ async function fillLocation(from, to) {
 
     list.forEach(item => {
         console.log(item.location + " : " + item.count)
-        table += `<tr><td>${item.location}</td><td>${item.count}</td></tr>`
+        let location =  item.location;//repo.getLocationByID(item.location)
+        table += `<tr><td><a href="/api/incidents/location/${location}/${from}/${to}"> ${item.location}</a></td><td><a href="/api/incidents/location/${location}/${from}/${to}"> ${item.count}</a></td></tr>`
 
     })
     document.getElementById('locationList').innerHTML = table
@@ -53,7 +55,7 @@ async function fillType(from, to) {
 
     list.forEach(item => {
         console.log(item.type + " : " + item.count)
-        table += `<tr><td>${item.type}</td><td>${item.count}</td></tr>`
+        table += `<tr><td><a href="/api/incidents/type/${item.type}/${from}/${to}">${item.type}</a></td><td><a href="/api/incidents/location/${item.type}/${from}/${to}">${item.count}</a></td></tr>`
 
     })
     document.getElementById('typeList').innerHTML = table
