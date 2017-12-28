@@ -61,20 +61,32 @@ app.get('/', (req, res) => res.render('login'))
 app.get('/AY',(req,res)=>res.render('reports'))
 app.get('/index', isAuthenticated,(req, res) => res.render('index'))
 app.post('/login', (req, res) => behvaiorController.login(req, res))
+
+
 app.get('/api/staffs', (req, res) => behvaiorController.getStaffs(req, res));
 app.get('/api/relatives', (req, res) => behvaiorController.getRealtives(req, res));
 app.get('/api/students', (req, res) => behvaiorController.getStudents(req, res));
 app.get('/api/academicYears', (req, res) => behvaiorController.getAcademicYears(req, res));
 app.get('/api/status', (req, res) => behvaiorController.getStatus(req, res));
+<<<<<<< HEAD
 app.get('/incidents', isAuthenticated,(req, res) => behvaiorController.getIncidentsData(req, res))
+=======
+
+app.get('/incidents', (req, res) => behvaiorController.getIncidentsData(req, res))
+>>>>>>> 7e8582af3da0818e587691ce6d32e71c741cad28
 app.get('/incidentEditor', (req, res) => behvaiorController.editIncident(req, res))
+
 app.get('/api/students/:studentID',(req, res) =>  behvaiorController.getStudent(req, res));
 app.post('/incidentEditor', (req, res) => behvaiorController.addIncident(req, res))
 app.get('/api/incidents/:studentID',(req, res) =>  behvaiorController.getStudentIncidents(req, res));
+
 app.get('/api/countByLocation/:from/:to',(req, res) =>  behvaiorController.getCountByLocation(req, res));
 app.get('/api/countByType/:from/:to',(req, res) =>  behvaiorController.getCountByType(req, res));
 app.get('/api/countByGrade/:from/:to',(req, res) =>  behvaiorController.getCountByGradeLevel(req, res));
 
+app.get('/api/incidents/location/:location/:from/:to', (req,res) => behvaiorController.filterIncidentsByLocation(req,res));
+app.get('/api/incidents/grade/:grade/:from/:to', (req,res) => behvaiorController.filterIncidentsByGrade(req,res));
+app.get('/api/incidents/type/:type/:from/:to', (req,res) => behvaiorController.filterIncidentsByType(req,res));
 
 app.get('/logout', (req, res) => behvaiorController.logout(req, res))
 

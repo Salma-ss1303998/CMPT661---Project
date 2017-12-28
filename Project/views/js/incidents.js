@@ -3,7 +3,6 @@ const IncidentsTemplate = `
     <table class="table table-striped">
         <tbody>
          <tr>
-            <td>Description</td>
             <td>Type</td>
             <td>Date</td>
             <td>Location</td>
@@ -12,7 +11,6 @@ const IncidentsTemplate = `
         
        {{#each .}}
         <tr>
-          <td>{{incidentDescription}}</td>
           <td>{{type}}</td>
           <td>{{date}}</td>
           <td>{{location}}</td> 
