@@ -3,11 +3,11 @@
 
     <div class="form-group row">
         <label class="col-sm-4" for="studentsDataList">Select a student: </label>
-        <input class="col-sm-8" class="form-control" name="studentsDataList" type="text"
+        <input class="col-sm-8" class="form-control"  id="studentsList" name="studentsDataList" type="text"
                list="studentsDataList">
         <datalist id="studentsDataList">
             {{#students}}
-                <option name="studentsList" value="{{_id}}">{{studentId}} {{firstName}} {{lastName}}</option>
+                <option name="studentId" value="{{studentId}}">{{studentId}} {{firstName}} {{lastName}}</option>
             {{/students}}
         </datalist>
     </div>
@@ -38,4 +38,3 @@
 <div id="incidentsDetails"></div>
 
 <script src="views/js/incidents.js"></script>
-

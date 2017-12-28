@@ -1,0 +1,14 @@
+<h3>Incidents in {{location}}</h3>
+
+<table class="table table-striped" id="incidentsInLocation">
+    <tr>
+        <td>Date</td>
+        <td>description</td>
+    </tr>
+    {{#incidents}}
+        <tr>
+            <td>{{date}}</td>
+            <td>{{incidentDescription}}</td>
+        </tr>
+    {{/incidents}}
+</table>
