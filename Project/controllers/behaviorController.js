@@ -19,7 +19,7 @@ class behaviorController {
     }
 
     async logout(req, res) {
-        req.session.destroy( () => {
+        req.session.destroy(() => {
             res.redirect('/')
         })
     }
@@ -128,10 +128,12 @@ class behaviorController {
             })
             .catch(err => res.status(500).send(err))
     }
+
     async getStudent(req, res) {
         console.log("I received Student ID: " + req.params.studentID)
         this.behaviorRespository.getStudentByID(req.params.studentID)
     }
+
     async getStudentIncidents(req, res) {
         console.log("I received Student ID: " + req.params.studentID);
         let answer = await this.behaviorRespository.getStudentIncidents(req.params.studentID)
@@ -163,27 +165,56 @@ class behaviorController {
         res.json(incidentObj)
     }
 
-
     async getCountByGradeLevel(req, res) {
-
+        console.log("Getting count by Grade Level (Controller)")
+        console.log(req.params.from, req.params.to)
+        this.behaviorRespository.getCountByGradeLevel(req.params.from, req.params.to)
+            .then(object => res.json(object))
+            .catch(err => console.log(err))
     }
 
 
     async getCountByLocation(req, res) {
         console.log("Getting count by location (Controller)")
+        console.log(req.params.from, req.params.to)
         this.behaviorRespository.getCountByLocation(req.params.from, req.params.to)
             .then(object => res.json(object))
             .catch(err => console.log(err))
 
-
-        async
-        getCountByType(req, res)
-        {
-
-        }
-
-
     }
+
+    async getCountByType(req, res) {
+        console.log("Getting count by Type (Controller)")
+        console.log(req.params.from, req.params.to)
+        this.behaviorRespository.getCountByType(req.params.from, req.params.to)
+            .then(object => res.json(object))
+            .catch(err => console.log(err))
+    }
+
+    async filterIncidentsByLocation(req,res){
+        console.log("filtering by location...")
+        console.log(req.params.location, req.params.from, req.params.to)
+        this.behaviorRespository.filterByLocation(req.params.location,req.params.from, req.params.to)
+            .then(object => res.json(object))
+            .catch(err => console.log(err))
+    }
+
+    async filterIncidentsByGrade(req,res){
+        console.log("filtering by grade...")
+        console.log(req.params.grade, req.params.from, req.params.to)
+        this.behaviorRespository.filterByGrade(req.params.grade,req.params.from, req.params.to)
+            .then(object => res.json(object))
+            .catch(err => console.log(err))
+    }
+
+    async filterIncidentsByType(req, res){
+        console.log("filtering by type...")
+        console.log(req.params.type, req.params.from, req.params.to)
+        this.behaviorRespository.filterByType(req.params.type,req.params.from, req.params.to)
+            .then(object => res.json(object))
+            .catch(err => console.log(err))
+    }
+
 }
 
 module.exports = new behaviorController();
