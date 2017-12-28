@@ -68,30 +68,19 @@ app.get('/api/relatives', (req, res) => behvaiorController.getRealtives(req, res
 app.get('/api/students', (req, res) => behvaiorController.getStudents(req, res));
 app.get('/api/academicYears', (req, res) => behvaiorController.getAcademicYears(req, res));
 app.get('/api/status', (req, res) => behvaiorController.getStatus(req, res));
-<<<<<<< HEAD
 app.get('/incidents', isAuthenticated,(req, res) => behvaiorController.getIncidentsData(req, res))
-=======
-
 app.get('/incidents', (req, res) => behvaiorController.getIncidentsData(req, res))
->>>>>>> 7e8582af3da0818e587691ce6d32e71c741cad28
 app.get('/incidentEditor', (req, res) => behvaiorController.editIncident(req, res))
-
 app.get('/api/students/:studentID',(req, res) =>  behvaiorController.getStudent(req, res));
 app.post('/incidentEditor', (req, res) => behvaiorController.addIncident(req, res))
 app.get('/api/incidents/:studentID',(req, res) =>  behvaiorController.getStudentIncidents(req, res));
-
 app.get('/api/countByLocation/:from/:to',(req, res) =>  behvaiorController.getCountByLocation(req, res));
 app.get('/api/countByType/:from/:to',(req, res) =>  behvaiorController.getCountByType(req, res));
 app.get('/api/countByGrade/:from/:to',(req, res) =>  behvaiorController.getCountByGradeLevel(req, res));
-
-<<<<<<< HEAD
 app.get('/api/incident/:id',(req, res) =>  behvaiorController.getIncidentbyDBID(req, res));
-=======
 app.get('/api/incidents/location/:location/:from/:to', (req,res) => behvaiorController.filterIncidentsByLocation(req,res));
 app.get('/api/incidents/grade/:grade/:from/:to', (req,res) => behvaiorController.filterIncidentsByGrade(req,res));
 app.get('/api/incidents/type/:type/:from/:to', (req,res) => behvaiorController.filterIncidentsByType(req,res));
->>>>>>> 9250e294df0215a781c994908a08b9f3d6936363
-
 app.get('/logout', (req, res) => behvaiorController.logout(req, res))
 
 

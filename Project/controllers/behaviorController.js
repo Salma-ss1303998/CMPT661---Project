@@ -1,4 +1,4 @@
-let loggedUser="";
+let loggedUser = "";
 
 class behaviorController {
 
@@ -12,22 +12,22 @@ class behaviorController {
 
         this.behaviorRespository.login(loginInfo.username, loginInfo.password).then(user => {
             req.session.user = user
-<<<<<<< HEAD
-            loggedUser=req.session.user;
+
+            loggedUser = req.session.user;
             res.redirect('/index')//req.session.prevUrl)
-=======
+
             console.log("Type of ", typeof (req.session.prevUrl))
 
-            if (typeof req.session.prevUrl == 'undefined'){
+            if (typeof req.session.prevUrl == 'undefined') {
                 res.redirect('/index')
 
-            }else{
+            } else {
                 // console.log(req.session.prevUrl)
                 res.redirect(req.session.prevUrl)
 
             }
 
->>>>>>> 9250e294df0215a781c994908a08b9f3d6936363
+
         })
             .catch(err => {
                 console.log(err)
@@ -51,31 +51,31 @@ class behaviorController {
         let newPenalty = await this.behaviorRespository.addPenalty(incident);
         let newNote = await this.behaviorRespository.addNote(incident);
 
-        if(incident.attachments || incident.attachmentTitle || incident.attachmentAddedOn || incident.attachmentUrl )
-        await this.behaviorRespository.addAttachmentToIncident(newIncident, newAttachment._id);
+        if (incident.attachments || incident.attachmentTitle || incident.attachmentAddedOn || incident.attachmentUrl)
+            await this.behaviorRespository.addAttachmentToIncident(newIncident, newAttachment._id);
 
-        if(incident.penalties || incident.penaltyAddedOn || incident.penaltyType || incident.penaltyDescription)
-        await this.behaviorRespository.addPenaltyToIncident(newIncident, newPenalty._id);
+        if (incident.penalties || incident.penaltyAddedOn || incident.penaltyType || incident.penaltyDescription)
+            await this.behaviorRespository.addPenaltyToIncident(newIncident, newPenalty._id);
 
-        if(incident.notes || incident.noteTitle || incident.noteAddedOn|| incident.noteBody )
-        await this.behaviorRespository.addNoteToIncident(newIncident, newNote._id)
+        if (incident.notes || incident.noteTitle || incident.noteAddedOn || incident.noteBody)
+            await this.behaviorRespository.addNoteToIncident(newIncident, newNote._id)
 
 
         let printIncident = await this.behaviorRespository.getIncidents();
-         console.log("Incident info from DB", printIncident);
+        console.log("Incident info from DB", printIncident);
 
     }
 
     async getIncidentsData(req, res) {
-        let students=null;
+        let students = null;
         //console.log( "----------",loggedUser);
 
         if (!loggedUser.role) { //relative
-          //  console.log("I am relative")
+            //  console.log("I am relative")
             students = await this.behaviorRespository.getStudentRelative(loggedUser.lastName);
         }
         else {
-         //   console.log("I am staff")
+            //   console.log("I am staff")
             students = await this.behaviorRespository.getStudents(); //get all students
         }
 
@@ -182,9 +182,9 @@ class behaviorController {
             .catch(err => res.status(500).send(err))
 
 
-        let incidentObj =[];
+        let incidentObj = [];
 
-        for (let i=0;i<answer.length;i++) {
+        for (let i = 0; i < answer.length; i++) {
             incidentObj.push(await this.behaviorRespository.getIncidentByID(answer[i]._id));
 
             let locationObj = await this.behaviorRespository.getLocationByID(answer[i].location);
@@ -199,14 +199,14 @@ class behaviorController {
         res.json(incidentObj)
     }
 
-<<<<<<< HEAD
+
     async getIncidentbyDBID(req, res) {
         console.log("I received incident ID: " + req.params.id)
         this.behaviorRespository.getIncidentByID(req.params.id)
             .then(s => {
                 if (s) {
-                  //  console.log(s);
-                   res.render('incidentDetails', {incident:s})
+                    //  console.log(s);
+                    res.render('incidentDetails', {incident: s})
 
                 }
                 else {
@@ -214,15 +214,17 @@ class behaviorController {
                 }
             })
             .catch(err => res.status(500).send(err))
-=======
+    }
+
     async getCountByGradeLevel(req, res) {
         console.log("Getting count by Grade Level (Controller)")
         console.log(req.params.from, req.params.to)
         this.behaviorRespository.getCountByGradeLevel(req.params.from, req.params.to)
             .then(object => res.json(object))
             .catch(err => console.log(err))
->>>>>>> 9250e294df0215a781c994908a08b9f3d6936363
+
     }
+
     async getCountByLocation(req, res) {
         console.log("Getting count by location (Controller)")
         console.log(req.params.from, req.params.to)
@@ -240,26 +242,26 @@ class behaviorController {
             .catch(err => console.log(err))
     }
 
-    async filterIncidentsByLocation(req,res){
+    async filterIncidentsByLocation(req, res) {
         console.log("filtering by location...")
         console.log(req.params.location, req.params.from, req.params.to)
-        this.behaviorRespository.filterByLocation(req.params.location,req.params.from, req.params.to)
+        this.behaviorRespository.filterByLocation(req.params.location, req.params.from, req.params.to)
             .then(object => res.json(object))
             .catch(err => console.log(err))
     }
 
-    async filterIncidentsByGrade(req,res){
+    async filterIncidentsByGrade(req, res) {
         console.log("filtering by grade...")
         console.log(req.params.grade, req.params.from, req.params.to)
-        this.behaviorRespository.filterByGrade(req.params.grade,req.params.from, req.params.to)
+        this.behaviorRespository.filterByGrade(req.params.grade, req.params.from, req.params.to)
             .then(object => res.json(object))
             .catch(err => console.log(err))
     }
 
-    async filterIncidentsByType(req, res){
+    async filterIncidentsByType(req, res) {
         console.log("filtering by type...")
         console.log(req.params.type, req.params.from, req.params.to)
-        this.behaviorRespository.filterByType(req.params.type,req.params.from, req.params.to)
+        this.behaviorRespository.filterByType(req.params.type, req.params.from, req.params.to)
             .then(object => res.json(object))
             .catch(err => console.log(err))
     }
