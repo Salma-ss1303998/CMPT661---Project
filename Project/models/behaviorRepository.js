@@ -293,18 +293,18 @@ class behaviorRepository {
 
     //in case needed during testing
     async emptyDB() {
-        // await Student.remove({})
-        // await Staff.remove({})
-        // await Relative.remove({})
-        // await AcademicYear.remove({})
-        // await IncidentType.remove({})
-        // await Location.remove({})
-        // await PenaltyType.remove({})
-        // await Status.remove({})
-        // await Incident.remove({})
-        // await Attachment.remove({})
-        // await Penalty.remove({})
-        // await Note.remove({})
+        await Student.remove({})
+        await Staff.remove({})
+        await Relative.remove({})
+        await AcademicYear.remove({})
+        await IncidentType.remove({})
+        await Location.remove({})
+        await PenaltyType.remove({})
+        await Status.remove({})
+        await Incident.remove({})
+        await Attachment.remove({})
+        await Penalty.remove({})
+        await Note.remove({})
     }
 
     async initDb() {
@@ -552,7 +552,7 @@ class behaviorRepository {
     async filterByGrade(grade, from, to) {
         let incidents = await this.refineIncidentsByDate(from, to);
         // grade = grade.charAt(0).toUpperCase() + grade.slice(1);
-        let std = await Student.findOne({_id: "5a4394f505fd858544a3b01b"});
+        let std = await Student.findOne({_id: "5a44ea64cc249c5eb0fd369b"});
         console.log("student : " + std.grade);
         let incidentsInGrade = [];
         let x = await Promise.all(incidents.map(async incident => { // get student IDs
