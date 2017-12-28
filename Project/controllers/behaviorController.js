@@ -237,17 +237,14 @@ class behaviorController {
     async filterIncidentsByLocation(req, res) {
         console.log("filtering by location...")
         console.log(req.params.location, req.params.from, req.params.to)
-<<<<<<< HEAD
         let incidents = await this.behaviorRespository.filterByLocation(req.params.location, req.params.from, req.params.to);
         res.render('byLocation', {location: req.params.location, incidents: incidents})
 
         //.then(object => res.json(object))
         //.catch(err => console.log(err))
-=======
         this.behaviorRespository.filterByLocation(req.params.location, req.params.from, req.params.to)
             .then(object => res.json(object))
             .catch(err => console.log(err))
->>>>>>> 2f7a74c446a807b0e6bc883a7773088dd357575a
     }
 
     async filterIncidentsByGrade(req, res) {
@@ -261,7 +258,6 @@ class behaviorController {
     async filterIncidentsByType(req, res) {
         console.log("filtering by type...")
         console.log(req.params.type, req.params.from, req.params.to)
-<<<<<<< HEAD
         let incidents = await this.behaviorRespository.filterByType(req.params.type, req.params.from, req.params.to);
         res.render('byType', {type: req.params.type, incidents: incidents})
 
@@ -284,11 +280,9 @@ class behaviorController {
             incidentsByLocation: incidentsByLocation,
             incidentsByType: incidentsByType
         })
-=======
         this.behaviorRespository.filterByType(req.params.type, req.params.from, req.params.to)
             .then(object => res.json(object))
             .catch(err => console.log(err))
->>>>>>> 2f7a74c446a807b0e6bc883a7773088dd357575a
     }
 
 }
