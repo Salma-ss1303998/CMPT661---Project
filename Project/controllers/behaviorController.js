@@ -1,3 +1,5 @@
+let loggedUser="";
+
 class behaviorController {
 
     constructor() {
@@ -6,10 +8,11 @@ class behaviorController {
 
     login(req, res) {
         const loginInfo = req.body
-        console.log("app.post(login).req.body", loginInfo)
+        //console.log("app.post(login).req.body", loginInfo)
 
         this.behaviorRespository.login(loginInfo.username, loginInfo.password).then(user => {
             req.session.user = user
+            loggedUser=req.session.user;
             res.redirect('/index')//req.session.prevUrl)
         })
             .catch(err => {
@@ -34,21 +37,38 @@ class behaviorController {
         let newPenalty = await this.behaviorRespository.addPenalty(incident);
         let newNote = await this.behaviorRespository.addNote(incident);
 
+        if(incident.attachments || incident.attachmentTitle || incident.attachmentAddedOn || incident.attachmentUrl )
         await this.behaviorRespository.addAttachmentToIncident(newIncident, newAttachment._id);
-        //await this.behaviorRespository.addStudentToIncident(newIncident, newStudent._id);
+
+        if(incident.penalties || incident.penaltyAddedOn || incident.penaltyType || incident.penaltyDescription)
         await this.behaviorRespository.addPenaltyToIncident(newIncident, newPenalty._id);
+
+        if(incident.notes || incident.noteTitle || incident.noteAddedOn|| incident.noteBody )
         await this.behaviorRespository.addNoteToIncident(newIncident, newNote._id)
 
 
-        //let printIncident = await this.behaviorRespository.getIncidents();
-        // console.log("Incident info from DB", printIncident);
+        let printIncident = await this.behaviorRespository.getIncidents();
+         console.log("Incident info from DB", printIncident);
 
     }
 
     async getIncidentsData(req, res) {
-        let students = await this.behaviorRespository.getStudents();
+        let students=null;
+        //console.log( "----------",loggedUser);
+
+        if (!loggedUser.role) { //relative
+          //  console.log("I am relative")
+            students = await this.behaviorRespository.getStudentRelative(loggedUser.lastName);
+        }
+        else {
+         //   console.log("I am staff")
+            students = await this.behaviorRespository.getStudents(); //get all students
+        }
+
+
         let academicYears = await this.behaviorRespository.getAcademicYears();
         let incidents = await this.behaviorRespository.getIncidents();
+
         res.render('incidents', {students: students, academicYears: academicYears, incidents: incidents})
     }
 
@@ -163,12 +183,21 @@ class behaviorController {
         res.json(incidentObj)
     }
 
+    async getIncidentbyDBID(req, res) {
+        console.log("I received incident ID: " + req.params.id)
+        this.behaviorRespository.getIncidentByID(req.params.id)
+            .then(s => {
+                if (s) {
+                  //  console.log(s);
+                   res.render('incidentDetails', {incident:s})
 
-    async getCountByGradeLevel(req, res) {
-
+                }
+                else {
+                    res.status(404).send('no incident is found')
+                }
+            })
+            .catch(err => res.status(500).send(err))
     }
-
-
     async getCountByLocation(req, res) {
         console.log("Getting count by location (Controller)")
         this.behaviorRespository.getCountByLocation(req.params.from, req.params.to)

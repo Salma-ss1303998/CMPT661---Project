@@ -75,6 +75,7 @@ app.get('/api/countByLocation/:from/:to',(req, res) =>  behvaiorController.getCo
 app.get('/api/countByType/:from/:to',(req, res) =>  behvaiorController.getCountByType(req, res));
 app.get('/api/countByGrade/:from/:to',(req, res) =>  behvaiorController.getCountByGradeLevel(req, res));
 
+app.get('/api/incident/:id',(req, res) =>  behvaiorController.getIncidentbyDBID(req, res));
 
 app.get('/logout', (req, res) => behvaiorController.logout(req, res))
 
