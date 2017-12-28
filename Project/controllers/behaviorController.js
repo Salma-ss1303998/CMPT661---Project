@@ -12,8 +12,22 @@ class behaviorController {
 
         this.behaviorRespository.login(loginInfo.username, loginInfo.password).then(user => {
             req.session.user = user
+<<<<<<< HEAD
             loggedUser=req.session.user;
             res.redirect('/index')//req.session.prevUrl)
+=======
+            console.log("Type of ", typeof (req.session.prevUrl))
+
+            if (typeof req.session.prevUrl == 'undefined'){
+                res.redirect('/index')
+
+            }else{
+                // console.log(req.session.prevUrl)
+                res.redirect(req.session.prevUrl)
+
+            }
+
+>>>>>>> 9250e294df0215a781c994908a08b9f3d6936363
         })
             .catch(err => {
                 console.log(err)
@@ -22,7 +36,7 @@ class behaviorController {
     }
 
     async logout(req, res) {
-        req.session.destroy( () => {
+        req.session.destroy(() => {
             res.redirect('/')
         })
     }
@@ -148,10 +162,12 @@ class behaviorController {
             })
             .catch(err => res.status(500).send(err))
     }
+
     async getStudent(req, res) {
         console.log("I received Student ID: " + req.params.studentID)
         this.behaviorRespository.getStudentByID(req.params.studentID)
     }
+
     async getStudentIncidents(req, res) {
         console.log("I received Student ID: " + req.params.studentID);
         let answer = await this.behaviorRespository.getStudentIncidents(req.params.studentID)
@@ -183,6 +199,7 @@ class behaviorController {
         res.json(incidentObj)
     }
 
+<<<<<<< HEAD
     async getIncidentbyDBID(req, res) {
         console.log("I received incident ID: " + req.params.id)
         this.behaviorRespository.getIncidentByID(req.params.id)
@@ -197,22 +214,56 @@ class behaviorController {
                 }
             })
             .catch(err => res.status(500).send(err))
+=======
+    async getCountByGradeLevel(req, res) {
+        console.log("Getting count by Grade Level (Controller)")
+        console.log(req.params.from, req.params.to)
+        this.behaviorRespository.getCountByGradeLevel(req.params.from, req.params.to)
+            .then(object => res.json(object))
+            .catch(err => console.log(err))
+>>>>>>> 9250e294df0215a781c994908a08b9f3d6936363
     }
     async getCountByLocation(req, res) {
         console.log("Getting count by location (Controller)")
+        console.log(req.params.from, req.params.to)
         this.behaviorRespository.getCountByLocation(req.params.from, req.params.to)
             .then(object => res.json(object))
             .catch(err => console.log(err))
 
-
-        async
-        getCountByType(req, res)
-        {
-
-        }
-
-
     }
+
+    async getCountByType(req, res) {
+        console.log("Getting count by Type (Controller)")
+        console.log(req.params.from, req.params.to)
+        this.behaviorRespository.getCountByType(req.params.from, req.params.to)
+            .then(object => res.json(object))
+            .catch(err => console.log(err))
+    }
+
+    async filterIncidentsByLocation(req,res){
+        console.log("filtering by location...")
+        console.log(req.params.location, req.params.from, req.params.to)
+        this.behaviorRespository.filterByLocation(req.params.location,req.params.from, req.params.to)
+            .then(object => res.json(object))
+            .catch(err => console.log(err))
+    }
+
+    async filterIncidentsByGrade(req,res){
+        console.log("filtering by grade...")
+        console.log(req.params.grade, req.params.from, req.params.to)
+        this.behaviorRespository.filterByGrade(req.params.grade,req.params.from, req.params.to)
+            .then(object => res.json(object))
+            .catch(err => console.log(err))
+    }
+
+    async filterIncidentsByType(req, res){
+        console.log("filtering by type...")
+        console.log(req.params.type, req.params.from, req.params.to)
+        this.behaviorRespository.filterByType(req.params.type,req.params.from, req.params.to)
+            .then(object => res.json(object))
+            .catch(err => console.log(err))
+    }
+
 }
 
 module.exports = new behaviorController();

@@ -205,18 +205,21 @@ class behaviorRepository {
 
     async getStudentIncidents(studentId) {
         const student = await this.getStudentByID(studentId);
-       return  await this.getStudentIncidentByID(student._id);
+        return await this.getStudentIncidentByID(student._id);
     }
 
     async getIncidentByID(id) {
-        return Incident.findOne({_id : id}).lean()
+        return Incident.findOne({_id: id}).lean()
     }
+
     async getLocationByID(id) {
-        return Location.findOne({_id : id}).lean()
+        return Location.findOne({_id: id}).lean()
     }
+
     async getIncidentTypeByID(id) {
-        return IncidentType.findOne({_id : id}).lean()
+        return IncidentType.findOne({_id: id}).lean()
     }
+
     /*
         async getIncidentByID(id) {
             return Incident.findOne({_id : id})
@@ -290,18 +293,18 @@ class behaviorRepository {
 
     //in case needed during testing
     async emptyDB() {
-         await Student.remove({})
-         await Staff.remove({})
-         await Relative.remove({})
-         await AcademicYear.remove({})
-         await IncidentType.remove({})
-         await Location.remove({})
-         await PenaltyType.remove({})
-         await Status.remove({})
-         await Incident.remove({})
-         await Attachment.remove({})
-         await Penalty.remove({})
-         await Note.remove({})
+        // await Student.remove({})
+        // await Staff.remove({})
+        // await Relative.remove({})
+        // await AcademicYear.remove({})
+        // await IncidentType.remove({})
+        // await Location.remove({})
+        // await PenaltyType.remove({})
+        // await Status.remove({})
+        // await Incident.remove({})
+        // await Attachment.remove({})
+        // await Penalty.remove({})
+        // await Note.remove({})
     }
 
     async initDb() {
@@ -402,7 +405,7 @@ class behaviorRepository {
         // }
     }
 
-    async refine(from, to) {
+    async refineIncidentsByDate(from, to) {
         let incidents = await this.getIncidents();
         let array = [];
         await Promise.all(incidents.filter(async incident => {
@@ -423,13 +426,13 @@ class behaviorRepository {
     }
 
     async getCountByGradeLevel(from, to) {
-        let incidents = await this.refine(from, to); // get all incidents in range
+        let incidents = await this.refineIncidentsByDate(from, to); // get all incidents in range
 
         let studentsInvolved = incidents.map(incident => { // get student IDs
             return incident.students
         })
 
-        // studentsInvolved = [].concat.apply([], studentsInvolved); // restructure array
+        studentsInvolved = [].concat.apply([], studentsInvolved); // restructure array
 
         let grades = await Promise.all(studentsInvolved.map(id => {
             console.log("in count by grade level : " + id)// get grades of IDs above
@@ -452,13 +455,15 @@ class behaviorRepository {
     }
 
     async getCountByLocation(from, to) {
-        let incidents = await this.refine(from, to);
+        let incidents = await this.refineIncidentsByDate(from, to);
         let locations = await Promise.all(incidents.map(incident => {
             return incident.location
         }));
 
         let location_count = await Promise.all(locations.map(loc => {
-            let count = locations.filter(l => l == loc).length
+            let count = locations.filter(l => l == loc).length;
+            let location = this.getLocationByID(loc);
+            // console.log("loc : " + location.location)
             return JSON.stringify({location: loc, count: count})
         }));
 
@@ -472,7 +477,7 @@ class behaviorRepository {
 
 
     async getCountByType(from, to) {
-        let incidents = await this.refine(from, to);
+        let incidents = await this.refineIncidentsByDate(from, to);
         let types = await Promise.all(incidents.map(incident => {
             return incident.type
         }));
@@ -499,6 +504,69 @@ class behaviorRepository {
     }
 
 
+    async filterByLocation(location, from, to) {
+        let incidents = await this.refineIncidentsByDate(from, to);
+        location = location.charAt(0).toUpperCase() + location.slice(1);
+
+        let loc = await Location.findOne({location: location});
+        if (loc == null)
+            return null
+
+        let locationId = loc._id.toString();
+        let incidentsInLocation = [];
+
+        incidents.filter(incident => {
+            if (incident.location.toString() == locationId)
+                incidentsInLocation.push(incident)
+        });
+        return incidentsInLocation
+    }
+
+    async filterByType(type, from, to) {
+        let incidents = await this.refineIncidentsByDate(from, to);
+        type = type.charAt(0).toUpperCase() + type.slice(1);
+
+        let incidentType = await IncidentType.findOne({type: type});
+        if (incidentType == null)
+            return null
+
+        let typeId = incidentType._id.toString();
+        let incidentsOfType = [];
+
+        incidents.filter(incident => {
+            if (incident.type.toString() == typeId)
+                incidentsOfType.push(incident)
+        });
+        return incidentsOfType
+    }
+
+    async filterByGrade(grade, from, to) {
+        let incidents = await this.refineIncidentsByDate(from, to);
+        // grade = grade.charAt(0).toUpperCase() + grade.slice(1);
+        let std = await Student.findOne({_id: "5a4394f505fd858544a3b01b"});
+        console.log("student : " + std.grade);
+        let incidentsInGrade = [];
+       let x = await Promise.all(incidents.map(async incident => { // get student IDs
+          incidentsInGrade = await incident.students.filter(async student => {
+                console.log("-----------" + student)
+                let std = await Student.findOne({_id: student.toString()});
+               std.grade == grade
+                // console.log(std)
+                // console.log(typeof std.grade + " : " + typeof grade)
+                // if (std.grade == grade) {
+                    // console.log(std.grade + " : " + grade)
+                    // console.log(incident)
+                    // return incident
+
+                    // incidentsInGrade.push(incident)
+                // }
+            })
+            console.log(incidentsInGrade)
+        }))
+
+        return incidentsInGrade;
+
+    }
 }
 
 module.exports = new behaviorRepository();

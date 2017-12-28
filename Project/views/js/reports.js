@@ -5,45 +5,57 @@ function refineDate() {
 
     console.log(from + " + " + to)
     fillGradeLevel(from, to).then(c => console.log(c)).catch(err => console.log(err));
-    fillLocation(from, to);
-    fillType(from, to);
+    fillLocation(from, to).then(c => console.log(c)).catch(err => console.log(err));
+    fillType(from, to).then(c => console.log(c)).catch(err => console.log(err));
 }
 
 //
 async function fillGradeLevel(from, to) {
-    let table = "<tr><th>Academic Year</th><th>Count</th></tr>\n"
-    //getCountByDate(from,to);  returns
+    let table = "<tr><th>Grade</th><th>Count</th></tr>\n"
+
     const url = `/api/countByGrade/${from}/${to}`
     const response = await fetch(url)
     let list = await response.json()
-    console.log("json is : " + list.length)
+
+    // console.log("json is : " + list.length)
 
     list.forEach(item => {
         console.log(item.grade + " : " + item.count)
-        table += `<tr><td>${item.grade}</td><td>${item.count}</td></tr>`
+        table += `<tr><td><a href="/incidents"> ${item.grade}</a></td><td><a href="/incidents"> ${item.count}</a></td></tr>`
 
     })
-    
+
     document.getElementById('gradeLevelList').innerHTML = table
 }
 
-function fillLocation(from, to) {
+async function fillLocation(from, to) {
     let table = "<tr><th>Location</th><th>Count</th></tr>\n"
 
-    for (let i = 0; i <= 3; i++) {
-        table += `<tr><td>${i}</td><td>${i * 2}</td></tr>`
-    }
+    const url = `/api/countByLocation/${from}/${to}`
+    const response = await fetch(url)
+    let list = await response.json()
 
+
+    list.forEach(item => {
+        console.log(item.location + " : " + item.count)
+        table += `<tr><td>${item.location}</td><td>${item.count}</td></tr>`
+
+    })
     document.getElementById('locationList').innerHTML = table
 }
 
-function fillType(from, to) {
-    let table = "<tr><th>Incident Type</th><th>Count</th></tr>\n"
-    // let types = controller.getCountByType(from,to)
-    for (let i = 0; i <= 3; i++) {
-        table += `<tr><td>${i}</td><td>${i * 2}</td></tr>`
-    }
+async function fillType(from, to) {
+    let table = "<tr><th>Location</th><th>Count</th></tr>\n"
 
+    const url = `/api/countByType/${from}/${to}`
+    const response = await fetch(url)
+    let list = await response.json()
+
+    list.forEach(item => {
+        console.log(item.type + " : " + item.count)
+        table += `<tr><td>${item.type}</td><td>${item.count}</td></tr>`
+
+    })
     document.getElementById('typeList').innerHTML = table
 }
 
