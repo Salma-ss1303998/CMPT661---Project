@@ -58,8 +58,13 @@ const dbConnection = mongoose.connect('mongodb://localhost/behavior', function(e
     }
 });
 app.get('/', (req, res) => res.render('login'))
+<<<<<<< HEAD
+app.get('/AY',(req,res)=> behvaiorController.getIncidents(res,res))//.render('reports'))
+app.get('/index', (req, res) => res.render('index'))
+=======
 app.get('/AY',(req,res)=>res.render('reports'))
 app.get('/index', isAuthenticated,(req, res) => res.render('index'))
+>>>>>>> 8a6a8f1a56012fe20ff81b4cfcc20f1ac2d1addf
 app.post('/login', (req, res) => behvaiorController.login(req, res))
 
 
@@ -69,22 +74,25 @@ app.get('/api/students', (req, res) => behvaiorController.getStudents(req, res))
 app.get('/api/academicYears', (req, res) => behvaiorController.getAcademicYears(req, res));
 app.get('/api/status', (req, res) => behvaiorController.getStatus(req, res));
 app.get('/incidents', isAuthenticated,(req, res) => behvaiorController.getIncidentsData(req, res))
+<<<<<<< HEAD
 
 // app.get('/incidents', (req, res) => behvaiorController.getIncidentsData(req, res))
+=======
+app.get('/incidents', (req, res) => behvaiorController.getIncidentsData(req, res))
+>>>>>>> 023c05622a4f937cecbab9175d1833ffe9a1957b
 app.get('/incidentEditor', (req, res) => behvaiorController.editIncident(req, res))
-
 app.get('/api/students/:studentID',(req, res) =>  behvaiorController.getStudent(req, res));
 app.post('/incidentEditor', (req, res) => behvaiorController.addIncident(req, res))
 app.get('/api/incidents/:studentID',(req, res) =>  behvaiorController.getStudentIncidents(req, res));
-
 app.get('/api/countByLocation/:from/:to',(req, res) =>  behvaiorController.getCountByLocation(req, res));
 app.get('/api/countByType/:from/:to',(req, res) =>  behvaiorController.getCountByType(req, res));
 app.get('/api/countByGrade/:from/:to',(req, res) =>  behvaiorController.getCountByGradeLevel(req, res));
-
+app.get('/api/incident/:id',(req, res) =>  behvaiorController.getIncidentbyDBID(req, res));
 app.get('/api/incidents/location/:location/:from/:to', (req,res) => behvaiorController.filterIncidentsByLocation(req,res));
+// app.get('/api/incidents/location/:location/:from/:to', (req, res) => res.render('byLocation'))
+
 app.get('/api/incidents/grade/:grade/:from/:to', (req,res) => behvaiorController.filterIncidentsByGrade(req,res));
 app.get('/api/incidents/type/:type/:from/:to', (req,res) => behvaiorController.filterIncidentsByType(req,res));
-
 app.get('/logout', (req, res) => behvaiorController.logout(req, res))
 
 
