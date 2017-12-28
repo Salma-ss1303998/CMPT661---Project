@@ -58,17 +58,10 @@ const dbConnection = mongoose.connect('mongodb://localhost/behavior', function(e
     }
 });
 app.get('/', (req, res) => res.render('login'))
-<<<<<<< HEAD
 app.get('/AY',(req,res)=> behvaiorController.getIncidents(res,res))//.render('reports'))
 app.get('/index', (req, res) => res.render('index'))
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 2de8e338127ea729a79643c5d482849076ec09f1
->>>>>>> a2f6c042c3b6d8c6278f5831eb1d61ee389ab748
 app.get('/AY',(req,res)=>res.render('reports'))
 app.get('/index', isAuthenticated,(req, res) => res.render('index'))
->>>>>>> 8a6a8f1a56012fe20ff81b4cfcc20f1ac2d1addf
 app.post('/login', (req, res) => behvaiorController.login(req, res))
 app.get('/api/staffs', (req, res) => behvaiorController.getStaffs(req, res));
 app.get('/api/relatives', (req, res) => behvaiorController.getRealtives(req, res));
@@ -76,12 +69,7 @@ app.get('/api/students', (req, res) => behvaiorController.getStudents(req, res))
 app.get('/api/academicYears', (req, res) => behvaiorController.getAcademicYears(req, res));
 app.get('/api/status', (req, res) => behvaiorController.getStatus(req, res));
 app.get('/incidents', isAuthenticated,(req, res) => behvaiorController.getIncidentsData(req, res))
-<<<<<<< HEAD
-
-// app.get('/incidents', (req, res) => behvaiorController.getIncidentsData(req, res))
-=======
 app.get('/incidents', (req, res) => behvaiorController.getIncidentsData(req, res))
->>>>>>> 023c05622a4f937cecbab9175d1833ffe9a1957b
 app.get('/incidentEditor', (req, res) => behvaiorController.editIncident(req, res))
 app.get('/api/students/:studentID',(req, res) =>  behvaiorController.getStudent(req, res));
 app.post('/incidentEditor', (req, res) => behvaiorController.addIncident(req, res))
